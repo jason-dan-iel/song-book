@@ -1,0 +1,50 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #fafafa;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: #222;
+  color: white;
+  padding: 1em;
+  text-align: center;
+}
+#search, #category-select {
+  margin-top: 1em;
+  padding: 0.5em;
+  width: 40%;
+  margin-right: 0.5em;
+}
+main {
+  max-width: 600px;
+  margin: 2em auto;
+  background: white;
+  padding: 2em;
+  border-radius: 8px;
+}
+ul#songs-list {
+  list-style: none;
+  padding: 0;
+}
+ul#songs-list li {
+  padding: 1em;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+ul#songs-list li:hover {
+  background: #f0f0f0;
+}
+#lyrics-section {
+  text-align: left;
+}
+#back-button {
+  margin-top: 1em;
+  padding: 0.5em 1em;
+}
+.section.chorus strong {
+  color: #0055bb;
+}
+.section.verse strong {
+  color: #888;
+}
