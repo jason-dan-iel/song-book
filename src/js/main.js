@@ -61,6 +61,7 @@ async function fetchSongs() {
     songsList.innerHTML = '<li>Error loading song manifest.</li>';
     return;
   }
+  
   for (const file of songFiles) {
     try {
       const resp = await fetch('lyrics/' + file);
@@ -72,9 +73,24 @@ async function fetchSongs() {
         songs.push({ ...data, file });
       }
     } catch (e) {
-      // Skip if file not found or invalid
+      console.error('Error loading file:', file, e);
     }
   }
+  
+  // Remove duplicates based on title and file
+  const uniqueSongs = [];
+  const seenTitles = new Set();
+  
+  for (const song of songs) {
+    const key = `${song.title}_${song.file}`;
+    if (!seenTitles.has(key)) {
+      seenTitles.add(key);
+      uniqueSongs.push(song);
+    }
+  }
+  
+  songs = uniqueSongs;
+  console.log('Loaded songs:', songs.length);
   filterAndRender();
 }
 
@@ -93,8 +109,11 @@ function renderSongs(songsToRender) {
   }
   songsToRender.forEach((song, index) => {
     const category = getSongCategory(song);
-    const songIndex = getSongIndex(song) || (index + 1);
-    const prefix = `${getDisplayCategoryLabel(category)}${songIndex}. `;
+    const fileIndex = getSongIndex(song);
+    
+    // Use file index if available, otherwise use sequential numbering
+    const displayIndex = fileIndex > 0 ? fileIndex : (index + 1);
+    const prefix = `${getDisplayCategoryLabel(category)}${displayIndex}. `;
     
     const li = document.createElement('li');
     li.textContent = `${prefix}${song.title || 'Untitled Song'}`;
@@ -227,7 +246,21 @@ function filterAndRender() {
     const catA = getSongCategory(a);
     const catB = getSongCategory(b);
     if (catA !== catB) return catA.localeCompare(catB);
-    return getSongIndex(a) - getSongIndex(b);
+    
+    const indexA = getSongIndex(a);
+    const indexB = getSongIndex(b);
+    
+    // If both have valid indices, sort by index
+    if (indexA > 0 && indexB > 0) {
+      return indexA - indexB;
+    }
+    
+    // If only one has a valid index, prioritize it
+    if (indexA > 0) return -1;
+    if (indexB > 0) return 1;
+    
+    // If neither has a valid index, sort by title
+    return (a.title || '').localeCompare(b.title || '');
   });
 
   renderSongs(filtered);
