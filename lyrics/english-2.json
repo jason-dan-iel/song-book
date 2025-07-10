@@ -1,15 +1,67 @@
 {
-    "title": "",
-    "artist": "",
-    "category": "english",
-    "sections": [
-        {
-            "type": "verse",
-            "label": "Verse 1",
-            "lines": [
-                "dafdsfasa",
-                "sdfasdfsadf"
-            ]
-        }
-    ]
+  "title": "Behold, What Love, What Boundless Love",
+  "artist": "",
+  "category": "english",
+  "sections": [
+    {
+      "type": "verse",
+      "label": "1",
+      "lines": [
+        "Behold, what love, what boundless love,",
+        "The Father hath bestowed",
+        "On sinners lost, that we should be",
+        "Now called the sons of God!"
+      ]
+    },
+    {
+      "type": "chorus",
+      "label": "chorus",
+      "lines": [
+        "Behold, what manner of love!",
+        "What manner of love the Father hath bestowed upon us,",
+        "That we, that we should be called,",
+        "Should be called the sons of God!"
+      ]
+    },
+    {
+      "type": "verse",
+      "label": "2",
+      "lines": [
+        "No longer far from Him but now",
+        "By precious blood made nigh,",
+        "Accepted in the Well beloved,",
+        "Near to God’s heart we lie."
+      ]
+    },
+    {
+      "type": "chorus",
+      "label": "",
+      "lines": [
+        "Behold, what manner of love!",
+        "What manner of love the Father hath bestowed upon us,",
+        "That we, that we should be called,",
+        "Should be called the sons of God!"
+      ]
+    },
+    {
+      "type": "verse",
+      "label": "3",
+      "lines": [
+        "What we in glory soon shall be,",
+        "It doth not yet appear;",
+        "But when our precious Lord we see,",
+        "We shall His image bear."
+      ]
+    },
+    {
+      "type": "verse",
+      "label": "4",
+      "lines": [
+        "With such a blessed hope in view,",
+        "We would more holy be,",
+        "More like our risen, glorious Lord,",
+        "Whose face we soon shall see."
+      ]
+    }
+  ]
 }
