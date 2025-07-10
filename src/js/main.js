@@ -1,15 +1,12 @@
-// src/js/main.js
-
 const songsList = document.getElementById('songs-list');
 const lyricsSection = document.getElementById('lyrics-section');
 const searchInput = document.getElementById('search');
 const songTitle = document.getElementById('song-title');
-// Removed: const songArtist = document.getElementById('song-artist');
 const songLyrics = document.getElementById('song-lyrics');
-const backButton = document.getElementById('back-button');
-const categorySelect = document.getElementById('category-select');
 
+const categorySelect = document.getElementById('category-select');
 let songs = [];
+let currentSong = null;
 
 // Helper to parse filename into category and index (e.g., "hindi-12.json" -> {category: "hindi", index: 12})
 function parseFilename(filename) {
@@ -82,11 +79,11 @@ function renderSongs(songsToRender) {
 }
 
 // Show lyrics with section support, including optional transliteration/translation
-function showLyrics(song) {
+function showLyrics(song, pushHistory = true) {
+  currentSong = song;
   songsList.style.display = 'none';
   lyricsSection.style.display = 'block';
   songTitle.textContent = song.title;
-  // Removed: songArtist.textContent = song.artist;
   songLyrics.innerHTML = '';
   song.sections.forEach(section => {
     const sectionDiv = document.createElement('div');
@@ -95,11 +92,9 @@ function showLyrics(song) {
     label.textContent = section.label;
     sectionDiv.appendChild(label);
     sectionDiv.appendChild(document.createElement('br'));
-    // Main lines
     section.lines.forEach((line, idx) => {
       sectionDiv.appendChild(document.createTextNode(line));
       sectionDiv.appendChild(document.createElement('br'));
-      // Optionally show transliteration/translation if present
       if (section.transliteration && section.transliteration[idx]) {
         const transSpan = document.createElement('span');
         transSpan.style.color = '#666';
@@ -120,12 +115,44 @@ function showLyrics(song) {
     sectionDiv.appendChild(document.createElement('br'));
     songLyrics.appendChild(sectionDiv);
   });
+
+  // Push state to history if navigating forward
+  if (pushHistory) {
+    history.pushState({ songFile: song.file }, '', `#song-${encodeURIComponent(song.file.replace(/\.json$/, ''))}`);
+  }
 }
 
-backButton.onclick = () => {
+function showSongList(pushHistory = true) {
   lyricsSection.style.display = 'none';
   songsList.style.display = 'block';
+  currentSong = null;
+  if (pushHistory) {
+    history.pushState({ songList: true }, '', '#list');
+  }
+}
+
+// Browser Back/Forward
+window.onpopstate = function(event) {
+  if (event.state && event.state.songFile) {
+    const song = songs.find(s => s.file === event.state.songFile);
+    if (song) showLyrics(song, false);
+  } else {
+    showSongList(false);
+  }
 };
+
+// On initial load, restore state from hash or default
+window.addEventListener('DOMContentLoaded', () => {
+  fetchSongs().then(() => {
+    if (location.hash.startsWith('#song-')) {
+      const fileBase = decodeURIComponent(location.hash.replace('#song-', '')) + '.json';
+      const song = songs.find(s => s.file.replace(/\.json$/, '') === fileBase.replace(/\.json$/, ''));
+      if (song) showLyrics(song, false);
+    } else {
+      showSongList(false);
+    }
+  });
+});
 
 // Filtering by category and search, and sorting by filename index
 function filterAndRender() {
