@@ -3,14 +3,14 @@ const lyricsSection = document.getElementById('lyrics-section');
 const searchInput = document.getElementById('search');
 const songTitle = document.getElementById('song-title');
 const songLyrics = document.getElementById('song-lyrics');
-
 const categorySelect = document.getElementById('category-select');
+
 let songs = [];
 let currentSong = null;
 
 // Helper to parse filename into category and index (e.g., "hindi-12.json" -> {category: "hindi", index: 12})
 function parseFilename(filename) {
-  const match = filename.match(/^(hindi|english|yc)-(\d+)\.json$/i);
+  const match = filename.match(/^(hindi|english|yc|special)-(\d+)\.json$/i);
   if (!match) return null;
   return {
     category: match[1].toLowerCase(),
@@ -18,14 +18,35 @@ function parseFilename(filename) {
   };
 }
 
-// Helper to get display label for category
+// Helper to get category from song data
+function getSongCategory(song) {
+  if (song.category) {
+    const category = song.category.toLowerCase();
+    if (category.includes('youth') || category.includes('camp')) return 'yc';
+    if (category.includes('hindi')) return 'hindi';
+    if (category.includes('english')) return 'english';
+    if (category.includes('special')) return 'special';
+    return category;
+  }
+  // Fallback to filename parsing
+  const parsed = parseFilename(song.file);
+  return parsed ? parsed.category : 'english';
+}
+
+// Helper to get song index
+function getSongIndex(song) {
+  const parsed = parseFilename(song.file);
+  return parsed ? parsed.index : 0;
+}
+
+// Helper to get display label for category (keeping empty as per your code)
 function getDisplayCategoryLabel(category) {
   switch (category) {
-    case 'hindi': return '';
-    case 'english': return '';
-    case 'yc': return '';
-    case 'special': return '';
-    default: return category;
+    case 'hindi': return 'H';
+    case 'english': return 'E';
+    case 'yc': return 'YC';
+    case 'special': return 'S';
+    default: return '';
   }
 }
 
@@ -44,7 +65,12 @@ async function fetchSongs() {
     try {
       const resp = await fetch('lyrics/' + file);
       const data = await resp.json();
-      songs.push({ ...data, file });
+      // If data is an array (like all-songs.json), spread it
+      if (Array.isArray(data)) {
+        songs.push(...data);
+      } else {
+        songs.push({ ...data, file });
+      }
     } catch (e) {
       // Skip if file not found or invalid
     }
@@ -65,14 +91,13 @@ function renderSongs(songsToRender) {
     songsList.innerHTML = '<li>No songs found.</li>';
     return;
   }
-  songsToRender.forEach((song) => {
-    const parsed = parseFilename(song.file);
-    let prefix = '';
-    if (parsed) {
-      prefix = `${getDisplayCategoryLabel(parsed.category)} ${parsed.index}. `;
-    }
+  songsToRender.forEach((song, index) => {
+    const category = getSongCategory(song);
+    const songIndex = getSongIndex(song) || (index + 1);
+    const prefix = `${getDisplayCategoryLabel(category)}${songIndex}. `;
+    
     const li = document.createElement('li');
-    li.textContent = `${prefix}${song.title}`;
+    li.textContent = `${prefix}${song.title || 'Untitled Song'}`;
     li.onclick = () => showLyrics(song);
     songsList.appendChild(li);
   });
@@ -83,7 +108,17 @@ function showLyrics(song, pushHistory = true) {
   currentSong = song;
   songsList.style.display = 'none';
   lyricsSection.style.display = 'block';
-  songTitle.textContent = song.title;
+  songTitle.textContent = song.title || 'Untitled Song';
+  
+  // Show artist if available
+  const songArtist = document.getElementById('song-artist');
+  if (song.artist && song.artist.trim()) {
+    songArtist.textContent = song.artist;
+    songArtist.style.display = 'block';
+  } else {
+    songArtist.style.display = 'none';
+  }
+  
   songLyrics.innerHTML = '';
   song.sections.forEach(section => {
     const sectionDiv = document.createElement('div');
@@ -160,11 +195,14 @@ function filterAndRender() {
   const category = categorySelect.value;
 
   let filtered = songs.filter(song => {
-    const parsed = parseFilename(song.file);
+    const songCategory = getSongCategory(song);
 
     // Category filter
-    if (category && category !== 'all' && (!parsed || parsed.category !== category)) {
-      return false;
+    if (category && category !== 'all') {
+      const categoryMatch = category === 'youth_camp' ? 'yc' : category;
+      if (songCategory !== categoryMatch) {
+        return false;
+      }
     }
 
     // No search: include everything that passes category
@@ -174,7 +212,8 @@ function filterAndRender() {
     if (song.title && song.title.toLowerCase().includes(keyword)) return true;
 
     // Search by index (exact or partial, e.g., "12" matches hindi-12)
-    if (parsed && parsed.index && parsed.index.toString().includes(keyword)) return true;
+    const songIndex = getSongIndex(song);
+    if (songIndex && songIndex.toString().includes(keyword)) return true;
 
     // Search by lyrics content
     const allLines = getAllLyricsLines(song);
@@ -185,11 +224,10 @@ function filterAndRender() {
 
   // Sort by category then index
   filtered.sort((a, b) => {
-    const pa = parseFilename(a.file);
-    const pb = parseFilename(b.file);
-    if (!pa || !pb) return 0;
-    if (pa.category !== pb.category) return pa.category.localeCompare(pb.category);
-    return pa.index - pb.index;
+    const catA = getSongCategory(a);
+    const catB = getSongCategory(b);
+    if (catA !== catB) return catA.localeCompare(catB);
+    return getSongIndex(a) - getSongIndex(b);
   });
 
   renderSongs(filtered);
