@@ -9,21 +9,17 @@
 </head>
 <body>
   <header>
-    <h1>Brethren Assembly Jodhpur Song Book</h1>
-    <select id="category-select">
-      <option value="all">All Songbooks</option>
-      <option value="english">English Songbook</option>
-      <option value="hindi">Hindi Songbook</option>
-      <option value="youth_camp">Youth Camp Book</option>
-      <option value="special">Special Songs</option>
-    </select>
-    <input type="text" id="search" placeholder="Search by song or number">
+    <h1>Song Book</h1>
+    <div class="controls">
+      <select id="category-select"></select>
+      <input type="text" id="search" placeholder="Search songs...">
+    </div>
   </header>
   <main>
     <ul id="songs-list"></ul>
     <section id="lyrics-section" style="display:none;">
+      <button id="back-to-list" type="button">← Back</button>
       <h2 id="song-title"></h2>
-      <h3 id="song-artist"></h3>
       <div id="song-lyrics"></div>
     </section>
   </main>
