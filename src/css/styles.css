@@ -1,47 +1,21 @@
-/* === BACK TO SONGS BUTTON === */
-#back-to-list {
-  display: inline-block;
-  margin-bottom: 1.1rem;
-  padding: 0.5em 1.2em;
-  font-size: 1.08rem;
-  background: #1976d2;
-  color: #fff;
-  border: none;
-  border-radius: 18px;
-  box-shadow: none;
-  cursor: pointer;
-  transition: background 0.15s;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-}
-
-#back-to-list:hover, #back-to-list:focus {
-  background: #0d47a1;
-  outline: none;
-}
 /* === RESET & BASE === */
-
-
-
 html, body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-  background: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: #f9fafb;
   color: #181818;
   scroll-behavior: smooth;
   box-sizing: border-box;
-  font-size: 18px;
-  line-height: 1.7;
+  font-size: 20px;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Root variables for easy theming and gradients */
-
-
 /* === HEADER === */
-
-
 header {
   background: none;
   color: #222;
@@ -50,163 +24,133 @@ header {
   box-shadow: none;
   border-bottom: 1px solid #f0f0f0;
 }
-
 header h1 {
-  font-family: 'Inter', Arial, sans-serif;
-  font-size: 1.5rem;
-  margin: 0 0 0.7rem 0;
-  font-weight: 600;
+  font-family: inherit;
+  font-size: 2.1rem;
+  margin: 0 0 1.2rem 0;
+  font-weight: 700;
   color: #1976d2;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.01em;
+  text-rendering: optimizeLegibility;
 }
 
-
+/* === CONTROLS === */
 .controls {
   display: flex;
   justify-content: center;
   gap: 1em;
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
   flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  background: #f9fafb;
+  z-index: 20;
+  padding: 0.5em 0;
+  border-radius: 0 0 1.2em 1.2em;
+  box-shadow: 0 2px 12px 0 rgba(60,60,60,0.03);
 }
-
-/* === CONTROLS === */
-
-
 #category-select, #search {
-  padding: 1em 1.3em;
-  border-radius: 20px;
+  padding: 1.1em 1.5em;
+  border-radius: 999px;
   border: 1.5px solid #e0e0e0;
-  font-size: 1.13rem;
-  background: #fafbfc;
+  font-size: 1.15rem;
+  background: #f5f7fa;
   color: #222;
-  box-shadow: none;
+  box-shadow: 0 2px 8px 0 rgba(60,60,60,0.04);
   outline: none;
-  min-width: 140px;
-  max-width: 340px;
+  min-width: 160px;
+  max-width: 360px;
   margin: 0;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
 }
-
-
 #category-select:focus, #search:focus, #back-to-list:focus {
   border-color: #1976d2;
-  box-shadow: 0 0 0 2px #1976d299;
+  box-shadow: 0 2px 12px 0 #1976d233;
+  background: #fff;
   outline: 2px solid #1976d2;
   outline-offset: 2px;
 }
-
 #search {
-  flex: 1 1 220px;
-  min-width: 160px;
+  flex: 1 1 240px;
+  min-width: 180px;
 }
 
 /* === MAIN PANEL === */
-
-
 main {
   flex: 1;
-  max-width: 520px;
-  margin: 1.2rem auto 1.2rem auto;
+  max-width: 600px;
+  margin: 2.5rem auto 2.5rem auto;
   background: #fff;
-  padding: 1.2rem 0.5rem 1.2rem 0.5rem;
-  border-radius: 1.1rem;
-  box-shadow: none;
-  min-height: 320px;
-  transition: none;
+  padding: 2.5rem 1.5rem 2.5rem 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.04);
+  min-height: 340px;
+  transition: box-shadow 0.2s;
 }
-
-
 main:before {
   display: none;
 }
 
-@keyframes floatAccent {
-  0% { transform: scale(1) translateY(0);}
-  100% { transform: scale(1.13) translateY(32px);}
-}
-@keyframes floatAccent2 {
-  0% { transform: scale(1) translateX(0);}
-  100% { transform: scale(1.07) translateX(32px);}
-}
-
-/* === LIST === */
+/* === SONG LIST === */
 ul#songs-list {
   list-style: none;
   padding: 0;
   margin: 0;
   animation: fadeIn 0.85s cubic-bezier(.4,0,.2,1);
 }
-
-
-
 ul#songs-list li {
-  padding: 1em 0.5em;
-  margin-bottom: 0.2em;
-  border-radius: 0.3em;
-  background: none;
-  font-size: 1.13rem;
+  padding: 1.2em 0.7em;
+  margin-bottom: 0.4em;
+  border-radius: 1em;
+  background: #f5f7fa;
+  font-size: 1.18rem;
   font-weight: 500;
   color: #1976d2;
   cursor: pointer;
   outline: none;
   border: none;
-  transition: color 0.13s, background 0.13s;
-  animation: none;
+  transition: color 0.13s, background 0.13s, box-shadow 0.13s;
+  box-shadow: 0 1px 4px 0 rgba(25,118,210,0.04);
   will-change: auto;
   position: relative;
   overflow: visible;
 }
-
-
-
-
-
 ul#songs-list li:hover, ul#songs-list li:focus {
   background: #e3f2fd;
   color: #0d47a1;
+  box-shadow: 0 2px 8px 0 rgba(25,118,210,0.10);
 }
-
-
 ul#songs-list li:active {
   transform: scale(0.98);
-  border-color: var(--accent);
 }
 
 /* === LYRICS SECTION === */
-
 #lyrics-section {
   text-align: left;
   animation: fadeInUp 0.5s cubic-bezier(.2,.7,.3,1.2);
   background: none;
-  border-radius: 0.7rem;
+  border-radius: 1.2rem;
   box-shadow: none;
   padding: 0.5em 0.2em 0.5em 0.2em;
 }
-
-
-
 #song-title {
-  font-family: 'Inter', Arial, sans-serif;
-  font-size: 1.35rem;
+  font-family: inherit;
+  font-size: 1.7rem;
   color: #1976d2;
-  margin: 0 0 0.5em 0;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  margin: 0 0 1.1em 0;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   text-shadow: none;
   animation: popIn 0.5s cubic-bezier(.4,0,.6,1.1);
 }
-
-
 #song-lyrics {
-  margin-top: 0.7em;
-  font-size: 1.09rem;
-  line-height: 1.7;
+  margin-top: 1.2em;
+  font-size: 1.15rem;
+  line-height: 2.0;
   letter-spacing: 0.01em;
   color: #23272e;
   animation: fadeIn 0.5s cubic-bezier(.36,.36,.56,1.1);
 }
-
-
 .section {
   margin-bottom: 1.1em;
   animation: none;
@@ -215,10 +159,8 @@ ul#songs-list li:active {
   padding-left: 0.7em;
   position: relative;
   background: none;
-  border-radius: 0.3em;
+  border-radius: 0.7em;
 }
-
-
 .section.verse strong {
   color: #1976d2;
   font-weight: 600;
@@ -226,9 +168,6 @@ ul#songs-list li:active {
   text-shadow: none;
   font-size: 1.08em;
 }
-
-
-
 .section.chorus strong {
   color: #b28704;
   font-weight: 600;
@@ -236,9 +175,6 @@ ul#songs-list li:active {
   text-shadow: none;
   font-size: 1.08em;
 }
-
-/* Sticky chorus styling */
-
 .section.chorus {
   position: -webkit-sticky;
   position: sticky;
@@ -246,43 +182,39 @@ ul#songs-list li:active {
   background: #fffbe7;
   z-index: 10;
   border-left: 3px solid #ffe082;
-  border-radius: 0.3em;
+  border-radius: 0.7em;
   margin-bottom: 1.1em;
   padding-bottom: 0.1em;
   padding-top: 0.1em;
 }
-
 .section.special strong {
   color: #ab47bc;
   font-weight: 700;
 }
 
-
-
-/* Back Button */
-
-
+/* === BACK TO SONGS BUTTON === */
 #back-to-list {
   display: inline-block;
   margin-bottom: 1.1rem;
-  padding: 0.7em 1.6em;
-  font-size: 1.13rem;
+  padding: 0.9em 2em;
+  font-size: 1.18rem;
   background: #1976d2;
   color: #fff;
   border: none;
-  border-radius: 22px;
-  box-shadow: none;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px 0 rgba(60,60,60,0.04);
   cursor: pointer;
-  transition: background 0.15s, box-shadow 0.15s;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.12s;
   font-weight: 500;
   letter-spacing: 0.01em;
   outline: none;
+  font-family: inherit;
 }
-
 #back-to-list:hover, #back-to-list:focus {
   background: #0d47a1;
   box-shadow: 0 0 0 2px #1976d233;
   outline: none;
+  transform: scale(1.04);
 }
 
 /* === ANIMATIONS === */
@@ -302,26 +234,8 @@ ul#songs-list li:active {
   0% { transform: scale(0.8); opacity: 0;}
   100% { transform: scale(1); opacity: 1;}
 }
-@keyframes mainBounceIn {
-  0% { opacity:0; transform:scale(0.92) translateY(60px);}
-  60% { opacity:1; transform:scale(1.02) translateY(-10px);}
-  100% { opacity:1; transform:scale(1) translateY(0);}
-}
-@keyframes sectionFadeIn {
-  0% { opacity: 0; transform: translateX(40px);}
-  100% { opacity: 1; transform: translateX(0);}
-}
-@keyframes slideInList {
-  0% { opacity: 0; transform: translateX(-32px);}
-  100% { opacity: 1; transform: translateX(0);}
-}
-@keyframes slideInLine {
-  0% { width: 0; opacity: 0;}
-  100% { width: 80px; opacity: 0.6;}
-}
 
 /* === SCROLLBAR === */
-
 ::-webkit-scrollbar {
   width: 8px;
   background: #f7fafd;
@@ -342,15 +256,12 @@ ul#songs-list li:active {
     padding-right: 4rem;
   }
 }
-
 @media (max-width: 900px) {
   main {
     max-width: 99vw;
     padding: 2rem 0.7rem 1.8rem 0.7rem;
   }
 }
-
-
 @media (max-width: 670px) {
   html, body {
     font-size: 16px;
@@ -358,21 +269,28 @@ ul#songs-list li:active {
   header h1 {
     font-size: 1.2rem;
   }
-  main {
-    margin: 1rem 0 1.2rem 0;
-    padding: 1.1rem 0.3rem 1rem 0.3rem;
-    border-radius: 0.7em;
+  .controls {
+    position: static;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0.2em 0;
   }
-  #song-title {
-    font-size: 1.1rem;
+  main {
+    margin: 0.7rem 0 1.2rem 0;
+    padding: 0.7rem 0.2rem 1rem 0.2rem;
+    border-radius: 0.7em;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.04);
   }
   #back-to-list {
     font-size: 1rem;
-    padding: 0.6em 1.2em;
+    padding: 0.7em 1.2em;
+  }
+  ul#songs-list li {
+    font-size: 1.05rem;
+    padding: 1em 0.5em;
+    border-radius: 0.5em;
   }
 }
-
-
 @media (max-width: 480px) {
   html, body {
     font-size: 15px;
@@ -381,24 +299,13 @@ ul#songs-list li:active {
     padding: 1.1rem 0.1rem 0.8rem 0.1rem;
   }
   main {
-    margin: 0.6rem 0 0.4rem 0;
-    padding: 0.7rem 0.1rem 0.5rem 0.1rem;
+    margin: 0.3rem 0 0.2rem 0;
+    padding: 0.5rem 0.1rem 0.5rem 0.1rem;
     border-radius: 0.3em;
   }
   ul#songs-list li {
-    font-size: 0.95rem;
-    padding: 0.8em 0.4em;
+    font-size: 0.98rem;
+    padding: 0.7em 0.3em;
+    border-radius: 0.4em;
   }
 }
-
-
-/* No dark mode override: always light theme */
-
-#lyrics-section {
-  position: relative;
-  text-align: left;
-  animation: fadeInUp 0.75s cubic-bezier(.2,.7,.3,1.2);
-}
-
-
-
