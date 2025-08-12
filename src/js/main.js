@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
       song.title.toLowerCase().includes(q) ||
       (song.lyrics && song.lyrics.toLowerCase().includes(q))
     );
-    songsList.innerHTML = filteredSongs.map((song, i) => `<li data-idx="${i}">${song.title}</li>`).join('');
+  songsList.innerHTML = filteredSongs.map((song, i) => `<li data-idx="${i}"><span style='opacity:.6;margin-right:.5em;'>${i+1}.</span>${song.title}</li>`).join('');
     showList();
   }
 
