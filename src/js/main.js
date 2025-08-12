@@ -66,7 +66,7 @@ async function fetchSongs() {
     try {
       const resp = await fetch('lyrics/' + file);
       const data = await resp.json();
-      // If data is an array (like all-songs.json), spread it
+      // Each file is now an array of songs (category split)
       if (Array.isArray(data)) {
         songs.push(...data);
       } else {
@@ -138,10 +138,16 @@ function showLyrics(song, pushHistory = true) {
     songArtist.style.display = 'none';
   }
   
+
   songLyrics.innerHTML = '';
+  const hasChorus = song.sections.some(section => section.type === 'chorus');
   song.sections.forEach(section => {
     const sectionDiv = document.createElement('div');
     sectionDiv.className = `section ${section.type}`;
+    // Add sticky class only if chorus exists and this is chorus
+    if (hasChorus && section.type === 'chorus') {
+      sectionDiv.classList.add('chorus');
+    }
     const label = document.createElement('strong');
     label.textContent = section.label;
     sectionDiv.appendChild(label);

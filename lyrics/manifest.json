@@ -1,3 +1,7 @@
 [
-    "all-songs.json"
+	"hindi-songs.json",
+	"english-songs.json",
+	"yc-songs.json",
+	"special-songs.json",
+	"other-songs.json"
 ]

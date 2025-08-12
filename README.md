@@ -47,7 +47,11 @@ song-book-app/
 │   └── js/
 │       └── main.js         # Core functionality
 ├── lyrics/
-│   ├── all-songs.json      # Complete song database
+│   ├── hindi-songs.json      # Hindi songs
+│   ├── english-songs.json    # English songs
+│   ├── yc-songs.json         # Youth Camp songs
+│   ├── special-songs.json    # Special songs
+│   └── other-songs.json      # Other songs
 │   └── manifest.json       # File manifest
 └── README.md               # This file
 ```
@@ -76,7 +80,7 @@ Songs are stored in JSON format with the following structure:
 
 - **Styling**: Modify `src/css/styles.css` for visual customization
 - **Functionality**: Update `src/js/main.js` for feature changes
-- **Songs**: Add new songs to `lyrics/all-songs.json`
+- **Songs**: Add new songs to the appropriate category file in `lyrics/` (e.g., `hindi-songs.json`, `english-songs.json`, etc.)
 
 ## Browser Support
 
@@ -89,7 +93,7 @@ Songs are stored in JSON format with the following structure:
 
 To add new songs or modify existing ones:
 
-1. Edit `lyrics/all-songs.json`
+1. Edit the appropriate file in `lyrics/` (e.g., `hindi-songs.json`, `english-songs.json`, etc.)
 2. Refresh the browser to see changes
 3. Use the data cleanup script if needed: `node clean-data.js`
 

@@ -1,0 +1,126 @@
+[
+  {
+    "title": "Praise, my soul, the King of heaven",
+    "artist": "",
+    "category": "english",
+    "sections": [
+      {
+        "type": "verse",
+        "label": "1",
+        "lines": [
+          "Praise, my soul, the King of heaven;",
+          "To His feet your tribute bring;",
+          "Ransomed, healed, restored, forgiven,",
+          "Who like thee, His praise should sing?",
+          "Halleluyah, Halleluyah!",
+          "Praise the everlasting King."
+        ]
+      },
+      {
+        "type": "verse",
+        "label": "2",
+        "lines": [
+          "Praise Him for His grace and favour",
+          "To our fathers in distress;",
+          "Praise Him, still the same forever,",
+          "Slow to chide and swift to bless;",
+          "Halleluyah, Halleluyah!",
+          "Glorious in His faithfulness."
+        ]
+      },
+      {
+        "type": "verse",
+        "label": "3",
+        "lines": [
+          "Father-like, He tends and spares us;",
+          "Well our feeble frame He knows;",
+          "In His hands He gently bears us,",
+          "Rescues us from all our foes;",
+          "Halleluyah, Halleluyah!",
+          "Widely yet His mercy flows."
+        ]
+      },
+      {
+        "type": "verse",
+        "label": "4",
+        "lines": [
+          "Angels in the height adore Him;",
+          "Ye behold Him face to face;",
+          "Saints triumphant, bow before Him,",
+          "Gathered in from every race;",
+          "Halleluyah, Halleluyah!",
+          "Praise with us the God of grace."
+        ]
+      }
+    ],
+    "file": "english-1.json"
+  },
+  {
+    "title": "Behold, What Love, What Boundless Love",
+    "artist": "",
+    "category": "english",
+    "sections": [
+      {
+        "type": "verse",
+        "label": "1",
+        "lines": [
+          "Behold, what love, what boundless love,",
+          "The Father hath bestowed",
+          "On sinners lost, that we should be",
+          "Now called the sons of God!"
+        ]
+      },
+      {
+        "type": "chorus",
+        "label": "chorus",
+        "lines": [
+          "Behold, what manner of love!",
+          "What manner of love the Father hath bestowed upon us,",
+          "That we, that we should be called,",
+          "Should be called the sons of God!"
+        ]
+      },
+      {
+        "type": "verse",
+        "label": "2",
+        "lines": [
+          "No longer far from Him but now",
+          "By precious blood made nigh,",
+          "Accepted in the Well beloved,",
+          "Near to God’s heart we lie."
+        ]
+      },
+      {
+        "type": "chorus",
+        "label": "",
+        "lines": [
+          "Behold, what manner of love!",
+          "What manner of love the Father hath bestowed upon us,",
+          "That we, that we should be called,",
+          "Should be called the sons of God!"
+        ]
+      },
+      {
+        "type": "verse",
+        "label": "3",
+        "lines": [
+          "What we in glory soon shall be,",
+          "It doth not yet appear;",
+          "But when our precious Lord we see,",
+          "We shall His image bear."
+        ]
+      },
+      {
+        "type": "verse",
+        "label": "4",
+        "lines": [
+          "With such a blessed hope in view,",
+          "We would more holy be,",
+          "More like our risen, glorious Lord,",
+          "Whose face we soon shall see."
+        ]
+      }
+    ],
+    "file": "english-2.json"
+  }
+]
