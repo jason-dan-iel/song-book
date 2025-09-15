@@ -203,7 +203,7 @@ function loadFontSize() {
         </div>
         <div class="action-controls">
           <button id="export-pdf" type="button" title="Export to PDF">📄 PDF</button>
-          <button id="fullscreen-toggle" type="button" title="Toggle fullscreen">⛶ Cast</button>
+          <button id="fullscreen-toggle" type="button" title="Cast to external display">📺 Cast</button>
         </div>
       </div>
       <div id="lyrics-content">${renderSections(song.sections)}</div>
@@ -220,12 +220,181 @@ function loadFontSize() {
     document.querySelector('.controls').style.visibility = 'hidden';
   }
 
+  // Cast functionality for screen casting to TV/external display
+  function toggleCast() {
+    const existingCastWindow = window.castWindow;
+    
+    if (existingCastWindow && !existingCastWindow.closed) {
+      // Close existing cast window
+      existingCastWindow.close();
+      window.castWindow = null;
+      updateCastButtonState(false);
+    } else {
+      // Open new cast window
+      const song = getCurrentSong();
+      if (!song) return;
+      
+      openCastWindow(song);
+    }
+  }
+
+  function openCastWindow(song) {
+    const castContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Cast - ${song.title}</title>
+        <style>
+          body {
+            margin: 0;
+            padding: 2rem;
+            background: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 28px;
+            line-height: 1.8;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+          }
+          .cast-title {
+            font-size: 2.5em;
+            color: #64b5f6;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #64b5f6;
+            padding-bottom: 1rem;
+          }
+          .section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            border-left: 4px solid #64b5f6;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .section.chorus {
+            background: rgba(255, 193, 7, 0.2);
+            border-left-color: #ffc107;
+          }
+          .section strong {
+            color: #64b5f6;
+            font-size: 1.2em;
+            margin-bottom: 0.5rem;
+            display: block;
+          }
+          .cast-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+          }
+          .cast-controls button {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+          }
+          .cast-controls button:hover {
+            background: #1565c0;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="cast-controls">
+          <span>Cast Mode</span>
+          <button onclick="window.close()">Close Cast</button>
+        </div>
+        <h1 class="cast-title">${song.title}</h1>
+        <div class="cast-content">
+          ${renderSections(song.sections)}
+        </div>
+        
+        <script>
+          // Listen for messages from parent window to update content
+          window.addEventListener('message', function(event) {
+            if (event.data.type === 'updateSong') {
+              document.querySelector('.cast-title').textContent = event.data.song.title;
+              document.querySelector('.cast-content').innerHTML = \`${renderSections(event.data.song.sections).replace(/`/g, '\\`')}\`;
+            }
+          });
+          
+          // Notify parent window when this window closes
+          window.addEventListener('beforeunload', function() {
+            if (window.opener && !window.opener.closed) {
+              window.opener.postMessage({type: 'castWindowClosed'}, '*');
+            }
+          });
+        </script>
+      </body>
+      </html>
+    `;
+    
+    // Open cast window
+    const castWindow = window.open('', 'songcast', 'width=1200,height=800,scrollbars=yes,resizable=yes');
+    castWindow.document.write(castContent);
+    castWindow.document.close();
+    
+    // Store reference to cast window
+    window.castWindow = castWindow;
+    
+    // Update button state
+    updateCastButtonState(true);
+    
+    // Focus the cast window
+    castWindow.focus();
+  }
+
+  function getCurrentSong() {
+    // Get the currently displayed song data
+    const songTitleElement = document.getElementById('song-title');
+    const lyricsContent = document.getElementById('lyrics-content');
+    
+    if (!songTitleElement.textContent || !lyricsContent) {
+      return null;
+    }
+    
+    // Find the song in cache based on title
+    for (let [id, song] of songCache) {
+      if (song.title === songTitleElement.textContent) {
+        return song;
+      }
+    }
+    
+    return null;
+  }
+
+  function updateCastButtonState(isCasting) {
+    const castBtn = document.getElementById('fullscreen-toggle');
+    if (castBtn) {
+      castBtn.textContent = isCasting ? '📺 Stop Cast' : '📺 Cast';
+    }
+  }
+
+  // Listen for messages from cast window
+  window.addEventListener('message', function(event) {
+    if (event.data.type === 'castWindowClosed') {
+      window.castWindow = null;
+      updateCastButtonState(false);
+    }
+  });
+
   function setupLyricsControls(song) {
     const decreaseFontBtn = document.getElementById('decrease-font');
     const increaseFontBtn = document.getElementById('increase-font');
     const fontSizeDisplay = document.getElementById('font-size-display');
     const exportPdfBtn = document.getElementById('export-pdf');
-    const fullscreenBtn = document.getElementById('fullscreen-toggle');
+    const castBtn = document.getElementById('fullscreen-toggle');
     const lyricsContent = document.getElementById('lyrics-content');
 
     // Font size controls
@@ -248,8 +417,16 @@ function loadFontSize() {
     // PDF Export
     exportPdfBtn.addEventListener('click', () => exportToPDF(song));
 
-    // Fullscreen toggle
-    fullscreenBtn.addEventListener('click', () => toggleFullscreen());
+    // Cast toggle (changed from fullscreen)
+    castBtn.addEventListener('click', () => toggleCast());
+    
+    // Update cast window if it exists and song changes
+    if (window.castWindow && !window.castWindow.closed) {
+      window.castWindow.postMessage({
+        type: 'updateSong',
+        song: song
+      }, '*');
+    }
   }
 
   // PDF Export function
@@ -320,54 +497,6 @@ function loadFontSize() {
     }
   }
 
-  // Fullscreen functionality for screen casting
-  function toggleFullscreen() {
-    const lyricsContent = document.getElementById('lyrics-content');
-    
-    if (!document.fullscreenElement) {
-      // Enter fullscreen
-      if (lyricsContent.requestFullscreen) {
-        lyricsContent.requestFullscreen();
-      } else if (lyricsContent.webkitRequestFullscreen) {
-        lyricsContent.webkitRequestFullscreen();
-      } else if (lyricsContent.msRequestFullscreen) {
-        lyricsContent.msRequestFullscreen();
-      }
-      
-      // Add fullscreen styling
-      lyricsContent.classList.add('fullscreen-mode');
-      
-    } else {
-      // Exit fullscreen
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-      }
-    }
-  }
-
-  // Listen for fullscreen changes
-  document.addEventListener('fullscreenchange', handleFullscreenChange);
-  document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-  document.addEventListener('msfullscreenchange', handleFullscreenChange);
-
-  function handleFullscreenChange() {
-    const lyricsContent = document.getElementById('lyrics-content');
-    const fullscreenBtn = document.getElementById('fullscreen-toggle');
-    
-    if (lyricsContent) {
-      if (document.fullscreenElement) {
-        lyricsContent.classList.add('fullscreen-mode');
-        if (fullscreenBtn) fullscreenBtn.textContent = '⛶ Exit Cast';
-      } else {
-        lyricsContent.classList.remove('fullscreen-mode');
-        if (fullscreenBtn) fullscreenBtn.textContent = '⛶ Cast';
-      }
-    }
-  }
 
   function showList() {
     lyricsSection.style.display = 'none';
