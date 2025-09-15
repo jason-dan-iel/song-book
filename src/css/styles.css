@@ -226,6 +226,95 @@ ul#songs-list li:active {
   transform: scale(1.04);
 }
 
+/* === LYRICS CONTROLS === */
+.lyrics-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: rgba(25, 118, 210, 0.05);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(25, 118, 210, 0.1);
+}
+
+.font-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.action-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.lyrics-controls button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #1976d2;
+  background: white;
+  color: #1976d2;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.lyrics-controls button:hover {
+  background: #1976d2;
+  color: white;
+}
+
+.lyrics-controls button:active {
+  transform: scale(0.95);
+}
+
+#font-size-display {
+  padding: 0.4rem 0.6rem;
+  background: rgba(25, 118, 210, 0.1);
+  border-radius: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #1976d2;
+  min-width: 50px;
+  text-align: center;
+}
+
+/* === FULLSCREEN MODE === */
+#lyrics-content.fullscreen-mode {
+  background: black;
+  color: white;
+  padding: 2rem;
+  font-size: 24px !important;
+  line-height: 1.8;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+#lyrics-content.fullscreen-mode .section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  border-left: 4px solid #64b5f6;
+}
+
+#lyrics-content.fullscreen-mode .section.chorus {
+  background: rgba(255, 193, 7, 0.2);
+  border-left-color: #ffc107;
+}
+
+#lyrics-content.fullscreen-mode strong {
+  color: #64b5f6;
+  font-size: 1.2em;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
 /* === ANIMATIONS === */
 @keyframes fadeInDown {
   0% { opacity: 0; transform: translateY(-40px);}
