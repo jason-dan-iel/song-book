@@ -54,7 +54,16 @@ document.addEventListener('DOMContentLoaded', () => {
     songLyrics: document.getElementById('song-lyrics'),
     backBtn: document.getElementById('back-to-list'),
     controls: document.querySelector('.controls'),
-    header: document.querySelector('header')
+    header: document.querySelector('header'),
+    alphaIndex: document.getElementById('alpha-index'),
+    alphaEN: document.getElementById('alpha-en'),
+    alphaHI: document.getElementById('alpha-hi'),
+  alphaClear: document.getElementById('alpha-clear'), // legacy (removed in new layout)
+    alphaSelect: document.getElementById('alpha-select'),
+    alphaClearCompact: document.getElementById('alpha-clear-compact'),
+    resultCount: document.getElementById('result-count'),
+    fuzzyToggle: document.getElementById('fuzzy-toggle'),
+    jumpNumber: document.getElementById('jump-number')
   };
 
 
@@ -95,6 +104,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
     }).catch(console.log);
+
+    // Listen for data/update messages from service worker
+    navigator.serviceWorker.addEventListener('message', (e) => {
+      if (!e.data || !e.data.type) return;
+      switch (e.data.type) {
+        case 'MANIFEST_UPDATED':
+          if (!window.__manifestToastShown) {
+            window.__manifestToastShown = true;
+            showToast('Song list updated. Refresh to see new songs', 'info', 6000);
+            setTimeout(()=>{ window.__manifestToastShown = false; }, 15000);
+          }
+          break;
+        case 'SW_VERSION':
+          // Hook available for future display / analytics
+          break;
+      }
+    });
   }
 
   window.addEventListener('beforeinstallprompt', e => {
@@ -149,10 +175,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let allSongsMetadata = [];
   let filteredSongs = [];
   let categories = [];
-  let currentCategory = '';
+  let currentCategory = 'all';
+  let alphaFilter = '';
   let songCache = new Map();
   let loadingPromises = new Map();
   let currentFontSize = 16;
+  let categoryOrder = []; // preserves original manifest order for All grouping
+  // Lookup structure: legacyNumMap (original numeric fragments -> array of metas)
+  let legacyNumMap = new Map();
   // PDF font size input removed; we'll base PDF export on currentFontSize.
 
   loadFontSize();
@@ -160,14 +190,47 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch(manifestUrl)
     .then(r => r.json())
     .then(manifest => {
-      categories = manifest.categories.map(c => c.name);
-      dom.categorySelect.innerHTML = categories.map(c => `<option value="${c}">${c[0].toUpperCase()+c.slice(1)}</option>`).join('');
-      allSongsMetadata = manifest.categories.flatMap(cat =>
-        cat.songs.map(song => ({ ...song, category: cat.name }))
-      );
-      currentCategory = categories[0];
+  categoryOrder = manifest.categories.map(c => c.name);
+  categories = ['all', ...categoryOrder];
+      dom.categorySelect.innerHTML = categories.map(c => `<option value="${c}">${c === 'all' ? 'All' : (c[0].toUpperCase()+c.slice(1))}</option>`).join('');
+      // Flatten songs
+      allSongsMetadata = [];
+      legacyNumMap.clear();
+      for (const cat of manifest.categories) {
+        for (const song of cat.songs) {
+          const idNum = (song.id.match(/(\d+)/) || [,''])[1] || '';
+          const title = song.title || '';
+          const meta = {
+            ...song,
+            category: cat.name,
+            __numRaw: idNum, // original numeric (may contain leading zeros)
+            __num: idNum.replace(/^0+/, ''),
+            __titleLower: title.toLowerCase(),
+            __idLower: song.id.toLowerCase()
+          };
+          allSongsMetadata.push(meta);
+          if (meta.__num) {
+            if (!legacyNumMap.has(meta.__num)) legacyNumMap.set(meta.__num, []);
+            legacyNumMap.get(meta.__num).push(meta);
+          }
+        }
+      }
+      // Restore last category if available, else All
+      try {
+        const savedCat = localStorage.getItem(LS_KEYS.cat);
+        currentCategory = (savedCat && categories.includes(savedCat)) ? savedCat : 'all';
+      } catch { currentCategory = 'all'; }
+      dom.categorySelect.value = currentCategory;
+      // Restore last search if available
+      try {
+        const savedQ = localStorage.getItem(LS_KEYS.search) || '';
+        dom.searchInput.value = savedQ;
+      } catch { /* ignore */ }
       loadCategory(currentCategory);
-      renderSongsList();
+      setupAlphaIndex();
+      // Restore fuzzy preference
+      try { const fz = localStorage.getItem('songbook-fuzzy'); if (fz === '1' && dom.fuzzyToggle) dom.fuzzyToggle.checked = true; } catch {}
+      renderSongsList(true);
     })
     .catch(err => console.error('Error loading manifest:', err));
 
@@ -176,6 +239,9 @@ document.addEventListener('DOMContentLoaded', () => {
     currentCategory = e.target.value;
     saveNumber(LS_KEYS.cat, currentCategory);
     loadCategory(currentCategory);
+    // Reset alpha filter when category changes
+    alphaFilter = '';
+    updateAlphaIndexVisibility();
     renderSongsList(true);
     dom.searchInput.value = '';
     localStorage.removeItem(LS_KEYS.search);
@@ -188,38 +254,157 @@ document.addEventListener('DOMContentLoaded', () => {
     searchTimer = setTimeout(() => {
       localStorage.setItem(LS_KEYS.search, dom.searchInput.value);
       renderSongsList(false);
+      toggleClearButton();
     }, 160);
+  });
+  function toggleClearButton(){
+    const btn = document.getElementById('clear-search');
+    if (!btn) return;
+    if (dom.searchInput.value) btn.style.display='inline-block'; else btn.style.display='none';
+  }
+  document.getElementById('clear-search')?.addEventListener('click', () => {
+    dom.searchInput.value='';
+    localStorage.removeItem(LS_KEYS.search);
+    renderSongsList(false);
+    toggleClearButton();
+    showToast('Search cleared','good');
+    dom.searchInput.focus();
+  });
+  toggleClearButton();
+
+  // Keyboard shortcuts: '/' to focus search, ESC in search to clear
+  window.addEventListener('keydown', (e) => {
+    if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      const tag = document.activeElement && document.activeElement.tagName;
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+        e.preventDefault();
+        dom.searchInput.focus();
+      }
+    }
+  });
+  dom.searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      dom.searchInput.value = '';
+      localStorage.removeItem(LS_KEYS.search);
+      renderSongsList(false);
+    }
   });
 
   /* === LIST RENDER (OPTIMISED) === */
   let lastListSignature = '';
   function renderSongsList(isInitial) {
-    const q = dom.searchInput.value.trim().toLowerCase();
-    let list = allSongsMetadata.filter(s => s.category === currentCategory);
+    const qRaw = dom.searchInput.value.trim();
+    const q = qRaw.toLowerCase();
+    let list = currentCategory === 'all' ? allSongsMetadata.slice() : allSongsMetadata.filter(s => s.category === currentCategory);
+    // Sort with category precedence (manifest order) when showing All
+    list.sort((a,b)=>{
+      if (currentCategory === 'all') {
+        const ai = categoryOrder.indexOf(a.category);
+        const bi = categoryOrder.indexOf(b.category);
+        if (ai !== bi) return ai - bi;
+      }
+      const an = parseInt(a.__num||'',10); const bn = parseInt(b.__num||'',10);
+      if (Number.isFinite(an) && Number.isFinite(bn) && an !== bn) return an - bn;
+      if (Number.isFinite(an) && !Number.isFinite(bn)) return -1;
+      if (!Number.isFinite(an) && Number.isFinite(bn)) return 1;
+      return (a.title||'').localeCompare(b.title||'');
+    });
+
+    // Apply alphabet filter if any (ignore leading punctuation/whitespace)
+    if (alphaFilter) {
+      const normStart = (str) => {
+        if (!str) return '';
+        // Remove leading whitespace and common punctuation/digits
+        const trimmed = str.replace(/^[\s\-–—\.,;:!?'"()\[\]{}0-9]+/, '');
+        return trimmed.charAt(0);
+      };
+      const target = alphaFilter;
+      list = list.filter(s => normStart(s.title) === target);
+    }
+
     if (q) {
-      list = list.filter(s => s.title.toLowerCase().includes(q));
+      const numOnly = q.replace(/[^0-9]/g, '');
+      if (numOnly.length > 0) {
+        const stripped = numOnly.replace(/^0+/, '');
+        list = list.filter(s => s.__num === stripped || s.__numRaw === numOnly || s.__num.startsWith(stripped));
+      } else if (dom.fuzzyToggle && dom.fuzzyToggle.checked && q.length >= 2) {
+        list = fuzzyFilter(list, q);
+      } else {
+        list = list.filter(s => s.__titleLower.includes(q) || s.__idLower.includes(q));
+      }
     }
     filteredSongs = list;
 
     // Signature for diff avoidance
-    const sig = q + '|' + currentCategory + '|' + list.length;
+    const sig = q + '|' + currentCategory + '|' + alphaFilter + '|' + list.length;
     if (!isInitial && sig === lastListSignature) return;
     lastListSignature = sig;
 
-    // Build list markup once
-    const frag = document.createDocumentFragment();
-    list.forEach((s,i) => {
-      const li = document.createElement('li');
-      li.dataset.idx = i;
-      // Bare list item title only (no numbering for minimal 90s look)
-      li.textContent = s.title;
-      frag.appendChild(li);
-    });
-    dom.songsList.innerHTML = '';
-    dom.songsList.appendChild(frag);
-
-    // Highlight search term (only after insertion)
-    if (q) highlightMatches(dom.songsList, q);
+    // Virtualization threshold
+    const V_THRESHOLD = 1600;
+    if (list.length > V_THRESHOLD) {
+      // Virtual list with grouping headers
+      const WINDOW = 400;
+      const visible = list.slice(0, WINDOW);
+      dom.songsList.innerHTML = '';
+      const frag = document.createDocumentFragment();
+      let lastCat = null;
+      let dataIdx = 0;
+      visible.forEach(s => {
+        if (currentCategory === 'all' && s.category !== lastCat) {
+          const h = document.createElement('li');
+          h.textContent = s.category.replace(/(^|\s)([a-z])/g,(m,p1,p2)=>p1+p2.toUpperCase());
+          h.className = 'group-header';
+          frag.appendChild(h);
+          lastCat = s.category;
+        }
+        const li = document.createElement('li');
+        li.dataset.idx = dataIdx;
+        const numLabel = s.__numRaw ? s.__numRaw : (s.__num || '');
+        li.textContent = (numLabel ? (numLabel + '. ') : '') + s.title;
+        frag.appendChild(li);
+        dataIdx++;
+      });
+      dom.songsList.appendChild(frag);
+      if (q && !q.match(/^(?:#|.*?\b)?\d{1,3}$/)) highlightMatches(dom.songsList, q);
+      if (dom.resultCount) dom.resultCount.textContent = list.length + ' songs (showing first ' + WINDOW + ')';
+    } else {
+      // Progressive chunked render with grouping
+      dom.songsList.innerHTML = '';
+      const CHUNK = 300;
+      let idx = 0; // index within list
+      let dataIdx = 0; // index for dataset.idx
+      let lastCat = null;
+      function appendChunk() {
+        if (idx >= list.length) return;
+        const frag = document.createDocumentFragment();
+        for (let c=0; c<CHUNK && idx<list.length; c++, idx++) {
+          const s = list[idx];
+            if (currentCategory === 'all' && s.category !== lastCat) {
+              const h = document.createElement('li');
+              h.textContent = s.category.replace(/(^|\s)([a-z])/g,(m,p1,p2)=>p1+p2.toUpperCase());
+              h.className = 'group-header';
+              frag.appendChild(h);
+              lastCat = s.category;
+            }
+          const li = document.createElement('li');
+          li.dataset.idx = dataIdx;
+          const numLabel = s.__numRaw ? s.__numRaw : (s.__num || '');
+          li.textContent = (numLabel ? (numLabel + '. ') : '') + s.title;
+          frag.appendChild(li);
+          dataIdx++;
+        }
+        dom.songsList.appendChild(frag);
+        if (idx < list.length) {
+          requestIdleCallback(appendChunk);
+        } else if (q && !q.match(/^(?:#|.*?\b)?\d{1,3}$/)) {
+          highlightMatches(dom.songsList, q);
+        }
+      }
+      appendChunk();
+      if (dom.resultCount) dom.resultCount.textContent = list.length ? (list.length + ' song' + (list.length===1?'':'s')) : 'No songs';
+    }
 
     showList();
   }
@@ -233,6 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function highlightMatches(root, term) {
     const regex = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'ig');
     root.querySelectorAll('li').forEach(li => {
+      if (li.classList.contains('group-header')) return;
       const textNode = Array.from(li.childNodes).find(n => n.nodeType === 3);
       if (textNode && regex.test(textNode.textContent)) {
         const span = document.createElement('span');
@@ -243,7 +429,134 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function loadCategory(cat) {
-    filteredSongs = allSongsMetadata.filter(s => s.category === cat);
+    if (cat === 'all') {
+      filteredSongs = allSongsMetadata.slice();
+    } else {
+      filteredSongs = allSongsMetadata.filter(s => s.category === cat);
+    }
+    updateAlphaIndexVisibility();
+  }
+
+  /* === ALPHABET INDEX === */
+  function setupAlphaIndex() {
+    // Only dropdown now
+    if (dom.alphaSelect) {
+      populateAlphaSelect();
+      dom.alphaSelect.addEventListener('change', (e) => {
+        const val = e.target.value;
+        setAlphaFilter(val);
+      });
+    }
+    dom.alphaClearCompact?.addEventListener('click', () => { setAlphaFilter(''); if (dom.alphaSelect) dom.alphaSelect.value=''; });
+    updateAlphaIndexVisibility();
+  }
+
+  function updateAlphaIndexVisibility() {
+    // Only need to repopulate dropdown based on category and maintain value
+    if (!dom.alphaSelect) return;
+    const prev = alphaFilter;
+    populateAlphaSelect();
+    dom.alphaSelect.value = prev;
+  }
+
+  function populateAlphaSelect() {
+    if (!dom.alphaSelect) return;
+    const enLetters = Array.from({length:26}, (_,i)=>String.fromCharCode(65+i));
+    const hiLetters = 'अ आ इ ई उ ऊ ऋ ए ऐ ओ औ क ख ग घ च छ ज झ ट ठ ड ढ त थ द ध न प फ ब भ म य र ल व श ष स ह'.split(' ');
+    const isEN = currentCategory === 'english';
+    const isHI = currentCategory === 'hindi';
+    const isAll = currentCategory === 'all';
+    dom.alphaSelect.innerHTML = '<option value="">All letters</option>';
+    if (isAll) {
+      const ogEn = document.createElement('optgroup'); ogEn.label = 'English';
+      enLetters.forEach(ch => {
+        const o = document.createElement('option'); o.value = ch; o.textContent = ch; ogEn.appendChild(o);
+      });
+      const ogHi = document.createElement('optgroup'); ogHi.label = 'Hindi';
+      hiLetters.forEach(ch => {
+        const o = document.createElement('option'); o.value = ch; o.textContent = ch; ogHi.appendChild(o);
+      });
+      dom.alphaSelect.appendChild(ogEn);
+      dom.alphaSelect.appendChild(ogHi);
+    } else if (isEN) {
+      enLetters.forEach(ch => {
+        const o = document.createElement('option'); o.value = ch; o.textContent = ch; dom.alphaSelect.appendChild(o);
+      });
+    } else if (isHI) {
+      hiLetters.forEach(ch => {
+        const o = document.createElement('option'); o.value = ch; o.textContent = ch; dom.alphaSelect.appendChild(o);
+      });
+    }
+  }
+
+  function setAlphaFilter(ch) {
+    alphaFilter = ch;
+    // Update button active state
+    updateAlphaIndexVisibility();
+    renderSongsList(false);
+  }
+
+  /* === FUZZY SEARCH SUPPORT === */
+  function fuzzyFilter(arr, term) {
+    const maxDist = term.length <= 4 ? 1 : 2;
+    return arr.filter(s => {
+      if (s.__titleLower.includes(term) || s.__idLower.includes(term)) return true;
+      const candidate = s.__titleLower.slice(0, Math.min(48, s.__titleLower.length));
+      return levenshtein(term, candidate) <= maxDist;
+    });
+  }
+  function levenshtein(a,b){
+    const m=a.length,n=b.length; if(!m) return n; if(!n) return m;
+    const dp=Array(n+1); for(let j=0;j<=n;j++) dp[j]=j;
+    for(let i=1;i<=m;i++){ let prev=dp[0]; dp[0]=i; for(let j=1;j<=n;j++){ const tmp=dp[j]; dp[j]=a[i-1]===b[j-1]?prev:Math.min(prev+1, dp[j]+1, dp[j-1]+1); prev=tmp; }}
+    return dp[n];
+  }
+  dom.fuzzyToggle?.addEventListener('change', ()=>{ try{localStorage.setItem('songbook-fuzzy', dom.fuzzyToggle.checked?'1':'0');}catch{} renderSongsList(false); showToast('Fuzzy ' + (dom.fuzzyToggle.checked?'on':'off'),'good'); });
+
+  /* === JUMP TO NUMBER FEATURE === */
+  dom.jumpNumber?.addEventListener('click', () => {
+    const input = prompt('Enter song number');
+    if (!input) return;
+    const clean = input.trim().replace(/[^0-9]/g,'').replace(/^0+/, '');
+    if (!clean) { showToast('Invalid number','warn'); return; }
+    const target = getSongByNumeric(clean);
+    if (target) {
+      dom.searchInput.value = clean; // allows arrow nav to narrow list starting from number
+      localStorage.setItem(LS_KEYS.search, clean);
+      renderSongsList(false);
+      keyboardIndex = 0;
+      setTimeout(()=>updateKeyboardHighlight(), 40);
+      showToast('Jumped to #' + clean,'good');
+    } else {
+      showToast('Song #' + clean + ' not found','err');
+    }
+  });
+
+  function getSongByNumeric(numStr) {
+    // Try raw (with leading zeros) and stripped variant
+    const stripped = numStr.replace(/^0+/, '');
+    // Direct raw bucket
+    if (legacyNumMap.has(numStr)) {
+      const list = legacyNumMap.get(numStr);
+      if (currentCategory === 'all') return list[0];
+      return list.find(m => m.category === currentCategory) || null;
+    }
+    if (legacyNumMap.has(stripped)) {
+      const list = legacyNumMap.get(stripped);
+      if (currentCategory === 'all') return list[0];
+      return list.find(m => m.category === currentCategory) || null;
+    }
+    return null;
+  }
+
+  /* === TOASTS === */
+  function showToast(msg, type='info', ttl=2400){
+    const host = document.getElementById('toast-container');
+    if(!host) return; const div=document.createElement('div');
+    div.className='toast ' + (type==='info'?'':type);
+    div.textContent=msg; host.appendChild(div);
+    requestAnimationFrame(()=>div.classList.add('show'));
+    setTimeout(()=>{ div.classList.remove('show'); setTimeout(()=>div.remove(), 600); }, ttl);
   }
 
   /* === SONG LOAD WITH BETTER ERROR HANDLING === */
@@ -270,6 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
   dom.songsList.addEventListener('click', async e => {
     const li = e.target.closest('li');
     if (!li) return;
+    if (!('idx' in li.dataset)) return; // group header
     const idx = +li.dataset.idx;
     const meta = filteredSongs[idx];
     showLoadingState();
@@ -333,6 +647,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.castWindow && !window.castWindow.closed) {
       window.castWindow.postMessage({ type: 'updateSong', song }, '*');
     }
+    // Notify layout-dependent features (sticky chorus) to recompute
+    document.dispatchEvent(new CustomEvent('song:loaded'));
   }
 
   function buildLyricsUI(song) {
@@ -609,17 +925,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const styleId = 'chorus-sticky-style';
     let st = document.getElementById(styleId);
     if (!st) { st = document.createElement('style'); st.id = styleId; document.head.appendChild(st); }
+    let rafHandle = null;
     function sync(){
-      const h = hdr.offsetHeight || 80;
-      document.body.style.paddingTop = h + 'px';
-      const topbar = document.getElementById('lyrics-topbar');
-      const tb = topbar ? topbar.offsetHeight : 0;
-      const chorusTop = h + tb; // stick chorus below the topbar
-      st.textContent = '#lyrics-topbar{position:sticky; top:' + h + 'px; background:#fff; z-index:500} .section.chorus{position:sticky; top:' + chorusTop + 'px}';
+      if (rafHandle) cancelAnimationFrame(rafHandle);
+      rafHandle = requestAnimationFrame(()=>{
+        const h = hdr.offsetHeight || 80;
+        document.body.style.paddingTop = h + 'px';
+        const topbar = document.getElementById('lyrics-topbar');
+        const tb = topbar ? topbar.offsetHeight : 0;
+        // Add a small gap so chorus never visually collides with title/controls
+        const chorusTop = h + tb + 4;
+        // Make every chorus sticky; add box-shadow for separation. Rely on natural flow for multiple choruses.
+        st.textContent = '#lyrics-topbar{position:sticky; top:' + h + 'px; background:#fff; z-index:600}' +
+          ' .section.chorus{position:sticky; top:' + chorusTop + 'px; z-index:400; box-shadow:0 2px 4px rgba(0,0,0,0.08);}' ;
+      });
     }
     window.addEventListener('resize', sync);
     // Run after fonts/layout
     setTimeout(sync, 0);
+    // Re-sync on custom song load event
+    document.addEventListener('song:loaded', sync);
+    // Observe topbar size changes (font adjustments etc.)
+    if ('ResizeObserver' in window) {
+      const topbar = document.getElementById('lyrics-topbar');
+      if (topbar) {
+        const ro = new ResizeObserver(()=>sync());
+        ro.observe(topbar);
+      }
+    }
   })();
 
 }); // DOMContentLoaded end

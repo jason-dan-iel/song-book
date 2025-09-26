@@ -36,7 +36,18 @@
           <label for="category-select" class="visually-hidden">Category</label>
           <select id="category-select" aria-label="Category"></select>
           <label for="search" class="visually-hidden">Search songs</label>
-          <input type="text" id="search" placeholder="Search songs..." autocomplete="off" enterkeyhint="search">
+          <input type="text" id="search" placeholder="Search title or number…" autocomplete="off" enterkeyhint="search">
+          <button id="clear-search" type="button" aria-label="Clear search" title="Clear search" style="display:none;">×</button>
+          <button id="jump-number" type="button" aria-label="Jump to song number" title="Jump to song number">#</button>
+          <label for="alpha-select" class="visually-hidden">Filter by first letter</label>
+          <select id="alpha-select" aria-label="Filter by first letter" title="Filter by first letter">
+            <option value="">All letters (A–Z / अ–ह)</option>
+          </select>
+          <button id="alpha-clear-compact" class="btn subtle" type="button" aria-label="Clear letter filter" title="Clear letter filter">×</button>
+          <label class="fuzzy-label" title="Allow minor typos">
+            <input type="checkbox" id="fuzzy-toggle"> Fuzzy
+          </label>
+          <span id="result-count" aria-live="polite" class="result-count"></span>
         </div>
       </nav>
     </header>
@@ -67,5 +78,7 @@
   </div>
   <!-- Offline pill -->
   <div id="offline-indicator" class="pill-offline" role="status" hidden>Offline – cached mode</div>
+  <!-- Toasts -->
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>

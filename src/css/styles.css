@@ -37,6 +37,28 @@ nav .controls {
   flex-wrap: wrap;
   justify-content: center;
 }
+nav .controls #jump-number { width: 34px; padding: 3px 0; }
+.fuzzy-label { font-size: 12px; display:flex; align-items:center; gap:2px; }
+#result-count { font-size: 12px; opacity: 0.8; align-self: center; }
+button#clear-search { width:28px; padding:3px 0; }
+button#clear-search { font-weight:bold; }
+button#clear-search[hidden], button#clear-search.hide { display:none !important; }
+
+/* Toasts */
+#toast-container { position: fixed; bottom: 12px; right: 12px; display: flex; flex-direction: column; gap: 6px; z-index: 4000; }
+.toast { background:#000; color:#fff; padding:6px 10px; font-size:12px; border:1px solid #000; box-shadow:2px 2px 0 #555; opacity:0; transform:translateY(6px); transition:opacity .25s, transform .25s; }
+.toast.show { opacity:1; transform:translateY(0); }
+.toast.good { background:#064; }
+.toast.warn { background:#640; }
+.toast.err { background:#600; }
+/* Unified alpha select (desktop + mobile) */
+#alpha-select { max-width: 200px; }
+#alpha-clear-compact { display: inline-block; padding: 3px 6px; }
+@media (max-width: 640px) {
+  header { padding: 6px 8px; }
+  header h1 { font-size: 18px; margin-bottom: 4px; }
+  #result-count { order: 99; width: 100%; text-align: center; margin-top: 2px; }
+}
 select, input[type="text"], button {
   font-family: inherit;
   font-size: 14px;
@@ -57,18 +79,24 @@ main {
 ul#songs-list {
   list-style: none;
   padding-left: 0;
-  counter-reset: song;
 }
 ul#songs-list li {
   cursor: pointer;
   margin-bottom: 6px;
 }
-ul#songs-list li::before {
-  counter-increment: song;
-  content: counter(song) ". ";
-  opacity: 0.6;
-  margin-right: 6px;
+ul#songs-list li.group-header {
+  cursor: default;
+  font-weight: bold;
+  margin-top: 18px;
+  margin-bottom: 6px;
+  padding: 4px 6px;
+  background: #f2f2f2;
+  border: 1px solid #000;
+  text-transform: capitalize;
+  letter-spacing: .5px;
 }
+ul#songs-list li.group-header:first-child { margin-top: 0; }
+ul#songs-list li.group-header:hover { text-decoration: none; }
 ul#songs-list li:hover, ul#songs-list li:focus {
   text-decoration: underline;
 }
@@ -86,20 +114,26 @@ ul#songs-list mark {
   margin-top: 0;
   border-top: none;
   padding-top: 0;
+  position: relative;
+  background: #fff; /* prevent underlying list bleeding through */
+  contain: layout paint style; /* isolate for smoother sticky layering */
 }
 #lyrics-topbar {
   position: sticky;
   top: 86px; /* default aligns with body padding; JS will set exact header height */
   background: #fff;
-  z-index: 500;
+  z-index: 650; /* above group headers and list items */
   padding-bottom: 6px;
   border-bottom: 1px dashed #000;
 }
 #back-to-list { margin-bottom: 8px; }
 #song-title {
   font-size: 22px;
-  margin: 6px 0 10px 0;
+  margin: 6px 0 8px 0;
   text-align: center;
+  background:#fff;
+  position: relative;
+  z-index: 1;
 }
 #song-lyrics {
   font-size: 16px;
@@ -107,6 +141,7 @@ ul#songs-list mark {
   max-width: 68ch;
   margin: 0 auto;
   text-align: left;
+  padding-top: 4px; /* small gap below top controls */
 }
 .section {
   margin-bottom: 12px;
@@ -121,6 +156,7 @@ ul#songs-list mark {
 
 /* Lyrics controls (simple) */
 .lyrics-controls { display: flex; gap: 8px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.lyrics-controls { background:#fff; }
 .font-controls, .action-controls { display: flex; gap: 6px; align-items: center; }
 #font-size-display { border: 1px solid #000; padding: 2px 6px; font-size: 12px; }
 
