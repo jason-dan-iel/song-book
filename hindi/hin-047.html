@@ -26,10 +26,11 @@ body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.title-row {
+.controls-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   margin-bottom: 12px;
   padding-bottom: 12px;
   border-bottom: 1px solid #f5f5f7;
@@ -57,6 +58,13 @@ body {
   background: #e5e5e7;
 }
 
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
 .song-title-text {
   font-size: 17px;
   font-weight: 600;
@@ -66,29 +74,17 @@ body {
   padding: 0 16px;
 }
 
-.nav-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #f5f5f7;
-}
-
 .nav-btn {
-  padding: 8px 20px;
-  font-size: 14px;
+  padding: 8px 16px;
+  font-size: 18px;
   color: #0066cc;
   text-decoration: none;
   border-radius: 8px;
   transition: all 0.2s ease;
   font-weight: 500;
-  white-space: nowrap;
   background: #f5f5f7;
-  flex: 1;
   text-align: center;
-  max-width: 200px;
+  min-width: 44px;
 }
 
 .nav-btn:hover:not(.disabled) {
@@ -101,28 +97,14 @@ body {
   background: transparent;
 }
 
-.controls-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-}
-
 .font-controls {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.font-label {
-  font-size: 13px;
-  color: #6e6e73;
-  font-weight: 500;
-}
-
 .font-btn {
-  width: 32px;
-  height: 32px;
+  padding: 6px 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,7 +112,7 @@ body {
   border-radius: 6px;
   background: #f5f5f7;
   color: #1d1d1f;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -182,7 +164,6 @@ body {
   border-radius: 12px;
   margin: 0;
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  padding: 8px 0;
 }
 
 .stanza {
@@ -223,9 +204,10 @@ body {
     padding: 16px;
   }
   
-  .title-row {
+  .controls-row {
     margin-bottom: 10px;
     padding-bottom: 10px;
+    gap: 12px;
   }
   
   .back-button a {
@@ -238,25 +220,21 @@ body {
     padding: 0 12px;
   }
   
-  .nav-row {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-  }
-  
   .nav-btn {
-    padding: 7px 16px;
-    font-size: 13px;
-  }
-  
-  .controls-row {
-    gap: 12px;
+    padding: 7px 14px;
+    font-size: 16px;
   }
 }
 
 /* Mobile */
 @media (max-width: 600px) {
-  .title-row {
+  .controls-row {
+    flex-wrap: wrap;
     gap: 8px;
+  }
+  
+  .back-button {
+    order: 1;
   }
   
   .back-button a {
@@ -264,34 +242,31 @@ body {
     font-size: 13px;
   }
   
-  .song-title-text {
-    font-size: 14px;
-    padding: 0 8px;
-  }
-  
-  .nav-row {
-    gap: 8px;
-  }
-  
-  .nav-btn {
-    max-width: none;
-    padding: 6px 12px;
-    font-size: 13px;
-  }
-  
-  .controls-row {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
   .font-controls {
-    width: 100%;
+    order: 2;
+    flex: 1;
     justify-content: center;
   }
   
   .pdf-btn {
-    width: 100%;
-    justify-content: center;
+    order: 3;
+  }
+  
+  .title-row {
+    gap: 8px;
+  }
+  
+  .song-title-text {
+    font-size: 14px;
+    padding: 0 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .nav-btn {
+    padding: 6px 12px;
+    font-size: 16px;
   }
 }
 
@@ -314,11 +289,6 @@ body {
     font-size: 14px;
   }
   
-  .nav-btn {
-    font-size: 12px;
-    padding: 6px 12px;
-  }
-  
   .lyrics-container {
     height: 60vh;
   }
@@ -336,27 +306,24 @@ body {
 </head>
 <body>
 <div class="page-header">
-  <div class="title-row">
+  <div class="controls-row">
     <div class="back-button">
       <a href="index.html">← Back</a>
     </div>
-    <div class="song-title-text">47 - तेरा हूं ऐ रब सुनता तेरी बात</div>
-  </div>
-  <div class="nav-row">
-    <a href="hin-046.html" class="nav-btn">← Previous</a>
-    <a href="hin-048.html" class="nav-btn">Next →</a>
-  </div>
-  <div class="controls-row">
     <div class="font-controls">
-      <span class="font-label">Font:</span>
-      <button class="font-btn" onclick="updateFontSize(-1)" title="Decrease font size">−</button>
+      <button class="font-btn" onclick="updateFontSize(-1)" title="Decrease font size">A−</button>
       <span class="font-size-display" id="font-size-display">17px</span>
-      <button class="font-btn" onclick="updateFontSize(1)" title="Increase font size">+</button>
+      <button class="font-btn" onclick="updateFontSize(1)" title="Increase font size">A+</button>
     </div>
     <button class="pdf-btn" onclick="exportToPDF()" title="Export to PDF">
       <span>📄</span>
       <span>PDF</span>
     </button>
+  </div>
+  <div class="title-row">
+    <a href="hin-046.html" class="nav-btn">←</a>
+    <div class="song-title-text">47 - तेरा हूं ऐ रब सुनता तेरी बात</div>
+    <a href="hin-048.html" class="nav-btn">→</a>
   </div>
 </div>
 
