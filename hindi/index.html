@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hindi Songs</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #1d1d1f;
+  background: #fbfbfd;
+  padding: 40px 20px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.back-button {
+  margin-bottom: 24px;
+}
+.back-button a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  font-size: 15px;
+  color: #0066cc;
+  background: white;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.back-button a:hover {
+  background: #f5f5f7;
+  transform: translateX(-2px);
+}
+.top-section {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.header {
+  text-align: center;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f5f5f7;
+}
+h1 { 
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+  color: #1d1d1f;
+}
+h2 { 
+  font-size: 15px;
+  font-weight: 400;
+  color: #86868b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.search-section {
+  margin-bottom: 24px;
+}
+.search-controls {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+#search-box { 
+  flex: 1;
+  padding: 14px 18px;
+  font-size: 17px;
+  border: 1px solid #e5e5e7;
+  border-radius: 10px;
+  outline: none;
+  font-family: inherit;
+  background: #f5f5f7;
+  transition: all 0.2s ease;
+}
+#search-box:focus {
+  background: white;
+  border-color: #0066cc;
+}
+#search-box::placeholder {
+  color: #86868b;
+}
+#reset-btn {
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: white;
+  background: #0066cc;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  white-space: nowrap;
+}
+#reset-btn:hover {
+  background: #0077ed;
+}
+.letter-nav-section {
+  text-align: center;
+}
+.letter-nav-label {
+  font-size: 13px;
+  color: #6e6e73;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+#letter-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+#letter-nav button { 
+  min-width: 36px;
+  height: 36px;
+  padding: 0 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1d1d1f;
+  background: #f5f5f7;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+#letter-nav button:hover {
+  background: #e5e5e7;
+  transform: translateY(-1px);
+}
+#letter-nav button:active {
+  transform: translateY(0);
+}
+ul { 
+  list-style: none;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+li { 
+  border-bottom: 1px solid #f5f5f7;
+}
+li:last-child {
+  border-bottom: none;
+}
+li a { 
+  display: block;
+  padding: 16px 24px;
+  color: #1d1d1f;
+  text-decoration: none;
+  font-size: 17px;
+  transition: background-color 0.2s ease;
+}
+li a:hover { 
+  background: #f5f5f7;
+}
+li a:visited { 
+  color: #1d1d1f;
+}
+.back-link {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 17px;
+}
+.back-link a {
+  color: #0066cc;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.back-link a:hover {
+  opacity: 0.7;
+}
+</style>
+</head>
+<body>
+<div class="back-button">
+  <a href="../index.html">← Back</a>
+</div>
+
+<div class="top-section">
+  <div class="header">
+    <h1>Hindi Songs</h1>
+    <h2>135 songs</h2>
+  </div>
+
+  <div class="search-section">
+    <div class="search-controls">
+      <input type="text" id="search-box" placeholder="Search or jump to song number">
+      <button id="reset-btn">Reset</button>
+    </div>
+  </div>
+
+  <div class="letter-nav-section">
+    <div class="letter-nav-label">Jump by first letter</div>
+    <div id="letter-nav"></div>
+  </div>
+</div>
+
+<ul id="song-list">
+<li><a href="hin-001.html">1 - प्रभु महान विचारू</a></li>
+<li><a href="hin-002.html">2 - हृदय का राजा जय यीशु नाम</a></li>
+<li><a href="hin-003.html">3 - आओ हम यहोवा के लिए</a></li>
+<li><a href="hin-004.html">4 - सनातन महान परमेश्वर की महिमा</a></li>
+<li><a href="hin-005.html">5 - घायल हुआ घायल हुआ</a></li>
+<li><a href="hin-006.html">6 - मधुर-मधुर यीशु नाम प्यारा</a></li>
+<li><a href="hin-007.html">7 - प्रभुजी ने किया स्नेह में</a></li>
+<li><a href="hin-008.html">8 - इब्राहीम का ईश्वर जो है</a></li>
+<li><a href="hin-009.html">9 - देखो कलवरी पर यीशु देता प्राण</a></li>
+<li><a href="hin-010.html">10 - यीशु ख्रीष्ट जी उठा है</a></li>
+<li><a href="hin-011.html">11 - करुणा तेरी अपरम्पार प्रेम ईश्वर तेरा है अपार</a></li>
+<li><a href="hin-012.html">12 - मृत्यु पर जय पाने वाले</a></li>
+<li><a href="hin-013.html">13 - ईश्वर ने अद्भुत रीति से</a></li>
+<li><a href="hin-014.html">14 - अदभुत क्रूस को निहारता जब</a></li>
+<li><a href="hin-015.html">15 - स्तुति करें ख्रीष्ट यीशु मसीह की हम</a></li>
+<li><a href="hin-016.html">16 - यीशु तेरा मधुर स्मरण</a></li>
+<li><a href="hin-017.html">17 - हे महा पवित्र</a></li>
+<li><a href="hin-018.html">18 - यीशु ने ऐसा प्रेम किया</a></li>
+<li><a href="hin-019.html">19 - ख्रीस्त यीशु क्रूस पर मरा है</a></li>
+<li><a href="hin-020.html">20 - यीशु प्रभु तेरे सन्मुख हम आते</a></li>
+<li><a href="hin-021.html">21 - परमेश्वर की दया कैसी</a></li>
+<li><a href="hin-022.html">22 - धन्य वह दिन रहता स्मरण</a></li>
+<li><a href="hin-023.html">23 - जीवन पथ की ज्योति तू क्रूसधारी यीशु</a></li>
+<li><a href="hin-024.html">24 - धन्य है परमेश्वर</a></li>
+<li><a href="hin-025.html">25 - स्तुति होवे तेरी प्रभु सदा तेरी प्रशंसा हो</a></li>
+<li><a href="hin-026.html">26 - जो क्रूस पे कुरबां है</a></li>
+<li><a href="hin-027.html">27 - उस मर्द-ए-कलवरी</a></li>
+<li><a href="hin-028.html">28 - गाओ गाओ ख़्रिस्त यीशु है मुक्तिदाता</a></li>
+<li><a href="hin-029.html">29 - पाप का बन्धन तोड़ा गया</a></li>
+<li><a href="hin-030.html">30 - मेरे गुनाह के लिए हुआ तू यीशु कुरबान</a></li>
+<li><a href="hin-031.html">31 - भजने आये हैं पिताजी</a></li>
+<li><a href="hin-032.html">32 - स्तुति प्रशंसा हे प्रभु</a></li>
+<li><a href="hin-033.html">33 - मेरे मन कर ले तारीफ</a></li>
+<li><a href="hin-034.html">34 - प्यारा मसीह प्यारा मसीह</a></li>
+<li><a href="hin-035.html">35 - मुहब्बत खुदा की दिखाने के लिए</a></li>
+<li><a href="hin-036.html">36 - यीशु है मेरा मुक्तिधाम</a></li>
+<li><a href="hin-037.html">37 - अनादि काल से शरणस्थान, हमारा तू रहा,</a></li>
+<li><a href="hin-038.html">38 - यह बाइबल मेरी ज़िन्दगी है</a></li>
+<li><a href="hin-039.html">39 - तू मेरे दिल का है अज़ीज़</a></li>
+<li><a href="hin-040.html">40 - प्रभु का वचन ले</a></li>
+<li><a href="hin-041.html">41 - यीशु की बाबत जानूंगा</a></li>
+<li><a href="hin-042.html">42 - मैं हूं मसीही और रहूंगा भी, जब तक न सूरज चांद टले,</a></li>
+<li><a href="hin-043.html">43 - हर दिन नई आशा का सन्देश सुनाता है</a></li>
+<li><a href="hin-044.html">44 - क्या मैं जो चेला मेम्ने का, और क्रूस का योद्धा हूं</a></li>
+<li><a href="hin-045.html">45 - यीशु मेरा विधाता है</a></li>
+<li><a href="hin-046.html">46 - प्रभु वाणी तेरी सुनता</a></li>
+<li><a href="hin-047.html">47 - तेरा हूं ऐ रब सुनता तेरी बात</a></li>
+<li><a href="hin-048.html">48 - पवित्र समय प्रार्थना का</a></li>
+<li><a href="hin-049.html">49 - मुझमें यीशु की शोभा दिखाई दे</a></li>
+<li><a href="hin-050.html">50 - यीशु को मैं सब कुछ देता, सब कुछ करता हूँ कुर्बान</a></li>
+<li><a href="hin-051.html">51 - दिल मेरा ले रब्ब, दिल मेरा ले, हो तेरी इच्छा पूरी मुझसे,</a></li>
+<li><a href="hin-052.html">52 - प्रभु मेरा जीवन ले, तेरा हो यह अभी से,</a></li>
+<li><a href="hin-053.html">53 - गिन गिन के स्तुति करूं, बेशुमार तेरे दानों के लिए</a></li>
+<li><a href="hin-054.html">54 - प्रभु का आनन्द है मेरी ताकत, संसार में यीशु है मेरी ताकत</a></li>
+<li><a href="hin-055.html">55 - उत्तम और शान्ति दायक बात, कि ईश्वर लिए मेरा हाथ</a></li>
+<li><a href="hin-056.html">56 - बढ़ चलेंगे हम, उस निशाने की तरफ,</a></li>
+<li><a href="hin-057.html">57 - देखो मैं हूं तुम्हारे साथ, दुनिया के अन्त तक</a></li>
+<li><a href="hin-058.html">58 - बढ़ेंगे साथ मिलाके हाथ, पहुंचेंगे हर मुकाम पर</a></li>
+<li><a href="hin-059.html">59 - प्रेम है अगाध प्रभु जो तेरा, सामर्थ्यहीन हूं वर्णन के मैं</a></li>
+<li><a href="hin-060.html">60 - प्रभु का धन्यवाद करूंगा, उसकी संगति में सदा रहूंगा</a></li>
+<li><a href="hin-061.html">61 - होशन्ना होशन्ना सब गाओ जय जयकार</a></li>
+<li><a href="hin-062.html">62 - कितना मधुरतम है</a></li>
+<li><a href="hin-063.html">63 - यीशु का गाओ धन्यवाद, वह ही है हमारा अल्लाहद</a></li>
+<li><a href="hin-064.html">64 - आनन्द से गीत गाओ खुशी से हर वक्त</a></li>
+<li><a href="hin-065.html">65 - हो जय जयकार जय जयकार करें।</a></li>
+<li><a href="hin-066.html">66 - हम तो मसीह के गीत गायेंगे, हम तो यीशु की स्तुति करेंगे</a></li>
+<li><a href="hin-067.html">67 - आज का दिन यहोवा ने बनाया है</a></li>
+<li><a href="hin-068.html">68 - गिन गिन के स्तुति करूं, मैं उपकारों को याद करूं मैं</a></li>
+<li><a href="hin-069.html">69 - यीशु है मेरा कैसा विलास, मन में वह देता आनन्द और आस</a></li>
+<li><a href="hin-070.html">70 - एक दिल होके गाओ, यीशु मसीह की स्तुति</a></li>
+<li><a href="hin-071.html">71 - यीशु कैसा दोस्त है प्यारा, दुख और बोझ उठाने को</a></li>
+<li><a href="hin-072.html">72 - हे यीशु महान! हे यीशु महान! तेरी जय तेरी जय तेरी जय</a></li>
+<li><a href="hin-073.html">73 - सियोन देश हमारा है देश, रहते हैं हम परदेश</a></li>
+<li><a href="hin-074.html">74 - यीशु जब आएगा बादलों पर, मैं उसके संग जाऊंगा</a></li>
+<li><a href="hin-075.html">75 - जब बादलों पर यीशु राजा आएगा</a></li>
+<li><a href="hin-076.html">76 - सेनाओं का यहोवा प्रभु महान</a></li>
+<li><a href="hin-077.html">77 - हम विश्वासियों के लिए एक आशा है</a></li>
+<li><a href="hin-078.html">78 - आ आ आ आ यीशु प्यारा जल्दी आएगा</a></li>
+<li><a href="hin-079.html">79 - इंतज़ार है हमको यीशु मसीह का, आशा हमारी है उस पर</a></li>
+<li><a href="hin-080.html">80 - एक नगर तैयार है हमारे लिए, रचने वाला खुद ही परमेश्वर है</a></li>
+<li><a href="hin-081.html">81 - हम यीशु के संग एक दिन स्वर्ग जाएंगे</a></li>
+<li><a href="hin-082.html">82 - नीले आसमान के पार जाएंगे, मेरा यीशु रहता वहां</a></li>
+<li><a href="hin-083.html">83 - हम विश्वास से एक देश देखते हैं</a></li>
+<li><a href="hin-084.html">84 - देखो प्रभु यीशु आता है स्वर्ग से वह जल्द आता है</a></li>
+<li><a href="hin-085.html">85 - हाँ हाँ हाल्लेलूयाह मिलकर गाएँ, भजन प्रभु जी के</a></li>
+<li><a href="hin-086.html">86 - क्या तुम गए यीशु पास कि मन शुद्ध हो</a></li>
+<li><a href="hin-087.html">87 - मुक्ति दिलाए यीशु नाम, शान्ति दिलाए यीशु नाम</a></li>
+<li><a href="hin-088.html">88 - तेरे पाप धुल सकेंगे आज ही मसीह के द्वारा</a></li>
+<li><a href="hin-089.html">89 - आओ आओ यीशु पास आओ, वही बुलाता अभी</a></li>
+<li><a href="hin-090.html">90 - खुल जाएंगी किताबें, जब भी हिसाब होगा</a></li>
+<li><a href="hin-091.html">91 - आओ अवसर यही है बुलाता है, सर्वशक्तिमान यीशु तुम्हे</a></li>
+<li><a href="hin-092.html">92 - तुझे यीशु बुलाता है, आवाज़ उसकी सुनो</a></li>
+<li><a href="hin-093.html">93 - यीशु तुम्हें बुला रहा, एक नज़र तो मोड़ लो</a></li>
+<li><a href="hin-094.html">94 - जैसा मैं हूं बगैर एक बात, पर तेरे लहू से हयात</a></li>
+<li><a href="hin-095.html">95 - सबने गुनाहगार को, नज़रों से जब गिरा दिया</a></li>
+<li><a href="hin-096.html">96 - आता हूं मसीह आता तेरे पास</a></li>
+<li><a href="hin-097.html">97 - यीशु युगों की चट्टान, तू है उत्तम रक्षास्थान</a></li>
+<li><a href="hin-098.html">98 - बोझ सबके गुनाह का उठाकर, वो लिए जा रहा है</a></li>
+<li><a href="hin-099.html">99 - मन का दीप जला, जीवन दीप जला</a></li>
+<li><a href="hin-100.html">100 - ईश्वर ने पापी मनुष्य के लिए</a></li>
+<li><a href="hin-101.html">101 - मैं आता हूं तेरे पास, प्रभु यीशु मेरे मसीह</a></li>
+<li><a href="hin-102.html">102 - आवाज़ उठाएंगे, हम साज़ बजाएंगे</a></li>
+<li><a href="hin-103.html">103 - चलते-चलते नूर में यीशु के साथ</a></li>
+<li><a href="hin-104.html">104 - जय जय यीशु, जय जय यीशु, जय मृत्युंजय-जयकार</a></li>
+<li><a href="hin-105.html">105 - मैंने अपना मन यीशु को दे दिया</a></li>
+<li><a href="hin-106.html">106 - यीशु ने अपना खून बहा के, मुझे बचा लिया</a></li>
+<li><a href="hin-107.html">107 - दिल के दाग को धोवे कौन, लहू जो कि क्रूस से जारी</a></li>
+<li><a href="hin-108.html">108 - पावन है वो प्रभु हमारा, उसकी जय जयकार करो</a></li>
+<li><a href="hin-109.html">109 - वक्त अब गुज़रता जाता है, गुनाह से कब पछताएगा?</a></li>
+<li><a href="hin-110.html">110 - भजन करूं मैं भजन करूं, नाम मसीह का लेता रहूं।</a></li>
+<li><a href="hin-111.html">111 - हमद तेरी ऐ बाप! तू ने बख्शा हमको</a></li>
+<li><a href="hin-112.html">112 - विश्वासयोग्य है प्रभु में तेरी स्तुति करूंगा (2)</a></li>
+<li><a href="hin-113.html">113 - आया मसीह दुनिया में तू, पापियों को बचाने को</a></li>
+<li><a href="hin-114.html">114 - खुश हो, खुदावन्द आया है, उसको कबूल कर ले</a></li>
+<li><a href="hin-115.html">115 - तैयार हो ऐ जवान, यीशु की आवाज़ सुन</a></li>
+<li><a href="hin-116.html">116 - सारी सृष्टि का मालिक यीशु है, सारी सृष्टि का रक्षक यीशु है</a></li>
+<li><a href="hin-117.html">117 - दुख का कटोरा अगर, मेरा प्रभु मुझे देगा</a></li>
+<li><a href="hin-118.html">118 - होगी आशीषों की बारिश, प्रेम की प्रतिज्ञा को मान</a></li>
+<li><a href="hin-119.html">119 - दूर और पास अब खेत तैयार है, खूब लहरता है अनाज</a></li>
+<li><a href="hin-120.html">120 - क्रूस पर, क्रूस पर, है ये कौन लहूलुहान</a></li>
+<li><a href="hin-121.html">121 - पुकारे तुझे आज सूली यहां</a></li>
+<li><a href="hin-122.html">122 - जीवन दिया मेरे लिए, जी उठा साथ रहने के लिए</a></li>
+<li><a href="hin-123.html">123 - थोड़ा समय है बाकी, सेवा अभी है काफी</a></li>
+<li><a href="hin-124.html">124 - रास्ता भटक घूम रहा था, उस रास्ते में खोया हुआ था</a></li>
+<li><a href="hin-125.html">125 - गाके मुझको सुनाओ फिर, मंगल सुसमाचार</a></li>
+<li><a href="hin-126.html">126 - आओ कदम बढ़ा चुके, मुड़ के कभी न देखेंगे</a></li>
+<li><a href="hin-127.html">127 - टूटे हुए दिल अब मिल गये है</a></li>
+<li><a href="hin-128.html">128 - हमारे जीवन में चमका है, प्यारे मसीह का उजियाला</a></li>
+<li><a href="hin-129.html">129 - सिर्फ़ एक ही मेरा नारा है, यीशु मेरा कफ़्फ़ारा है</a></li>
+<li><a href="hin-130.html">130 - मेरे जीवन पर तेरा बड़ा ही उपकार</a></li>
+<li><a href="hin-131.html">131 - ख़ुशियाँ मिली मुझको तुमसे, इस राह पे चला मैं जबसे</a></li>
+<li><a href="hin-132.html">132 - मुंह मोड़कर गुनाहों से, आज तौबा करले</a></li>
+<li><a href="hin-133.html">133 - ज़िन्दगी में थी विरानियां, और जीवन सूना-सूना था</a></li>
+<li><a href="hin-134.html">134 - प्रार्थना के सुनने वाले प्रभु प्रार्थना की चाहत हम में भर दे</a></li>
+<li><a href="hin-135.html">135 - दुःख मुसीबत के वक्त में, तसल्ली वह देता है</a></li>
+</ul>
+
+<div class="back-link">
+  <a href="../index.html">← Back to All Categories</a>
+</div>
+
+<script>
+const songs = [
+{num: 1, title: "प्रभु महान विचारू", file: "hin-001.html"},
+{num: 2, title: "हृदय का राजा जय यीशु नाम", file: "hin-002.html"},
+{num: 3, title: "आओ हम यहोवा के लिए", file: "hin-003.html"},
+{num: 4, title: "सनातन महान परमेश्वर की महिमा", file: "hin-004.html"},
+{num: 5, title: "घायल हुआ घायल हुआ", file: "hin-005.html"},
+{num: 6, title: "मधुर-मधुर यीशु नाम प्यारा", file: "hin-006.html"},
+{num: 7, title: "प्रभुजी ने किया स्नेह में", file: "hin-007.html"},
+{num: 8, title: "इब्राहीम का ईश्वर जो है", file: "hin-008.html"},
+{num: 9, title: "देखो कलवरी पर यीशु देता प्राण", file: "hin-009.html"},
+{num: 10, title: "यीशु ख्रीष्ट जी उठा है", file: "hin-010.html"},
+{num: 11, title: "करुणा तेरी अपरम्पार प्रेम ईश्वर तेरा है अपार", file: "hin-011.html"},
+{num: 12, title: "मृत्यु पर जय पाने वाले", file: "hin-012.html"},
+{num: 13, title: "ईश्वर ने अद्भुत रीति से", file: "hin-013.html"},
+{num: 14, title: "अदभुत क्रूस को निहारता जब", file: "hin-014.html"},
+{num: 15, title: "स्तुति करें ख्रीष्ट यीशु मसीह की हम", file: "hin-015.html"},
+{num: 16, title: "यीशु तेरा मधुर स्मरण", file: "hin-016.html"},
+{num: 17, title: "हे महा पवित्र", file: "hin-017.html"},
+{num: 18, title: "यीशु ने ऐसा प्रेम किया", file: "hin-018.html"},
+{num: 19, title: "ख्रीस्त यीशु क्रूस पर मरा है", file: "hin-019.html"},
+{num: 20, title: "यीशु प्रभु तेरे सन्मुख हम आते", file: "hin-020.html"},
+{num: 21, title: "परमेश्वर की दया कैसी", file: "hin-021.html"},
+{num: 22, title: "धन्य वह दिन रहता स्मरण", file: "hin-022.html"},
+{num: 23, title: "जीवन पथ की ज्योति तू क्रूसधारी यीशु", file: "hin-023.html"},
+{num: 24, title: "धन्य है परमेश्वर", file: "hin-024.html"},
+{num: 25, title: "स्तुति होवे तेरी प्रभु सदा तेरी प्रशंसा हो", file: "hin-025.html"},
+{num: 26, title: "जो क्रूस पे कुरबां है", file: "hin-026.html"},
+{num: 27, title: "उस मर्द-ए-कलवरी", file: "hin-027.html"},
+{num: 28, title: "गाओ गाओ ख़्रिस्त यीशु है मुक्तिदाता", file: "hin-028.html"},
+{num: 29, title: "पाप का बन्धन तोड़ा गया", file: "hin-029.html"},
+{num: 30, title: "मेरे गुनाह के लिए हुआ तू यीशु कुरबान", file: "hin-030.html"},
+{num: 31, title: "भजने आये हैं पिताजी", file: "hin-031.html"},
+{num: 32, title: "स्तुति प्रशंसा हे प्रभु", file: "hin-032.html"},
+{num: 33, title: "मेरे मन कर ले तारीफ", file: "hin-033.html"},
+{num: 34, title: "प्यारा मसीह प्यारा मसीह", file: "hin-034.html"},
+{num: 35, title: "मुहब्बत खुदा की दिखाने के लिए", file: "hin-035.html"},
+{num: 36, title: "यीशु है मेरा मुक्तिधाम", file: "hin-036.html"},
+{num: 37, title: "अनादि काल से शरणस्थान, हमारा तू रहा,", file: "hin-037.html"},
+{num: 38, title: "यह बाइबल मेरी ज़िन्दगी है", file: "hin-038.html"},
+{num: 39, title: "तू मेरे दिल का है अज़ीज़", file: "hin-039.html"},
+{num: 40, title: "प्रभु का वचन ले", file: "hin-040.html"},
+{num: 41, title: "यीशु की बाबत जानूंगा", file: "hin-041.html"},
+{num: 42, title: "मैं हूं मसीही और रहूंगा भी, जब तक न सूरज चांद टले,", file: "hin-042.html"},
+{num: 43, title: "हर दिन नई आशा का सन्देश सुनाता है", file: "hin-043.html"},
+{num: 44, title: "क्या मैं जो चेला मेम्ने का, और क्रूस का योद्धा हूं", file: "hin-044.html"},
+{num: 45, title: "यीशु मेरा विधाता है", file: "hin-045.html"},
+{num: 46, title: "प्रभु वाणी तेरी सुनता", file: "hin-046.html"},
+{num: 47, title: "तेरा हूं ऐ रब सुनता तेरी बात", file: "hin-047.html"},
+{num: 48, title: "पवित्र समय प्रार्थना का", file: "hin-048.html"},
+{num: 49, title: "मुझमें यीशु की शोभा दिखाई दे", file: "hin-049.html"},
+{num: 50, title: "यीशु को मैं सब कुछ देता, सब कुछ करता हूँ कुर्बान", file: "hin-050.html"},
+{num: 51, title: "दिल मेरा ले रब्ब, दिल मेरा ले, हो तेरी इच्छा पूरी मुझसे,", file: "hin-051.html"},
+{num: 52, title: "प्रभु मेरा जीवन ले, तेरा हो यह अभी से,", file: "hin-052.html"},
+{num: 53, title: "गिन गिन के स्तुति करूं, बेशुमार तेरे दानों के लिए", file: "hin-053.html"},
+{num: 54, title: "प्रभु का आनन्द है मेरी ताकत, संसार में यीशु है मेरी ताकत", file: "hin-054.html"},
+{num: 55, title: "उत्तम और शान्ति दायक बात, कि ईश्वर लिए मेरा हाथ", file: "hin-055.html"},
+{num: 56, title: "बढ़ चलेंगे हम, उस निशाने की तरफ,", file: "hin-056.html"},
+{num: 57, title: "देखो मैं हूं तुम्हारे साथ, दुनिया के अन्त तक", file: "hin-057.html"},
+{num: 58, title: "बढ़ेंगे साथ मिलाके हाथ, पहुंचेंगे हर मुकाम पर", file: "hin-058.html"},
+{num: 59, title: "प्रेम है अगाध प्रभु जो तेरा, सामर्थ्यहीन हूं वर्णन के मैं", file: "hin-059.html"},
+{num: 60, title: "प्रभु का धन्यवाद करूंगा, उसकी संगति में सदा रहूंगा", file: "hin-060.html"},
+{num: 61, title: "होशन्ना होशन्ना सब गाओ जय जयकार", file: "hin-061.html"},
+{num: 62, title: "कितना मधुरतम है", file: "hin-062.html"},
+{num: 63, title: "यीशु का गाओ धन्यवाद, वह ही है हमारा अल्लाहद", file: "hin-063.html"},
+{num: 64, title: "आनन्द से गीत गाओ खुशी से हर वक्त", file: "hin-064.html"},
+{num: 65, title: "हो जय जयकार जय जयकार करें।", file: "hin-065.html"},
+{num: 66, title: "हम तो मसीह के गीत गायेंगे, हम तो यीशु की स्तुति करेंगे", file: "hin-066.html"},
+{num: 67, title: "आज का दिन यहोवा ने बनाया है", file: "hin-067.html"},
+{num: 68, title: "गिन गिन के स्तुति करूं, मैं उपकारों को याद करूं मैं", file: "hin-068.html"},
+{num: 69, title: "यीशु है मेरा कैसा विलास, मन में वह देता आनन्द और आस", file: "hin-069.html"},
+{num: 70, title: "एक दिल होके गाओ, यीशु मसीह की स्तुति", file: "hin-070.html"},
+{num: 71, title: "यीशु कैसा दोस्त है प्यारा, दुख और बोझ उठाने को", file: "hin-071.html"},
+{num: 72, title: "हे यीशु महान! हे यीशु महान! तेरी जय तेरी जय तेरी जय", file: "hin-072.html"},
+{num: 73, title: "सियोन देश हमारा है देश, रहते हैं हम परदेश", file: "hin-073.html"},
+{num: 74, title: "यीशु जब आएगा बादलों पर, मैं उसके संग जाऊंगा", file: "hin-074.html"},
+{num: 75, title: "जब बादलों पर यीशु राजा आएगा", file: "hin-075.html"},
+{num: 76, title: "सेनाओं का यहोवा प्रभु महान", file: "hin-076.html"},
+{num: 77, title: "हम विश्वासियों के लिए एक आशा है", file: "hin-077.html"},
+{num: 78, title: "आ आ आ आ यीशु प्यारा जल्दी आएगा", file: "hin-078.html"},
+{num: 79, title: "इंतज़ार है हमको यीशु मसीह का, आशा हमारी है उस पर", file: "hin-079.html"},
+{num: 80, title: "एक नगर तैयार है हमारे लिए, रचने वाला खुद ही परमेश्वर है", file: "hin-080.html"},
+{num: 81, title: "हम यीशु के संग एक दिन स्वर्ग जाएंगे", file: "hin-081.html"},
+{num: 82, title: "नीले आसमान के पार जाएंगे, मेरा यीशु रहता वहां", file: "hin-082.html"},
+{num: 83, title: "हम विश्वास से एक देश देखते हैं", file: "hin-083.html"},
+{num: 84, title: "देखो प्रभु यीशु आता है स्वर्ग से वह जल्द आता है", file: "hin-084.html"},
+{num: 85, title: "हाँ हाँ हाल्लेलूयाह मिलकर गाएँ, भजन प्रभु जी के", file: "hin-085.html"},
+{num: 86, title: "क्या तुम गए यीशु पास कि मन शुद्ध हो", file: "hin-086.html"},
+{num: 87, title: "मुक्ति दिलाए यीशु नाम, शान्ति दिलाए यीशु नाम", file: "hin-087.html"},
+{num: 88, title: "तेरे पाप धुल सकेंगे आज ही मसीह के द्वारा", file: "hin-088.html"},
+{num: 89, title: "आओ आओ यीशु पास आओ, वही बुलाता अभी", file: "hin-089.html"},
+{num: 90, title: "खुल जाएंगी किताबें, जब भी हिसाब होगा", file: "hin-090.html"},
+{num: 91, title: "आओ अवसर यही है बुलाता है, सर्वशक्तिमान यीशु तुम्हे", file: "hin-091.html"},
+{num: 92, title: "तुझे यीशु बुलाता है, आवाज़ उसकी सुनो", file: "hin-092.html"},
+{num: 93, title: "यीशु तुम्हें बुला रहा, एक नज़र तो मोड़ लो", file: "hin-093.html"},
+{num: 94, title: "जैसा मैं हूं बगैर एक बात, पर तेरे लहू से हयात", file: "hin-094.html"},
+{num: 95, title: "सबने गुनाहगार को, नज़रों से जब गिरा दिया", file: "hin-095.html"},
+{num: 96, title: "आता हूं मसीह आता तेरे पास", file: "hin-096.html"},
+{num: 97, title: "यीशु युगों की चट्टान, तू है उत्तम रक्षास्थान", file: "hin-097.html"},
+{num: 98, title: "बोझ सबके गुनाह का उठाकर, वो लिए जा रहा है", file: "hin-098.html"},
+{num: 99, title: "मन का दीप जला, जीवन दीप जला", file: "hin-099.html"},
+{num: 100, title: "ईश्वर ने पापी मनुष्य के लिए", file: "hin-100.html"},
+{num: 101, title: "मैं आता हूं तेरे पास, प्रभु यीशु मेरे मसीह", file: "hin-101.html"},
+{num: 102, title: "आवाज़ उठाएंगे, हम साज़ बजाएंगे", file: "hin-102.html"},
+{num: 103, title: "चलते-चलते नूर में यीशु के साथ", file: "hin-103.html"},
+{num: 104, title: "जय जय यीशु, जय जय यीशु, जय मृत्युंजय-जयकार", file: "hin-104.html"},
+{num: 105, title: "मैंने अपना मन यीशु को दे दिया", file: "hin-105.html"},
+{num: 106, title: "यीशु ने अपना खून बहा के, मुझे बचा लिया", file: "hin-106.html"},
+{num: 107, title: "दिल के दाग को धोवे कौन, लहू जो कि क्रूस से जारी", file: "hin-107.html"},
+{num: 108, title: "पावन है वो प्रभु हमारा, उसकी जय जयकार करो", file: "hin-108.html"},
+{num: 109, title: "वक्त अब गुज़रता जाता है, गुनाह से कब पछताएगा?", file: "hin-109.html"},
+{num: 110, title: "भजन करूं मैं भजन करूं, नाम मसीह का लेता रहूं।", file: "hin-110.html"},
+{num: 111, title: "हमद तेरी ऐ बाप! तू ने बख्शा हमको", file: "hin-111.html"},
+{num: 112, title: "विश्वासयोग्य है प्रभु में तेरी स्तुति करूंगा (2)", file: "hin-112.html"},
+{num: 113, title: "आया मसीह दुनिया में तू, पापियों को बचाने को", file: "hin-113.html"},
+{num: 114, title: "खुश हो, खुदावन्द आया है, उसको कबूल कर ले", file: "hin-114.html"},
+{num: 115, title: "तैयार हो ऐ जवान, यीशु की आवाज़ सुन", file: "hin-115.html"},
+{num: 116, title: "सारी सृष्टि का मालिक यीशु है, सारी सृष्टि का रक्षक यीशु है", file: "hin-116.html"},
+{num: 117, title: "दुख का कटोरा अगर, मेरा प्रभु मुझे देगा", file: "hin-117.html"},
+{num: 118, title: "होगी आशीषों की बारिश, प्रेम की प्रतिज्ञा को मान", file: "hin-118.html"},
+{num: 119, title: "दूर और पास अब खेत तैयार है, खूब लहरता है अनाज", file: "hin-119.html"},
+{num: 120, title: "क्रूस पर, क्रूस पर, है ये कौन लहूलुहान", file: "hin-120.html"},
+{num: 121, title: "पुकारे तुझे आज सूली यहां", file: "hin-121.html"},
+{num: 122, title: "जीवन दिया मेरे लिए, जी उठा साथ रहने के लिए", file: "hin-122.html"},
+{num: 123, title: "थोड़ा समय है बाकी, सेवा अभी है काफी", file: "hin-123.html"},
+{num: 124, title: "रास्ता भटक घूम रहा था, उस रास्ते में खोया हुआ था", file: "hin-124.html"},
+{num: 125, title: "गाके मुझको सुनाओ फिर, मंगल सुसमाचार", file: "hin-125.html"},
+{num: 126, title: "आओ कदम बढ़ा चुके, मुड़ के कभी न देखेंगे", file: "hin-126.html"},
+{num: 127, title: "टूटे हुए दिल अब मिल गये है", file: "hin-127.html"},
+{num: 128, title: "हमारे जीवन में चमका है, प्यारे मसीह का उजियाला", file: "hin-128.html"},
+{num: 129, title: "सिर्फ़ एक ही मेरा नारा है, यीशु मेरा कफ़्फ़ारा है", file: "hin-129.html"},
+{num: 130, title: "मेरे जीवन पर तेरा बड़ा ही उपकार", file: "hin-130.html"},
+{num: 131, title: "ख़ुशियाँ मिली मुझको तुमसे, इस राह पे चला मैं जबसे", file: "hin-131.html"},
+{num: 132, title: "मुंह मोड़कर गुनाहों से, आज तौबा करले", file: "hin-132.html"},
+{num: 133, title: "ज़िन्दगी में थी विरानियां, और जीवन सूना-सूना था", file: "hin-133.html"},
+{num: 134, title: "प्रार्थना के सुनने वाले प्रभु प्रार्थना की चाहत हम में भर दे", file: "hin-134.html"},
+{num: 135, title: "दुःख मुसीबत के वक्त में, तसल्ली वह देता है", file: "hin-135.html"}
+];
+
+function displaySongs(songsToShow) {
+  const list = document.getElementById('song-list');
+  list.innerHTML = '';
+  songsToShow.forEach(song => {
+    const li = document.createElement('li');
+    li.innerHTML = `<a href="${song.file}">${song.num} - ${song.title}</a>`;
+    list.appendChild(li);
+  });
+}
+
+function generateLetterNav() {
+  const letters = new Set();
+  songs.forEach(song => {
+    const firstChar = song.title.charAt(0);
+    letters.add(firstChar);
+  });
+  
+  const nav = document.getElementById('letter-nav');
+  Array.from(letters).sort().forEach(letter => {
+    const btn = document.createElement('button');
+    btn.textContent = letter;
+    btn.onclick = () => filterByLetter(letter);
+    nav.appendChild(btn);
+  });
+}
+
+function filterByLetter(letter) {
+  const filtered = songs.filter(song => song.title.startsWith(letter));
+  displaySongs(filtered);
+}
+
+const searchBox = document.getElementById('search-box');
+searchBox.addEventListener('input', function() {
+  const query = this.value.toLowerCase();
+  const filtered = songs.filter(song => 
+    song.title.toLowerCase().includes(query) || 
+    song.num.toString().includes(query)
+  );
+  displaySongs(filtered);
+});
+
+searchBox.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    const query = this.value.trim();
+    const songNum = parseInt(query);
+    if (!isNaN(songNum) && songNum >= 1 && songNum <= 135) {
+      window.location.href = `hin-${String(songNum).padStart(3, '0')}.html`;
+    }
+  }
+});
+
+const resetBtn = document.getElementById('reset-btn');
+resetBtn.addEventListener('click', function() {
+  searchBox.value = '';
+  displaySongs(songs);
+});
+
+generateLetterNav();
+</script>
+
+</body>
+</html>

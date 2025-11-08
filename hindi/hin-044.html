@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>44 - क्या मैं जो चेला मेम्ने का, और क्रूस का योद्धा हूं</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #1d1d1f;
+  background: #fbfbfd;
+  padding: 40px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.back-button {
+  margin-bottom: 24px;
+}
+.back-button a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  font-size: 15px;
+  color: #0066cc;
+  background: white;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.back-button a:hover {
+  background: #f5f5f7;
+  transform: translateX(-2px);
+}
+
+
+.lyrics-container { 
+  height: 70vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 12px;
+  margin: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.stanza { 
+  text-align: justify;
+  padding: 16px 20px;
+  margin-bottom: 8px;
+}
+.stanza-label { 
+  text-align: left;
+  font-size: 15px;
+  font-weight: 600;
+  color: #6e6e73;
+  margin-bottom: 8px;
+}
+.chorus { 
+  text-align: justify;
+  position: sticky;
+  top: 0;
+  background: #fff9e6;
+  padding: 16px 20px;
+  margin: 0;
+  font-style: italic;
+  border-top: 2px solid #ffe680;
+  border-bottom: 2px solid #ffe680;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.controls-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.font-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.font-label {
+  font-size: 14px;
+  color: #6e6e73;
+  font-weight: 500;
+}
+.font-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: #f5f5f7;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1d1d1f;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.font-btn:hover {
+  background: #e5e5e7;
+  transform: translateY(-1px);
+}
+.font-btn:active {
+  transform: translateY(0);
+}
+.font-size-display {
+  min-width: 50px;
+  text-align: center;
+  font-size: 15px;
+  color: #1d1d1f;
+  font-weight: 500;
+}
+.pdf-btn {
+  padding: 10px 20px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pdf-btn:hover {
+  background: #0077ed;
+  transform: translateY(-1px);
+}
+.pdf-btn:active {
+  transform: translateY(0);
+}
+@media print {
+  body {
+    background: white;
+    padding: 20px;
+  }
+  .back-button,
+  .controls-bar,
+  .nav,
+  hr {
+    display: none !important;
+  }
+  .lyrics-container {
+    height: auto !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+  h1 { 
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  text-align: center;
+  margin-bottom: 24px;
+  color: #1d1d1f;
+}
+  .stanza {
+    page-break-inside: avoid;
+    margin: 16px 0;
+  }
+  .chorus { 
+  text-align: justify;
+  position: sticky;
+  top: -1px;
+  background: #fff9e6;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 24px 0;
+  font-style: italic;
+  border: 1px solid #ffe680;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+}
+
+
+.title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border-radius: 12px;
+  padding: 16px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  margin-bottom: 24px;
+}
+
+.nav-btn {
+  padding: 8px 16px;
+  font-size: 15px;
+  color: #0066cc;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.nav-btn:hover:not(.disabled) {
+  background: #f5f5f7;
+}
+
+.nav-btn.disabled {
+  color: #86868b;
+  cursor: default;
+}
+
+.song-title-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1d1d1f;
+  text-align: center;
+  flex: 1;
+  padding: 0 16px;
+}
+
+@media (max-width: 600px) {
+  .title-bar {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+  
+  .song-title-text {
+    order: -1;
+  }
+  
+  .nav-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+</style>
+</head>
+<body>
+<div class="back-button">
+  <a href="../hindi/index.html">← Back</a>
+</div>
+<div class="controls-bar">
+  <div class="font-controls">
+    <span class="font-label">Font Size:</span>
+    <button class="font-btn" onclick="updateFontSize(-1)" title="Decrease font size">−</button>
+    <span class="font-size-display" id="font-size-display">17px</span>
+    <button class="font-btn" onclick="updateFontSize(1)" title="Increase font size">+</button>
+  </div>
+  <button class="pdf-btn" onclick="exportToPDF()" title="Export to PDF">
+    <span>📄</span>
+    <span>Export PDF</span>
+  </button>
+</div>
+
+
+<div class="title-bar">
+  <a href="hin-043.html" class="nav-btn">← Previous</a>
+  <div class="song-title-text">44 क्या मैं जो चेला मेम्ने का, और क्रूस का योद्धा हूं</div>
+  <a href="hin-045.html" class="nav-btn">Next →</a>
+</div>
+
+<div class="lyrics-container">
+<div class="stanza">
+<div class="stanza-label"><b>1</b></div>
+क्या मैं जो चेला मेम्ने का, और क्रूस का योद्धा हूं<br>
+शरमाऊं नाम के मानने से, और सेवा न करूं।
+</div>
+<div class="stanza chorus">
+<div class="stanza-label"><b>कोरस</b></div>
+नाम से प्यारे प्रभु के, जिसने दिया अपना प्राण<br>
+विश्वास से क्रुस उठाऊंगा, खीस्त यीशु के समान।
+</div>
+<div class="stanza">
+<div class="stanza-label"><b>2</b></div>
+जयफल परिश्रम संकट से, औरों ने पाया है<br>
+क्या बैठूं मैं आराम के साथ, सुख भोगूं हर समय।
+</div>
+<div class="stanza">
+<div class="stanza-label"><b>3</b></div>
+क्या दुष्टों का मैं सामना कर, शैतान से न लडू<br>
+संसार पर क्या मुक्त होने का, भरोसा मैं करूं।
+</div>
+<div class="stanza">
+<div class="stanza-label"><b>4</b></div>
+जो राज्य मैं करना चाहता हूं, तो निश्चय लड़ना है<br>
+सहूंगा दुख परिश्रम को, जब तक न हो विजय।
+</div>
+</div>
+<script>
+// Load saved font size from localStorage or use default
+let currentFontSize = parseInt(localStorage.getItem('songFontSize')) || 17;
+const minSize = 12;
+const maxSize = 32;
+
+// Apply saved font size on page load
+window.addEventListener('DOMContentLoaded', function() {
+  const stanzas = document.querySelectorAll('.stanza');
+  stanzas.forEach(stanza => {
+    stanza.style.fontSize = currentFontSize + 'px';
+  });
+  
+  const display = document.getElementById('font-size-display');
+  if (display) {
+    display.textContent = currentFontSize + 'px';
+  }
+});
+
+function updateFontSize(change) {
+  currentFontSize += change;
+  if (currentFontSize < minSize) currentFontSize = minSize;
+  if (currentFontSize > maxSize) currentFontSize = maxSize;
+  
+  // Save to localStorage
+  localStorage.setItem('songFontSize', currentFontSize);
+  
+  // Update all stanzas
+  const stanzas = document.querySelectorAll('.stanza');
+  stanzas.forEach(stanza => {
+    stanza.style.fontSize = currentFontSize + 'px';
+  });
+  
+  const display = document.getElementById('font-size-display');
+  if (display) {
+    display.textContent = currentFontSize + 'px';
+  }
+}
+
+function exportToPDF() {
+  window.print();
+}
+</script>
+</body>
+</html>

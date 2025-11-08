@@ -1,84 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Song Book - Brethren Assembly Jodhpur</title>
-  <meta name="description" content="Digital songbook for Brethren Assembly Jodhpur with English, Hindi, Youth Camp, and Special songs">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1976d2" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#101722" media="(prefers-color-scheme: dark)">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Song Book">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <!-- icons (ensure files exist) -->
-  <link rel="apple-touch-icon" href="icons/icon-180x180.png">
-  <link rel="stylesheet" href="src/css/styles.css">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="color-scheme" content="light dark">
-  <link rel="prefetch" href="lyrics/manifest.json" as="fetch" crossorigin>
-  <!-- Defer script to avoid blocking first paint -->
-  <script defer src="src/js/main.js"></script>
-  <noscript>
-    <div style="padding:1rem;background:#b71c1c;color:#fff;text-align:center;">
-      This app needs JavaScript enabled.
-    </div>
-  </noscript>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Song Book - Brethren Assembly Jodhpur</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #1d1d1f;
+  background: #fbfbfd;
+  padding: 60px 20px;
+  text-align: center;
+}
+h1 { 
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+  color: #1d1d1f;
+}
+h2 { 
+  font-size: 24px;
+  font-weight: 400;
+  color: #6e6e73;
+  margin-bottom: 60px;
+}
+h3 { 
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #6e6e73;
+  margin: 80px 0 32px 0;
+}
+ul { 
+  list-style: none;
+  max-width: 400px;
+  margin: 0 auto;
+}
+li { 
+  margin: 16px 0;
+}
+a { 
+  color: #0066cc;
+  text-decoration: none;
+  font-size: 21px;
+  font-weight: 400;
+  display: inline-block;
+  transition: opacity 0.2s ease;
+}
+a:hover { 
+  opacity: 0.7;
+}
+a:visited { 
+  color: #0066cc;
+}
+.song-count {
+  color: #86868b;
+  font-size: 17px;
+  margin-left: 8px;
+}
+.footer {
+  margin-top: 100px;
+  font-size: 14px;
+  color: #86868b;
+}
+</style>
 </head>
 <body>
-  <a href="#songs-list" class="visually-hidden focus-reveal" id="skip-link">Skip to song list</a>
-  <div id="app-shell">
-    <header role="banner">
-      <h1>Song Book</h1>
-      <nav aria-label="Primary" class="controls-wrapper">
-        <div class="controls" role="search">
-          <label for="category-select" class="visually-hidden">Category</label>
-          <select id="category-select" aria-label="Category"></select>
-          <label for="search" class="visually-hidden">Search songs</label>
-          <input type="text" id="search" placeholder="Search title or number…" autocomplete="off" enterkeyhint="search">
-          <button id="clear-search" type="button" aria-label="Clear search" title="Clear search" style="display:none;">×</button>
-          <button id="jump-number" type="button" aria-label="Jump to song number" title="Jump to song number">#</button>
-          <label for="alpha-select" class="visually-hidden">Filter by first letter</label>
-          <select id="alpha-select" aria-label="Filter by first letter" title="Filter by first letter">
-            <option value="">All letters (A–Z / अ–ह)</option>
-          </select>
-          <button id="alpha-clear-compact" class="btn subtle" type="button" aria-label="Clear letter filter" title="Clear letter filter">×</button>
-          <label class="fuzzy-label" title="Allow minor typos">
-            <input type="checkbox" id="fuzzy-toggle"> Fuzzy
-          </label>
-          <span id="result-count" aria-live="polite" class="result-count"></span>
-        </div>
-      </nav>
-    </header>
-    <main id="main" role="main">
-      <ul id="songs-list" role="listbox" aria-label="Song list" tabindex="0" aria-live="polite"></ul>
-      <section id="lyrics-section" aria-live="polite" aria-label="Lyrics viewer">
-        <div id="lyrics-topbar">
-          <button id="back-to-list" type="button" aria-label="Back to song list">← Back</button>
-          <h2 id="song-title" tabindex="-1"></h2>
-          <div id="lyrics-top-controls" aria-label="Lyrics controls"></div>
-        </div>
-        <div id="song-lyrics" role="document"></div>
-      </section>
-    </main>
-  </div>
-  <!-- Install banner -->
-  <div id="pwa-install-banner" class="banner banner-install" role="dialog" aria-live="polite" aria-label="Install prompt" hidden>
-    <span class="banner-text">📱 Install Song Book for offline use</span>
-    <div class="banner-actions">
-      <button id="install-pwa" class="btn primary">Install</button>
-      <button id="dismiss-install" class="btn subtle">Later</button>
-    </div>
-  </div>
-  <!-- Update banner -->
-  <div id="app-update-banner" class="banner banner-update" role="status" hidden>
-    <span class="banner-text">New version available</span>
-    <button id="update-app" class="btn primary-outline">Update</button>
-  </div>
-  <!-- Offline pill -->
-  <div id="offline-indicator" class="pill-offline" role="status" hidden>Offline – cached mode</div>
-  <!-- Toasts -->
-  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+<h1>Song Book</h1>
+<h2>Brethren Assembly Jodhpur</h2>
+
+<h3>Categories</h3>
+<ul>
+<li><a href="english/index.html">English</a><span class="song-count">2 songs</span></li>
+<li><a href="hindi/index.html">Hindi</a><span class="song-count">135 songs</span></li>
+</ul>
+
+<div class="footer">
+Simple. Clean. Intuitive.
+</div>
 </body>
 </html>
