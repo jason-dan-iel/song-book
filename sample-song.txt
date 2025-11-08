@@ -1,0 +1,39 @@
+# Sample Text File Format for Song Lyrics
+# =========================================
+#
+# INSTRUCTIONS:
+# 1. Start with CATEGORY (hindi or english)
+# 2. Then TITLE on next line
+# 3. Then stanzas and chorus sections
+# 4. Use "STANZA X:" for verse labels
+# 5. Use "CHORUS:" for chorus sections
+# 6. Leave blank lines between sections
+# 7. Each line of lyrics goes on its own line
+# 8. The script will auto-generate the song number based on existing files
+#
+# IMPORTANT: Save your text file with UTF-8 encoding to preserve Hindi characters!
+
+CATEGORY: hindi
+TITLE: तेरी महिमा अपरम्पार
+
+STANZA 1:
+तेरी महिमा अपरम्पार, तेरा नाम है महान
+सारी सृष्टि करे पुकार, तू ही प्रभु भगवान
+पर्वत और समुन्दर भी, तेरी बड़ाई करते
+चाँद सितारे आकाश में, तेरा गुण गाते
+
+CHORUS:
+पवित्र पवित्र पवित्र, प्रभु तू महान (2)
+तेरी स्तुति हम करें, यीशु तेरा नाम
+
+STANZA 2:
+स्वर्ग दूतों की सेना भी, गाए तेरा भजन
+धरती पर सब प्राणी मिल, करते हैं वंदन
+युग युगों से तू ही राजा, तेरा सिंहासन
+सदा रहेगा अटल खड़ा, यह विश्वास अपना
+
+STANZA 3:
+दीन दुखियों की सुनता तू, रक्षक है प्यारा
+पापी का भी उद्धारक, यीशु तू हमारा
+क्रूस पर तूने प्राण दिए, प्रेम है अपरम्पार
+अब हम गाते जय जयकार, तेरी जय जयकार
