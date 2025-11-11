@@ -133,7 +133,7 @@ def generate_html(song_data, song_num, total_songs):
         is_chorus = section['type'] == 'chorus'
         class_name = 'stanza chorus' if is_chorus else 'stanza'
         
-        lines_html = '<br>\n'.join(section['lines'])
+        lines_html = '\n'.join(section['lines'])
         
         section_html = f'''<div class="{class_name}">
 <div class="stanza-label"><b>{section['label']}</b></div>
@@ -154,7 +154,7 @@ def generate_html(song_data, song_num, total_songs):
 body {{
   font-family: monospace;
   font-size: 16px;
-  line-height: 1.1;
+  line-height: 1.4em;
   padding: 10px;
   max-width: 800px;
   margin: 0 auto;
@@ -246,6 +246,7 @@ body {{
 .stanza {{
   margin-bottom: 1em;
   white-space: pre-line;
+  line-height: 1.6;
 }}
 
 .stanza.chorus {{
@@ -254,8 +255,8 @@ body {{
   background: #fff;
   margin-left: 0;
   font-style: italic;
-  padding: 1em;
-  padding-bottom: 2em;
+  padding: 0.5em;
+  padding-bottom: 0.5em;
   margin-bottom: 1em;
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
@@ -282,7 +283,6 @@ body {{
   }}
   .stanza.chorus {{
     top: 110px;
-    padding-bottom: 3em;
   }}
 }}
 </style>
