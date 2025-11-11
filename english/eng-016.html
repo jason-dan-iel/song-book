@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>16 - When peace like a river</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 1.4;
+  padding: 10px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 120px;
+}
+
+.page-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: 100;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 10px;
+  border-bottom: 1px solid #000;
+}
+
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.back-button a {
+  text-decoration: none;
+}
+
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.song-title-text {
+  text-align: center;
+  flex: 1;
+}
+
+.nav-btn {
+  padding: 2px 10px;
+  text-decoration: none;
+  border: 1px solid #000;
+  text-align: center;
+  min-width: 30px;
+}
+
+.nav-btn.disabled {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: default;
+}
+
+.font-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.font-btn {
+  padding: 2px 8px;
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+}
+
+.font-size-display {
+  min-width: 40px;
+  text-align: center;
+}
+
+.pdf-btn {
+  padding: 2px 8px;
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+}
+
+.lyrics-container {
+  padding: 0;
+  position: relative;
+}
+
+.stanza {
+  margin-bottom: 1em;
+  white-space: pre-line;
+}
+
+.stanza.chorus {
+  position: sticky;
+  top: 90px;
+  background: #fff;
+  margin-left: 0;
+  font-style: italic;
+  padding: 1em;
+  padding-bottom: 2em;
+  margin-bottom: 1em;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  z-index: 10;
+}
+
+@media print {
+  .page-header { display: none; }
+  body { padding: 20px; }
+  .stanza { page-break-inside: avoid; }
+}
+
+@media (max-width: 768px) {
+  body { padding: 8px; padding-top: 140px; }
+  .page-header { padding: 8px; }
+  .controls-row { flex-wrap: wrap; gap: 5px; }
+  .title-row { gap: 5px; }
+  .song-title-text { 
+    padding: 5px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+  .stanza.chorus {
+    top: 110px;
+    padding-bottom: 3em;
+  }
+}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="controls-row">
+    <div class="back-button">
+      <a href="index.html">← Back</a>
+    </div>
+    <div class="font-controls">
+      <button class="font-btn" onclick="updateFontSize(-1)" title="Decrease font size">A−</button>
+      <span class="font-size-display" id="font-size-display">17px</span>
+      <button class="font-btn" onclick="updateFontSize(1)" title="Increase font size">A+</button>
+    </div>
+    <button class="pdf-btn" onclick="exportToPDF()" title="Export to PDF">
+      <span>📄</span>
+      <span>PDF</span>
+    </button>
+  </div>
+  <div class="title-row">
+    <a href="eng-015.html" class="nav-btn">←</a>
+    <div class="song-title-text">16 - When peace like a river</div>
+    <a href="eng-017.html" class="nav-btn">→</a>
+  </div>
+</div>
+
+<div class="lyrics-container">
+<div class="stanza">
+<div class="stanza-label"><b>1</b></div>
+When peace like a river attendeth my way<br>
+When sorrows like sea billows roll,<br>
+What ever my lot Thou hast taught me to say<br>
+It is well, it is well with my soul.
+</div>
+<div class="stanza chorus">
+<div class="stanza-label"><b>Chorus</b></div>
+It is well... with my soul<br>
+It is well it is well with my soul.
+</div>
+<div class="stanza">
+<div class="stanza-label"><b>2</b></div>
+Tho' Satan should buffet, tho' trials should come<br>
+Let this blest assurance control,<br>
+That Christ has regarded my helpless estate<br>
+And hath shed His own blood for my soul.
+</div>
+<div class="stanza">
+<div class="stanza-label"><b>3</b></div>
+My sin-oh! the bliss of this glorious tho't<br>
+My sin not in part but the whole,<br>
+Is nailed to the cross and I bear it no more<br>
+Praise the Lord, praise the Lord, O my soul!
+</div>
+<div class="stanza">
+<div class="stanza-label"><b>4</b></div>
+And Lord haste the day when the faith shall be sight<br>
+The clouds be rolled back as a scroll,<br>
+The trump shall resound and the Lord shall descend<br>
+"Even so" it is well with my soul.
+</div>
+</div>
+<script>
+// Unified font size management across all pages
+let currentFontSize = parseInt(localStorage.getItem('globalFontSize')) || 17;
+const minSize = 12;
+const maxSize = 32;
+
+// Apply saved font size on page load
+window.addEventListener('DOMContentLoaded', function() {
+  document.body.style.setProperty('font-size', currentFontSize + 'px', 'important');
+  
+  const display = document.getElementById('font-size-display');
+  if (display) {
+    display.textContent = currentFontSize + 'px';
+  }
+});
+
+function updateFontSize(change) {
+  currentFontSize += change;
+  if (currentFontSize < minSize) currentFontSize = minSize;
+  if (currentFontSize > maxSize) currentFontSize = maxSize;
+  
+  // Save to localStorage with unified key
+  localStorage.setItem('globalFontSize', currentFontSize);
+  
+  // Update body font size with !important to override CSS
+  document.body.style.setProperty('font-size', currentFontSize + 'px', 'important');
+  
+  const display = document.getElementById('font-size-display');
+  if (display) {
+    display.textContent = currentFontSize + 'px';
+  }
+}
+
+function exportToPDF() {
+  window.print();
+}
+</script>
+</body>
+</html>

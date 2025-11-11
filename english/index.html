@@ -7,349 +7,136 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { 
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 17px;
-  line-height: 1.6;
-  color: #1d1d1f;
-  background: #fbfbfd;
-  padding: 40px 20px;
-  max-width: 980px;
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 1.4;
+  padding: 10px;
+  max-width: 900px;
   margin: 0 auto;
 }
-.header-bar {
-  margin-bottom: 24px;
+.page-header {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #000;
+}
+.controls-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
-  padding: 16px 20px;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-.back-button {
-  margin: 0;
+  margin-bottom: 8px;
 }
 .back-button a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  font-size: 15px;
-  color: #0066cc;
-  background: #f5f5f7;
-  border-radius: 8px;
   text-decoration: none;
-  transition: all 0.2s ease;
-  font-weight: 500;
 }
-.back-button a:hover {
-  background: #e5e5e7;
+.title-row {
+  text-align: center;
 }
-.category-title {
-  font-size: 28px;
-  font-weight: 600;
-  color: #1d1d1f;
-  letter-spacing: -0.5px;
+.page-title {
+  margin: 0;
 }
-.song-count {
-  font-size: 14px;
-  color: #86868b;
-  font-weight: 500;
+.font-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.font-btn {
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+  padding: 2px 8px;
+}
+.font-size-display {
+  min-width: 40px;
+  text-align: center;
 }
 .top-section {
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  margin-bottom: 24px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  margin-bottom: 15px;
 }
 .search-section {
-  margin-bottom: 24px;
+  margin-bottom: 15px;
 }
 .search-controls {
   display: flex;
-  gap: 8px;
-  align-items: stretch;
+  gap: 5px;
 }
 #search-box { 
   flex: 1;
-  padding: 14px 18px;
-  font-size: 17px;
-  border: 1px solid #e5e5e7;
-  border-radius: 10px;
-  outline: none;
+  padding: 4px;
+  border: 1px solid #000;
   font-family: inherit;
-  background: #f5f5f7;
-  transition: all 0.2s ease;
-}
-#search-box:focus {
-  background: white;
-  border-color: #0066cc;
-}
-#search-box::placeholder {
-  color: #86868b;
 }
 #reset-btn {
-  padding: 14px 20px;
-  font-size: 15px;
-  font-weight: 500;
-  color: white;
-  background: #0066cc;
-  border: none;
-  border-radius: 10px;
+  padding: 4px 10px;
+  border: 1px solid #000;
+  background: none;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: inherit;
-  white-space: nowrap;
-}
-#reset-btn:hover {
-  background: #0077ed;
 }
 .letter-nav-section {
-  text-align: center;
+  margin-bottom: 15px;
 }
 .letter-nav-label {
-  font-size: 13px;
-  color: #6e6e73;
-  margin-bottom: 12px;
-  font-weight: 500;
+  margin-bottom: 5px;
 }
 #letter-nav {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px;
+  gap: 5px;
 }
 #letter-nav button { 
-  min-width: 36px;
-  height: 36px;
-  padding: 0 12px;
-  font-size: 15px;
-  font-weight: 500;
-  color: #1d1d1f;
-  background: #f5f5f7;
-  border: none;
-  border-radius: 8px;
+  padding: 2px 8px;
+  border: 1px solid #000;
+  background: none;
   cursor: pointer;
-  transition: all 0.2s ease;
   font-family: inherit;
 }
-#letter-nav button:hover {
-  background: #e5e5e7;
-  transform: translateY(-1px);
-}
-#letter-nav button:active {
-  transform: translateY(0);
-}
 .song-list-container {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  max-height: 60vh;
+  border: 1px solid #000;
+  max-height: 500px;
   overflow-y: auto;
 }
 ul { 
   list-style: none;
 }
 li { 
-  border-bottom: 1px solid #f5f5f7;
+  border-bottom: 1px solid #ccc;
 }
 li:last-child {
   border-bottom: none;
 }
 li a { 
   display: block;
-  padding: 16px 24px;
-  color: #1d1d1f;
+  padding: 8px;
   text-decoration: none;
-  font-size: 17px;
-  transition: background-color 0.2s ease;
-}
-li a:hover { 
-  background: #f5f5f7;
-}
-li a:visited { 
-  color: #1d1d1f;
 }
 .back-link {
   text-align: center;
-  margin-top: 24px;
-  font-size: 17px;
+  margin-top: 15px;
 }
 .back-link a {
-  color: #0066cc;
   text-decoration: none;
-  transition: opacity 0.2s ease;
 }
-.back-link a:hover {
-  opacity: 0.7;
-}
-
-/* Mobile Responsive Styles */
 @media (max-width: 768px) {
-  body {
-    padding: 20px 12px;
-    font-size: 16px;
-  }
-  
-  .header-bar {
-    padding: 12px 16px;
-    margin-bottom: 20px;
-  }
-  
-  .category-title {
-    font-size: 22px;
-  }
-  
-  .top-section {
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 16px;
-  }
-  
-  .search-section {
-    margin-bottom: 20px;
-  }
-  
-  #search-box {
-    padding: 12px 16px;
-    font-size: 16px;
-  }
-  
-  #reset-btn {
-    padding: 12px 16px;
-    font-size: 14px;
-  }
-  
-  .letter-nav-label {
-    font-size: 12px;
-    margin-bottom: 10px;
-  }
-  
-  #letter-nav button {
-    min-width: 32px;
-    height: 32px;
-    padding: 0 10px;
-    font-size: 14px;
-  }
-  
-  li a {
-    padding: 14px 16px;
-    font-size: 16px;
-  }
-  
-  .song-list-container {
-    max-height: 55vh;
-  }
-}
-
-@media (max-width: 600px) {
-  .header-bar {
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  
-  .category-title {
-    font-size: 20px;
-    order: -1;
-    flex: 1 1 100%;
-    text-align: center;
-  }
-  
-  .search-controls {
-    flex-direction: column;
-  }
-  
-  #reset-btn {
-    width: 100%;
-  }
-  
-  li a {
-    font-size: 16px;
-    padding: 14px 18px;
-  }
-  
-  .song-list-container {
-    max-height: 50vh;
-  }
-}
-
-@media (max-width: 480px) {
-  body {
-    padding: 16px 10px;
-    font-size: 15px;
-  }
-  
-  .header-bar {
-    padding: 10px 12px;
-  }
-  
-  .category-title {
-    font-size: 18px;
-  }
-  
-  .back-button a {
-    padding: 6px 10px;
-    font-size: 13px;
-  }
-  
-  .song-count {
-    font-size: 12px;
-  }
-  
-  .top-section {
-    padding: 16px;
-    border-radius: 10px;
-  }
-  
-  .search-controls {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  #search-box {
-    padding: 12px 14px;
-    font-size: 15px;
-  }
-  
-  #reset-btn {
-    padding: 12px;
-    font-size: 14px;
-    width: 100%;
-  }
-  
-  #letter-nav button {
-    min-width: 30px;
-    height: 30px;
-    padding: 0 8px;
-    font-size: 13px;
-    gap: 4px;
-  }
-  
-  li a {
-    padding: 12px 14px;
-    font-size: 15px;
-    line-height: 1.4;
-  }
-  
-  .song-list-container {
-    border-radius: 10px;
-    max-height: 45vh;
-  }
-  
-  .back-link {
-    font-size: 15px;
-  }
+  body { padding: 8px; }
+  .search-controls { flex-direction: column; }
+  #reset-btn { width: 100%; }
 }
 </style>
 </head>
 <body>
-<div class="header-bar">
-  <div class="back-button">
-    <a href="../index.html">← Back</a>
+<div class="page-header">
+  <div class="controls-row">
+    <div class="back-button">
+      <a href="../index.html">← Back</a>
+    </div>
+    <div class="font-controls">
+      <button class="font-btn" onclick="updateFontSize(-1)" title="Decrease font size">A−</button>
+      <span class="font-size-display" id="font-size-display">17px</span>
+      <button class="font-btn" onclick="updateFontSize(1)" title="Increase font size">A+</button>
+    </div>
   </div>
-  <h1 class="category-title">English Songs</h1>
-  <span class="song-count">2 songs</span>
+  <div class="title-row">
+    <h1 class="page-title">English Songs</h1>
+  </div>
 </div>
 
 <div class="top-section">
@@ -370,6 +157,44 @@ li a:visited {
 <ul id="song-list">
 <li><a href="eng-001.html">1 - Praise, my soul, the King of heaven</a></li>
 <li><a href="eng-002.html">2 - Behold, What Love, What Boundless Love</a></li>
+<li><a href="eng-003.html">3 - In tenderness He sought me</a></li>
+<li><a href="eng-004.html">4 - Man of Sorrows!</a></li>
+<li><a href="eng-005.html">5 - Crown Him with many crowns</a></li>
+<li><a href="eng-006.html">6 - Loved with everlasting love</a></li>
+<li><a href="eng-007.html">7 - O worship the King</a></li>
+<li><a href="eng-008.html">8 - All hail the power of Jesus' name</a></li>
+<li><a href="eng-009.html">9 - On a hill far away</a></li>
+<li><a href="eng-010.html">10 - Amazing grace</a></li>
+<li><a href="eng-011.html">11 - When I survey the wondrous cross</a></li>
+<li><a href="eng-012.html">12 - Alas! and did my Saviour bleed?</a></li>
+<li><a href="eng-013.html">13 - King of my life</a></li>
+<li><a href="eng-014.html">14 - I'm not ashamed to own my Lord</a></li>
+<li><a href="eng-015.html">15 - Great is Thy Faithfulness</a></li>
+<li><a href="eng-016.html">16 - When peace like a river</a></li>
+<li><a href="eng-017.html">17 - I need Thee ev'ry hour</a></li>
+<li><a href="eng-018.html">18 - Sweet hour of prayer</a></li>
+<li><a href="eng-019.html">19 - Onward Christian soldiers</a></li>
+<li><a href="eng-020.html">20 - I'm pressing on up the upward way</a></li>
+<li><a href="eng-021.html">21 - Sowing in the morning</a></li>
+<li><a href="eng-022.html">22 - What a Friend We Have in Jesus</a></li>
+<li><a href="eng-023.html">23 - Blessed Assurance</a></li>
+<li><a href="eng-024.html">24 - My hope is built on nothing less</a></li>
+<li><a href="eng-025.html">25 - Song-25</a></li>
+<li><a href="eng-026.html">26 - In the sweet by and by</a></li>
+<li><a href="eng-027.html">27 - When the trumpet</a></li>
+<li><a href="eng-028.html">28 - Have you been to Jesus</a></li>
+<li><a href="eng-029.html">29 - I have found a friend in Jesus</a></li>
+<li><a href="eng-030.html">30 - There is power</a></li>
+<li><a href="eng-031.html">31 - Oh! what a wonderful, wonderful day</a></li>
+<li><a href="eng-032.html">32 - What can wash away my sin?</a></li>
+<li><a href="eng-033.html">33 - O Jesus, I have promised</a></li>
+<li><a href="eng-034.html">34 - All the way</a></li>
+<li><a href="eng-035.html">35 - Silent Night</a></li>
+<li><a href="eng-036.html">36 - Many things about tomorrow</a></li>
+<li><a href="eng-037.html">37 - My Jesus, I love Thee</a></li>
+<li><a href="eng-038.html">38 - Because He Lives</a></li>
+<li><a href="eng-039.html">39 - Jesus, the very thought of Thee</a></li>
+<li><a href="eng-040.html">40 - Rescue the Perishing</a></li>
 </ul>
 </div>
 
@@ -380,7 +205,45 @@ li a:visited {
 <script>
 const songs = [
 {num: 1, title: "Praise, my soul, the King of heaven", file: "eng-001.html"},
-{num: 2, title: "Behold, What Love, What Boundless Love", file: "eng-002.html"}
+{num: 2, title: "Behold, What Love, What Boundless Love", file: "eng-002.html"},
+{num: 3, title: "In tenderness He sought me", file: "eng-003.html"},
+{num: 4, title: "Man of Sorrows!", file: "eng-004.html"},
+{num: 5, title: "Crown Him with many crowns", file: "eng-005.html"},
+{num: 6, title: "Loved with everlasting love", file: "eng-006.html"},
+{num: 7, title: "O worship the King", file: "eng-007.html"},
+{num: 8, title: "All hail the power of Jesus' name", file: "eng-008.html"},
+{num: 9, title: "On a hill far away", file: "eng-009.html"},
+{num: 10, title: "Amazing grace", file: "eng-010.html"},
+{num: 11, title: "When I survey the wondrous cross", file: "eng-011.html"},
+{num: 12, title: "Alas! and did my Saviour bleed?", file: "eng-012.html"},
+{num: 13, title: "King of my life", file: "eng-013.html"},
+{num: 14, title: "I'm not ashamed to own my Lord", file: "eng-014.html"},
+{num: 15, title: "Great is Thy Faithfulness", file: "eng-015.html"},
+{num: 16, title: "When peace like a river", file: "eng-016.html"},
+{num: 17, title: "I need Thee ev'ry hour", file: "eng-017.html"},
+{num: 18, title: "Sweet hour of prayer", file: "eng-018.html"},
+{num: 19, title: "Onward Christian soldiers", file: "eng-019.html"},
+{num: 20, title: "I'm pressing on up the upward way", file: "eng-020.html"},
+{num: 21, title: "Sowing in the morning", file: "eng-021.html"},
+{num: 22, title: "What a Friend We Have in Jesus", file: "eng-022.html"},
+{num: 23, title: "Blessed Assurance", file: "eng-023.html"},
+{num: 24, title: "My hope is built on nothing less", file: "eng-024.html"},
+{num: 25, title: "Song-25", file: "eng-025.html"},
+{num: 26, title: "In the sweet by and by", file: "eng-026.html"},
+{num: 27, title: "When the trumpet", file: "eng-027.html"},
+{num: 28, title: "Have you been to Jesus", file: "eng-028.html"},
+{num: 29, title: "I have found a friend in Jesus", file: "eng-029.html"},
+{num: 30, title: "There is power", file: "eng-030.html"},
+{num: 31, title: "Oh! what a wonderful, wonderful day", file: "eng-031.html"},
+{num: 32, title: "What can wash away my sin?", file: "eng-032.html"},
+{num: 33, title: "O Jesus, I have promised", file: "eng-033.html"},
+{num: 34, title: "All the way", file: "eng-034.html"},
+{num: 35, title: "Silent Night", file: "eng-035.html"},
+{num: 36, title: "Many things about tomorrow", file: "eng-036.html"},
+{num: 37, title: "My Jesus, I love Thee", file: "eng-037.html"},
+{num: 38, title: "Because He Lives", file: "eng-038.html"},
+{num: 39, title: "Jesus, the very thought of Thee", file: "eng-039.html"},
+{num: 40, title: "Rescue the Perishing", file: "eng-040.html"},
 ];
 
 function displaySongs(songsToShow) {
@@ -441,6 +304,38 @@ resetBtn.addEventListener('click', function() {
 });
 
 generateLetterNav();
+
+// Unified font size management across all pages
+let currentFontSize = parseInt(localStorage.getItem('globalFontSize')) || 17;
+const minSize = 12;
+const maxSize = 32;
+
+// Apply saved font size on page load
+window.addEventListener('DOMContentLoaded', function() {
+  document.body.style.setProperty('font-size', currentFontSize + 'px', 'important');
+  
+  const display = document.getElementById('font-size-display');
+  if (display) {
+    display.textContent = currentFontSize + 'px';
+  }
+});
+
+function updateFontSize(change) {
+  currentFontSize += change;
+  if (currentFontSize < minSize) currentFontSize = minSize;
+  if (currentFontSize > maxSize) currentFontSize = maxSize;
+  
+  // Save to localStorage with unified key
+  localStorage.setItem('globalFontSize', currentFontSize);
+  
+  // Update body font size with !important to override CSS
+  document.body.style.setProperty('font-size', currentFontSize + 'px', 'important');
+  
+  const display = document.getElementById('font-size-display');
+  if (display) {
+    display.textContent = currentFontSize + 'px';
+  }
+}
 </script>
 
 </body>

@@ -67,9 +67,17 @@ def read_song_file(filepath):
             # Determine if it's a chorus
             is_chorus = 'CHORUS' in section_type.upper()
             
+            # Extract just the number from "STANZA 1" format
+            if not is_chorus:
+                number_match = re.search(r'\d+', section_type)
+                stanza_number = number_match.group(0) if number_match else section_type
+                label = stanza_number
+            else:
+                label = 'कोरस' if category == 'hindi' else 'Chorus'
+            
             sections.append({
                 'type': 'chorus' if is_chorus else 'stanza',
-                'label': 'कोरस' if (is_chorus and category == 'hindi') else 'Chorus' if is_chorus else section_type,
+                'label': label,
                 'lines': lines
             })
     
@@ -112,12 +120,12 @@ def generate_html(song_data, song_num, total_songs):
     # Determine file names for navigation
     prefix = 'hin' if category == 'hindi' else 'eng'
     
-    # Previous/Next buttons
+    # Previous/Next buttons (arrow-only style)
     prev_num = song_num - 1 if song_num > 1 else None
     next_num = song_num + 1 if song_num < total_songs else None
     
-    prev_html = f'<a href="{prefix}-{prev_num:03d}.html" class="nav-btn">← Previous</a>' if prev_num else '<span class="nav-btn disabled">← Previous</span>'
-    next_html = f'<a href="{prefix}-{next_num:03d}.html" class="nav-btn">Next →</a>' if next_num else '<span class="nav-btn disabled">Next →</span>'
+    prev_html = f'<a href="{prefix}-{prev_num:03d}.html" class="nav-btn">←</a>' if prev_num else '<span class="nav-btn disabled">←</span>'
+    next_html = f'<a href="{prefix}-{next_num:03d}.html" class="nav-btn">→</a>' if next_num else '<span class="nav-btn disabled">→</span>'
     
     # Build sections HTML
     sections_html = []
@@ -141,407 +149,163 @@ def generate_html(song_data, song_num, total_songs):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{song_num} - {title}</title>
 <style>
-* {{ margin: 0; padding: 0; box-sizing: border-box;}}
-body {{ 
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 17px;
-  line-height: 1.6;
-  color: #1d1d1f;
-  background: #fbfbfd;
-  padding: 40px 20px;
+* {{ margin: 0; padding: 0; box-sizing: border-box; }}
+
+body {{
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 1.4;
+  padding: 10px;
   max-width: 800px;
   margin: 0 auto;
+  padding-top: 120px;
 }}
-/* Compact Header Layout */
+
 .page-header {{
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  margin-bottom: 20px;
-}}
-
-.title-row {{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #f5f5f7;
-}}
-
-.back-button {{
-  margin: 0;
-}}
-.back-button a {{
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  font-size: 14px;
-  color: #0066cc;
-  background: #f5f5f7;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  font-weight: 500;
-}}
-.back-button a:hover {{
-  background: #e5e5e7;
-}}
-
-.song-title-text {{
-  font-size: 17px;
-  font-weight: 600;
-  color: #1d1d1f;
-  text-align: center;
-  flex: 1;
-  padding: 0 16px;
-}}
-
-.nav-row {{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #f5f5f7;
-}}
-
-.nav-btn {{
-  padding: 8px 20px;
-  font-size: 14px;
-  color: #0066cc;
-  text-decoration: none;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  font-weight: 500;
-  white-space: nowrap;
-  background: #f5f5f7;
-  flex: 1;
-  text-align: center;
-  max-width: 200px;
-}}
-
-.nav-btn:hover:not(.disabled) {{
-  background: #e5e5e7;
-}}
-
-.nav-btn.disabled {{
-  color: #86868b;
-  cursor: default;
-  background: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: 100;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 10px;
+  border-bottom: 1px solid #000;
 }}
 
 .controls-row {{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
-}}
-
-
-.lyrics-container {{ 
-  height: 70vh;
-  overflow-y: auto;
-  background: white;
-  border-radius: 12px;
-  margin: 0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}}
-.stanza {{ 
-  text-align: justify;
-  padding: 16px 20px;
+  gap: 10px;
   margin-bottom: 8px;
 }}
-.stanza-label {{ 
-  text-align: left;
-  font-size: 15px;
-  font-weight: 600;
-  color: #6e6e73;
-  margin-bottom: 8px;
-}}
-.chorus {{ 
-  text-align: justify;
-  position: sticky;
-  top: 0;
-  background: #fff9e6;
-  padding: 16px 20px;
-  margin: 0;
-  font-style: italic;
-  border-top: 2px solid #ffe680;
-  border-bottom: 2px solid #ffe680;
-  z-index: 10;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+.back-button a {{
+  text-decoration: none;
 }}
 
+.title-row {{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}}
+
+.song-title-text {{
+  text-align: center;
+  flex: 1;
+}}
+
+.nav-btn {{
+  padding: 2px 10px;
+  text-decoration: none;
+  border: 1px solid #000;
+  text-align: center;
+  min-width: 30px;
+}}
+
+.nav-btn.disabled {{
+  border-color: #ccc;
+  color: #ccc;
+  cursor: default;
+}}
 
 .font-controls {{
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 }}
-.font-label {{
-  font-size: 13px;
-  color: #6e6e73;
-  font-weight: 500;
-}}
+
 .font-btn {{
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: #f5f5f7;
-  border-radius: 8px;
+  padding: 2px 8px;
+  border: 1px solid #000;
+  background: none;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  color: #1d1d1f;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }}
-.font-btn:hover {{
-  background: #e5e5e7;
-}}
-.font-btn:active {{
-  transform: scale(0.95);
-}}
+
 .font-size-display {{
-  min-width: 45px;
+  min-width: 40px;
   text-align: center;
-  font-size: 14px;
-  color: #1d1d1f;
-  font-weight: 500;
 }}
+
 .pdf-btn {{
-  padding: 8px 16px;
-  background: #0066cc;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
+  padding: 2px 8px;
+  border: 1px solid #000;
+  background: none;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: inherit;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}}
-.pdf-btn:hover {{
-  background: #0077ed;
-}}
-.pdf-btn:active {{
-  transform: scale(0.98);
 }}
 
-/* Mobile Responsive Styles */
-@media (max-width: 768px) {{
-  body {{
-    padding: 16px 12px;
-    font-size: 16px;
-  }}
-  
-  .page-header {{
-    padding: 14px;
-    margin-bottom: 16px;
-  }}
-  
-  .top-row {{
-    margin-bottom: 10px;
-  }}
-  
-  .back-button a {{
-    padding: 7px 12px;
-    font-size: 13px;
-  }}
-  
-  .title-bar {{
-    gap: 8px;
-  }}
-  
-  .song-title-text {{
-    font-size: 14px;
-    padding: 0 8px;
-  }}
-  
-  .nav-btn {{
-    padding: 7px 12px;
-    font-size: 13px;
-  }}
-  
-  .font-label {{
-    font-size: 12px;
-  }}
-  
-  .font-controls {{
-    gap: 8px;
-  }}
-  
-  .font-btn {{
-    width: 30px;
-    height: 30px;
-    font-size: 15px;
-  }}
-  
-  .font-size-display {{
-    font-size: 13px;
-    min-width: 40px;
-  }}
-  
-  .pdf-btn {{
-    padding: 7px 14px;
-    font-size: 13px;
-    gap: 5px;
-  }}
-  
-  .lyrics-container {{
-    height: 65vh;
-    border-radius: 8px;
-  }}
-  
-  .stanza {{
-    padding: 12px 16px;
-    font-size: 15px;
-    text-align: left;
-  }}
-  
-  .stanza-label {{
-    font-size: 14px;
-    margin-bottom: 6px;
-  }}
-  
-  .chorus {{
-    padding: 12px 16px;
-    font-size: 15px;
-    text-align: left;
-  }}
+.lyrics-container {{
+  padding: 0;
+  position: relative;
 }}
 
-@media (max-width: 600px) {{
-  .title-row {{
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }}
-  
-  .song-title-text {{
-    order: -1;
-    font-size: 15px;
-    padding: 0 8px 8px 8px;
-    text-align: center;
-  }}
-  
-  .back-button {{
-    text-align: center;
-  }}
-  
-  .nav-row {{
-    gap: 10px;
-  }}
-  
-  .nav-btn {{
-    max-width: none;
-  }}
-  
-  .controls-row {{
-    flex-direction: column;
-    gap: 10px;
-  }}
-  
-  .font-controls {{
-    width: 100%;
-    justify-content: center;
-  }}
-  
-  .pdf-btn {{
-    width: 100%;
-    justify-content: center;
-  }}
+.stanza {{
+  margin-bottom: 1em;
+  white-space: pre-line;
 }}
 
-@media (max-width: 480px) {{
-  body {{
-    padding: 12px 10px;
-    font-size: 15px;
-  }}
-  
-  .page-header {{
-    padding: 12px;
-  }}
-  
-  .back-button a {{
-    font-size: 12px;
-    padding: 6px 10px;
-  }}
-  
-  .song-title-text {{
-    font-size: 14px;
-  }}
-  
-  .nav-btn {{
-    font-size: 12px;
-    padding: 6px 12px;
-  }}
-  
-  .lyrics-container {{
-    height: 60vh;
-  }}
-  
-  .stanza {{
-    padding: 10px 12px;
-    font-size: 14px;
-  }}
-  
-  .stanza-label {{
-    font-size: 13px;
-  }}
-  
-  .chorus {{
-    padding: 10px 12px;
-    font-size: 14px;
-  }}
+.stanza.chorus {{
+  position: sticky;
+  top: 90px;
+  background: #fff;
+  margin-left: 0;
+  font-style: italic;
+  padding: 1em;
+  padding-bottom: 2em;
+  margin-bottom: 1em;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  z-index: 10;
 }}
 
 @media print {{
-  body {{
-    background: white;
-    padding: 20px;
+  .page-header {{ display: none; }}
+  body {{ padding: 20px; }}
+  .stanza {{ page-break-inside: avoid; }}
+}}
+
+@media (max-width: 768px) {{
+  body {{ padding: 8px; padding-top: 140px; }}
+  .page-header {{ padding: 8px; }}
+  .controls-row {{ flex-wrap: wrap; gap: 5px; }}
+  .title-row {{ gap: 5px; }}
+  .song-title-text {{ 
+    padding: 5px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
   }}
-  .page-header {{
-    display: none;
-  }}
-  .lyrics-container {{
-    height: auto;
-    box-shadow: none;
+  .stanza.chorus {{
+    top: 110px;
+    padding-bottom: 3em;
   }}
 }}
 </style>
 </head>
 <body>
 <div class="page-header">
-  <div class="title-row">
-    <div class="back-button">
-      <a href="../{category}/index.html">← Back</a>
-    </div>
-    <div class="song-title-text">{song_num} {title}</div>
-  </div>
-  <div class="nav-row">
-    {prev_html}
-    {next_html}
-  </div>
   <div class="controls-row">
+    <div class="back-button">
+      <a href="index.html">← Back</a>
+    </div>
     <div class="font-controls">
-      <span class="font-label">Font:</span>
-      <button class="font-btn" onclick="updateFontSize(-1)" title="Decrease font size">−</button>
+      <button class="font-btn" onclick="updateFontSize(-1)" title="Decrease font size">A−</button>
       <span class="font-size-display" id="font-size-display">17px</span>
-      <button class="font-btn" onclick="updateFontSize(1)" title="Increase font size">+</button>
+      <button class="font-btn" onclick="updateFontSize(1)" title="Increase font size">A+</button>
     </div>
     <button class="pdf-btn" onclick="exportToPDF()" title="Export to PDF">
       <span>📄</span>
       <span>PDF</span>
     </button>
+  </div>
+  <div class="title-row">
+    {prev_html}
+    <div class="song-title-text">{song_num} - {title}</div>
+    {next_html}
   </div>
 </div>
 
@@ -549,17 +313,14 @@ body {{
 {chr(10).join(sections_html)}
 </div>
 <script>
-// Load saved font size from localStorage or use default
-let currentFontSize = parseInt(localStorage.getItem('songFontSize')) || 17;
+// Unified font size management across all pages
+let currentFontSize = parseInt(localStorage.getItem('globalFontSize')) || 17;
 const minSize = 12;
 const maxSize = 32;
 
 // Apply saved font size on page load
 window.addEventListener('DOMContentLoaded', function() {{
-  const stanzas = document.querySelectorAll('.stanza');
-  stanzas.forEach(stanza => {{
-    stanza.style.fontSize = currentFontSize + 'px';
-  }});
+  document.body.style.setProperty('font-size', currentFontSize + 'px', 'important');
   
   const display = document.getElementById('font-size-display');
   if (display) {{
@@ -568,25 +329,19 @@ window.addEventListener('DOMContentLoaded', function() {{
 }});
 
 function updateFontSize(change) {{
-  const newSize = currentFontSize + change;
+  currentFontSize += change;
+  if (currentFontSize < minSize) currentFontSize = minSize;
+  if (currentFontSize > maxSize) currentFontSize = maxSize;
   
-  if (newSize >= minSize && newSize <= maxSize) {{
-    currentFontSize = newSize;
-    
-    // Save to localStorage
-    localStorage.setItem('songFontSize', currentFontSize);
-    
-    // Update all stanzas
-    const stanzas = document.querySelectorAll('.stanza');
-    stanzas.forEach(stanza => {{
-      stanza.style.fontSize = currentFontSize + 'px';
-    }});
-    
-    // Update display
-    const display = document.getElementById('font-size-display');
-    if (display) {{
-      display.textContent = currentFontSize + 'px';
-    }}
+  // Save to localStorage with unified key
+  localStorage.setItem('globalFontSize', currentFontSize);
+  
+  // Update body font size with !important to override CSS
+  document.body.style.setProperty('font-size', currentFontSize + 'px', 'important');
+  
+  const display = document.getElementById('font-size-display');
+  if (display) {{
+    display.textContent = currentFontSize + 'px';
   }}
 }}
 
@@ -681,7 +436,13 @@ def main():
         
         # Get next song number
         song_num = get_next_song_number(category)
-        total_songs = song_num  # This will be the new total
+        
+        # Get current total to properly enable next button on previous song
+        current_total = song_num - 1
+        
+        # After adding this song, total will be song_num
+        # But for generating HTML, we set total higher to enable next button
+        total_songs = song_num + 100  # Allow for future songs
         
         print(f"\n🔢 Assigning song number: {song_num}")
         
@@ -697,6 +458,25 @@ def main():
             f.write(html_content)
         
         print(f"✓ Created: {output_file}")
+        
+        # Update previous song's next button if this isn't the first song
+        if song_num > 1:
+            print(f"\n🔗 Updating previous song's next button...")
+            prev_file = f"{category}/{prefix}-{song_num-1:03d}.html"
+            if os.path.exists(prev_file):
+                with open(prev_file, 'r', encoding='utf-8') as f:
+                    prev_content = f.read()
+                
+                # Replace disabled next button with active one
+                prev_content = prev_content.replace(
+                    '<span class="nav-btn disabled">→</span>',
+                    f'<a href="{prefix}-{song_num:03d}.html" class="nav-btn">→</a>'
+                )
+                
+                with open(prev_file, 'w', encoding='utf-8') as f:
+                    f.write(prev_content)
+                
+                print(f"✓ Updated {prev_file}")
         
         # Update listing page
         print("\n📝 Updating listing page...")
