@@ -154,7 +154,7 @@ def generate_html(song_data, song_num, total_songs):
 body {{
   font-family: monospace;
   font-size: 16px;
-  line-height: 1.4;
+  line-height: 1.1;
   padding: 10px;
   max-width: 800px;
   margin: 0 auto;
@@ -239,6 +239,7 @@ body {{
 
 .lyrics-container {{
   padding: 0;
+  padding-left: 2em;
   position: relative;
 }}
 
