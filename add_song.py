@@ -7,7 +7,7 @@ and automatically adds it to the appropriate listing page.
 
 Text File Format:
 -----------------
-CATEGORY: hindi or english
+CATEGORY: hindi, english, youth camp, special, chorus - english, chorus - hindi, or chorus - youth camp
 TITLE: Song title here
 
 STANZA 1:
@@ -38,17 +38,21 @@ def read_song_file(filepath):
         content = f.read()
     
     # Extract category and title
-    category_match = re.search(r'CATEGORY:\s*(\w+)', content, re.IGNORECASE)
+    category_match = re.search(r'CATEGORY:\s*(.+)', content, re.IGNORECASE)
     title_match = re.search(r'TITLE:\s*(.+)', content)
     
     if not category_match or not title_match:
         raise ValueError("Text file must have CATEGORY and TITLE at the beginning")
     
-    category = category_match.group(1).lower()
+    category = category_match.group(1).strip().lower()
     title = title_match.group(1).strip()
     
-    if category not in ['hindi', 'english']:
-        raise ValueError("CATEGORY must be either 'hindi' or 'english'")
+    # List of supported categories
+    supported_categories = ['hindi', 'english', 'youth camp', 'special', 
+                           'chorus - english', 'chorus - hindi', 'chorus - youth camp']
+    
+    if category not in supported_categories:
+        raise ValueError(f"CATEGORY must be one of: {', '.join(supported_categories)}")
     
     # Extract sections (stanzas and chorus)
     sections = []
@@ -87,13 +91,26 @@ def read_song_file(filepath):
         'sections': sections
     }
 
+def get_category_prefix(category):
+    """Get the file prefix for a category"""
+    prefix_map = {
+        'hindi': 'hin',
+        'english': 'eng',
+        'youth camp': 'yth',
+        'special': 'spc',
+        'chorus - english': 'che',
+        'chorus - hindi': 'chh',
+        'chorus - youth camp': 'chy'
+    }
+    return prefix_map.get(category, category.replace(' ', '-').replace('-', '')[:3])
+
 def get_next_song_number(category):
     """Determine the next available song number"""
     dir_path = category
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
     
-    prefix = 'hin' if category == 'hindi' else 'eng'
+    prefix = get_category_prefix(category)
     
     # Find all existing song files
     existing_files = [f for f in os.listdir(dir_path) if f.startswith(f"{prefix}-") and f.endswith('.html')]
@@ -118,7 +135,7 @@ def generate_html(song_data, song_num, total_songs):
     sections = song_data['sections']
     
     # Determine file names for navigation
-    prefix = 'hin' if category == 'hindi' else 'eng'
+    prefix = get_category_prefix(category)
     
     # Previous/Next buttons (arrow-only style)
     prev_num = song_num - 1 if song_num > 1 else None
@@ -355,26 +372,308 @@ function exportToPDF() {{
     
     return html
 
+def create_listing_page(category):
+    """Create a new listing page for a category"""
+    
+    listing_file = f"{category}/index.html"
+    prefix = get_category_prefix(category)
+    category_title = category.title()
+    
+    html_content = f'''<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{category_title} Songs</title>
+<style>
+* {{ margin: 0; padding: 0; box-sizing: border-box; }}
+body {{ 
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 1.4;
+  padding: 10px;
+  max-width: 900px;
+  margin: 0 auto;
+}}
+.page-header {{
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #000;
+}}
+.controls-row {{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}}
+.back-button a {{
+  text-decoration: none;
+}}
+.title-row {{
+  text-align: center;
+}}
+.page-title {{
+  margin: 0;
+}}
+.font-controls {{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}}
+.font-btn {{
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+  padding: 2px 8px;
+}}
+.font-size-display {{
+  min-width: 40px;
+  text-align: center;
+}}
+.top-section {{
+  margin-bottom: 15px;
+}}
+.search-section {{
+  margin-bottom: 15px;
+}}
+.search-controls {{
+  display: flex;
+  gap: 5px;
+}}
+#search-box {{ 
+  flex: 1;
+  padding: 4px;
+  border: 1px solid #000;
+  font-family: inherit;
+}}
+#reset-btn {{
+  padding: 4px 10px;
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+}}
+.letter-nav-section {{
+  margin-bottom: 15px;
+}}
+.letter-nav-label {{
+  margin-bottom: 5px;
+}}
+#letter-nav {{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}}
+#letter-nav button {{ 
+  padding: 2px 8px;
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}}
+.song-list-container {{
+  border: 1px solid #000;
+  max-height: 500px;
+  overflow-y: auto;
+}}
+ul {{ 
+  list-style: none;
+}}
+li {{ 
+  border-bottom: 1px solid #ccc;
+}}
+li:last-child {{
+  border-bottom: none;
+}}
+li a {{ 
+  display: block;
+  padding: 8px;
+  text-decoration: none;
+}}
+.back-link {{
+  text-align: center;
+  margin-top: 15px;
+}}
+.back-link a {{
+  text-decoration: none;
+}}
+@media (max-width: 768px) {{
+  body {{ padding: 8px; }}
+  .search-controls {{ flex-direction: column; }}
+  #reset-btn {{ width: 100%; }}
+}}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="controls-row">
+    <div class="back-button">
+      <a href="../index.html">← Back</a>
+    </div>
+    <div class="font-controls">
+      <button class="font-btn" onclick="updateFontSize(-1)" title="Decrease font size">A−</button>
+      <span class="font-size-display" id="font-size-display">17px</span>
+      <button class="font-btn" onclick="updateFontSize(1)" title="Increase font size">A+</button>
+    </div>
+  </div>
+  <div class="title-row">
+    <h1 class="page-title">{category_title} Songs</h1>
+  </div>
+</div>
+
+<div class="top-section">
+  <div class="search-section">
+    <div class="search-controls">
+      <input type="text" id="search-box" placeholder="Search or jump to song number">
+      <button id="reset-btn">Reset</button>
+    </div>
+  </div>
+
+  <div class="letter-nav-section">
+    <div class="letter-nav-label">Jump by first letter</div>
+    <div id="letter-nav"></div>
+  </div>
+</div>
+
+<div class="song-list-container">
+<ul id="song-list">
+</ul>
+</div>
+
+<div class="back-link">
+  <a href="../index.html">← Back to All Categories</a>
+</div>
+
+<script>
+const songs = [
+];
+
+function displaySongs(songsToShow) {{
+  const list = document.getElementById('song-list');
+  list.innerHTML = '';
+  songsToShow.forEach(song => {{
+    const li = document.createElement('li');
+    li.innerHTML = `<a href="${{song.file}}">${{song.num}} - ${{song.title}}</a>`;
+    list.appendChild(li);
+  }});
+}}
+
+function generateLetterNav() {{
+  const letters = new Set();
+  songs.forEach(song => {{
+    const firstChar = song.title.charAt(0);
+    letters.add(firstChar);
+  }});
+  
+  const nav = document.getElementById('letter-nav');
+  Array.from(letters).sort().forEach(letter => {{
+    const btn = document.createElement('button');
+    btn.textContent = letter;
+    btn.onclick = () => filterByLetter(letter);
+    nav.appendChild(btn);
+  }});
+}}
+
+function filterByLetter(letter) {{
+  const filtered = songs.filter(song => song.title.startsWith(letter));
+  displaySongs(filtered);
+}}
+
+const searchBox = document.getElementById('search-box');
+searchBox.addEventListener('input', function() {{
+  const query = this.value.toLowerCase();
+  const filtered = songs.filter(song => 
+    song.title.toLowerCase().includes(query) || 
+    song.num.toString().includes(query)
+  );
+  displaySongs(filtered);
+}});
+
+searchBox.addEventListener('keypress', function(e) {{
+  if (e.key === 'Enter') {{
+    const query = this.value.trim();
+    const songNum = parseInt(query);
+    if (!isNaN(songNum) && songNum >= 1 && songNum <= songs.length) {{
+      window.location.href = `{prefix}-${{String(songNum).padStart(3, '0')}}.html`;
+    }}
+  }}
+}});
+
+const resetBtn = document.getElementById('reset-btn');
+resetBtn.addEventListener('click', function() {{
+  searchBox.value = '';
+  displaySongs(songs);
+}});
+
+generateLetterNav();
+
+// Unified font size management across all pages
+let currentFontSize = parseInt(localStorage.getItem('globalFontSize')) || 17;
+const minSize = 12;
+const maxSize = 32;
+
+// Apply saved font size on page load
+window.addEventListener('DOMContentLoaded', function() {{
+  document.body.style.setProperty('font-size', currentFontSize + 'px', 'important');
+  
+  const display = document.getElementById('font-size-display');
+  if (display) {{
+    display.textContent = currentFontSize + 'px';
+  }}
+}});
+
+function updateFontSize(change) {{
+  currentFontSize += change;
+  if (currentFontSize < minSize) currentFontSize = minSize;
+  if (currentFontSize > maxSize) currentFontSize = maxSize;
+  
+  // Save to localStorage with unified key
+  localStorage.setItem('globalFontSize', currentFontSize);
+  
+  // Update body font size with !important to override CSS
+  document.body.style.setProperty('font-size', currentFontSize + 'px', 'important');
+  
+  const display = document.getElementById('font-size-display');
+  if (display) {{
+    display.textContent = currentFontSize + 'px';
+  }}
+}}
+</script>
+
+</body>
+</html>'''
+    
+    with open(listing_file, 'w', encoding='utf-8') as f:
+        f.write(html_content)
+    
+    print(f"✓ Created new listing page: {listing_file}")
+
 def update_listing_page(category, song_num, title):
     """Update the listing page with the new song"""
     
     listing_file = f"{category}/index.html"
-    prefix = 'hin' if category == 'hindi' else 'eng'
+    prefix = get_category_prefix(category)
     
     if not os.path.exists(listing_file):
-        print(f"Warning: {listing_file} not found. Please add the song manually to the listing page.")
-        return
+        print(f"Creating new listing page for {category}...")
+        create_listing_page(category)
     
     with open(listing_file, 'r', encoding='utf-8') as f:
         content = f.read()
     
     # Add to HTML list (before </ul>)
     new_list_item = f'<li><a href="{prefix}-{song_num:03d}.html">{song_num} - {title}</a></li>'
-    content = content.replace('</ul>', f'{new_list_item}\n</ul>')
+    content = content.replace('</ul>', f'{new_list_item}\n</ul>', 1)
     
     # Add to JavaScript array (before ];)
-    new_js_item = f'{{num: {song_num}, title: "{title}", file: "{prefix}-{song_num:03d}.html"}},'
-    content = re.sub(r'(\]\s*;)', f'{new_js_item}\n\\1', content)
+    # Escape any quotes in the title
+    safe_title = title.replace('"', '\\"')
+    new_js_item = f'{{num: {song_num}, title: "{safe_title}", file: "{prefix}-{song_num:03d}.html"}}'
+    
+    # Find the songs array and add the new song before the closing ];
+    # Look for the pattern of the last song entry followed by ];
+    pattern = r'(file: "[^"]+\.html"\})\s*\n\];'
+    replacement = r'\1,\n' + new_js_item + '\n];'
+    content = re.sub(pattern, replacement, content, count=1)
     
     # Update song count in header
     content = re.sub(
@@ -398,7 +697,7 @@ def update_main_index(category, new_count):
         content = f.read()
     
     # Update the song count for the category
-    category_name = 'Hindi' if category == 'hindi' else 'English'
+    category_name = category.title()
     pattern = f'({category_name}.*?<span class="song-count">)\\d+(\\s*songs?</span>)'
     content = re.sub(pattern, f'\\g<1>{new_count}\\g<2>', content, flags=re.IGNORECASE | re.DOTALL)
     
@@ -452,7 +751,7 @@ def main():
         html_content = generate_html(song_data, song_num, total_songs)
         
         # Save the file
-        prefix = 'hin' if category == 'hindi' else 'eng'
+        prefix = get_category_prefix(category)
         output_file = f"{category}/{prefix}-{song_num:03d}.html"
         
         with open(output_file, 'w', encoding='utf-8') as f:

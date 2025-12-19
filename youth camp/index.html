@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Youth Camp Songs</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 1.4;
+  padding: 10px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.page-header {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #000;
+}
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.back-button a {
+  text-decoration: none;
+}
+.title-row {
+  text-align: center;
+}
+.page-title {
+  margin: 0;
+}
+.font-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.font-btn {
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+  padding: 2px 8px;
+}
+.font-size-display {
+  min-width: 40px;
+  text-align: center;
+}
+.top-section {
+  margin-bottom: 15px;
+}
+.search-section {
+  margin-bottom: 15px;
+}
+.search-controls {
+  display: flex;
+  gap: 5px;
+}
+#search-box { 
+  flex: 1;
+  padding: 4px;
+  border: 1px solid #000;
+  font-family: inherit;
+}
+#reset-btn {
+  padding: 4px 10px;
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+}
+.letter-nav-section {
+  margin-bottom: 15px;
+}
+.letter-nav-label {
+  margin-bottom: 5px;
+}
+#letter-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+#letter-nav button { 
+  padding: 2px 8px;
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.song-list-container {
+  border: 1px solid #000;
+  max-height: 500px;
+  overflow-y: auto;
+}
+ul { 
+  list-style: none;
+}
+li { 
+  border-bottom: 1px solid #ccc;
+}
+li:last-child {
+  border-bottom: none;
+}
+li a { 
+  display: block;
+  padding: 8px;
+  text-decoration: none;
+}
+.back-link {
+  text-align: center;
+  margin-top: 15px;
+}
+.back-link a {
+  text-decoration: none;
+}
+@media (max-width: 768px) {
+  body { padding: 8px; }
+  .search-controls { flex-direction: column; }
+  #reset-btn { width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="controls-row">
+    <div class="back-button">
+      <a href="../index.html">← Back</a>
+    </div>
+    <div class="font-controls">
+      <button class="font-btn" onclick="updateFontSize(-1)" title="Decrease font size">A−</button>
+      <span class="font-size-display" id="font-size-display">17px</span>
+      <button class="font-btn" onclick="updateFontSize(1)" title="Increase font size">A+</button>
+    </div>
+  </div>
+  <div class="title-row">
+    <h1 class="page-title">Youth Camp Songs</h1>
+  </div>
+</div>
+
+<div class="top-section">
+  <div class="search-section">
+    <div class="search-controls">
+      <input type="text" id="search-box" placeholder="Search or jump to song number">
+      <button id="reset-btn">Reset</button>
+    </div>
+  </div>
+
+  <div class="letter-nav-section">
+    <div class="letter-nav-label">Jump by first letter</div>
+    <div id="letter-nav"></div>
+  </div>
+</div>
+
+<div class="song-list-container">
+<ul id="song-list">
+<li><a href="yth-001.html">1 - मसीही मुसाफ़िर हम</a></li>
+</ul>
+</div>
+
+<div class="back-link">
+  <a href="../index.html">← Back to All Categories</a>
+</div>
+
+<script>
+const songs = [
+];
+
+function displaySongs(songsToShow) {
+  const list = document.getElementById('song-list');
+  list.innerHTML = '';
+  songsToShow.forEach(song => {
+    const li = document.createElement('li');
+    li.innerHTML = `<a href="${song.file}">${song.num} - ${song.title}</a>`;
+    list.appendChild(li);
+  });
+}
+
+function generateLetterNav() {
+  const letters = new Set();
+  songs.forEach(song => {
+    const firstChar = song.title.charAt(0);
+    letters.add(firstChar);
+  });
+  
+  const nav = document.getElementById('letter-nav');
+  Array.from(letters).sort().forEach(letter => {
+    const btn = document.createElement('button');
+    btn.textContent = letter;
+    btn.onclick = () => filterByLetter(letter);
+    nav.appendChild(btn);
+  });
+}
+
+function filterByLetter(letter) {
+  const filtered = songs.filter(song => song.title.startsWith(letter));
+  displaySongs(filtered);
+}
+
+const searchBox = document.getElementById('search-box');
+searchBox.addEventListener('input', function() {
+  const query = this.value.toLowerCase();
+  const filtered = songs.filter(song => 
+    song.title.toLowerCase().includes(query) || 
+    song.num.toString().includes(query)
+  );
+  displaySongs(filtered);
+});
+
+searchBox.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    const query = this.value.trim();
+    const songNum = parseInt(query);
+    if (!isNaN(songNum) && songNum >= 1 && songNum <= songs.length) {
+      window.location.href = `yth-${String(songNum).padStart(3, '0')}.html`;
+    }
+  }
+});
+
+const resetBtn = document.getElementById('reset-btn');
+resetBtn.addEventListener('click', function() {
+  searchBox.value = '';
+  displaySongs(songs);
+});
+
+generateLetterNav();
+
+// Unified font size management across all pages
+let currentFontSize = parseInt(localStorage.getItem('globalFontSize')) || 17;
+const minSize = 12;
+const maxSize = 32;
+
+// Apply saved font size on page load
+window.addEventListener('DOMContentLoaded', function() {
+  document.body.style.setProperty('font-size', currentFontSize + 'px', 'important');
+  
+  const display = document.getElementById('font-size-display');
+  if (display) {
+    display.textContent = currentFontSize + 'px';
+  }
+});
+
+function updateFontSize(change) {
+  currentFontSize += change;
+  if (currentFontSize < minSize) currentFontSize = minSize;
+  if (currentFontSize > maxSize) currentFontSize = maxSize;
+  
+  // Save to localStorage with unified key
+  localStorage.setItem('globalFontSize', currentFontSize);
+  
+  // Update body font size with !important to override CSS
+  document.body.style.setProperty('font-size', currentFontSize + 'px', 'important');
+  
+  const display = document.getElementById('font-size-display');
+  if (display) {
+    display.textContent = currentFontSize + 'px';
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1 - मसीही मुसाफ़िर हम</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 1.4em;
+  padding: 10px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 120px;
+}
+
+.page-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: 100;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 10px;
+  border-bottom: 1px solid #000;
+}
+
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.back-button a {
+  text-decoration: none;
+}
+
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.song-title-text {
+  text-align: center;
+  flex: 1;
+}
+
+.nav-btn {
+  padding: 2px 10px;
+  text-decoration: none;
+  border: 1px solid #000;
+  text-align: center;
+  min-width: 30px;
+}
+
+.nav-btn.disabled {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: default;
+}
+
+.font-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.font-btn {
+  padding: 2px 8px;
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+}
+
+.font-size-display {
+  min-width: 40px;
+  text-align: center;
+}
+
+.pdf-btn {
+  padding: 2px 8px;
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+}
+
+.lyrics-container {
+  padding: 0;
+  padding-left: 2em;
+  position: relative;
+}
+
+.stanza {
+  margin-bottom: 1em;
+  white-space: pre-line;
+  line-height: 1.6;
+}
+
+.stanza.chorus {
+  position: sticky;
+  top: 90px;
+  background: #fff;
+  margin-left: 0;
+  font-style: italic;
+  padding: 0.5em;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  z-index: 10;
+}
+
+@media print {
+  .page-header { display: none; }
+  body { padding: 20px; }
+  .stanza { page-break-inside: avoid; }
+}
+
+@media (max-width: 768px) {
+  body { padding: 8px; padding-top: 140px; }
+  .page-header { padding: 8px; }
+  .controls-row { flex-wrap: wrap; gap: 5px; }
+  .title-row { gap: 5px; }
+  .song-title-text { 
+    padding: 5px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+  .stanza.chorus {
+    top: 110px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="controls-row">
+    <div class="back-button">
+      <a href="index.html">← Back</a>
+    </div>
+    <div class="font-controls">
+      <button class="font-btn" onclick="updateFontSize(-1)" title="Decrease font size">A−</button>
+      <span class="font-size-display" id="font-size-display">17px</span>
+      <button class="font-btn" onclick="updateFontSize(1)" title="Increase font size">A+</button>
+    </div>
+    <button class="pdf-btn" onclick="exportToPDF()" title="Export to PDF">
+      <span>📄</span>
+      <span>PDF</span>
+    </button>
+  </div>
+  <div class="title-row">
+    <span class="nav-btn disabled">←</span>
+    <div class="song-title-text">1 - मसीही मुसाफ़िर हम</div>
+    <a href="yth-002.html" class="nav-btn">→</a>
+  </div>
+</div>
+
+<div class="lyrics-container">
+<div class="stanza chorus">
+<div class="stanza-label"><b>Chorus</b></div>
+मसीही मुसाफ़िर हम
+सम्मुख प्रभु के रहेंगे हम
+यीशु मसीह के संग संग चलेंगे
+उसकी समानता में बढ़ते रहेंगे (2)
+</div>
+<div class="stanza">
+<div class="stanza-label"><b>1</b></div>
+जीवन है आशा है, और है चाहत
+यीशु मसीह है हमारा चौपान (2)
+</div>
+<div class="stanza">
+<div class="stanza-label"><b>2</b></div>
+मसीही मार्ग में अब चलना सदा
+यीशु मसीह के गवाह बन सदा (2)
+</div>
+<div class="stanza">
+<div class="stanza-label"><b>3</b></div>
+आशीष पाएँगे इस जीवन में
+प्रतिफल पाएँगे हम स्वर्ग में (2)
+</div>
+</div>
+<script>
+// Unified font size management across all pages
+let currentFontSize = parseInt(localStorage.getItem('globalFontSize')) || 17;
+const minSize = 12;
+const maxSize = 32;
+
+// Apply saved font size on page load
+window.addEventListener('DOMContentLoaded', function() {
+  document.body.style.setProperty('font-size', currentFontSize + 'px', 'important');
+  
+  const display = document.getElementById('font-size-display');
+  if (display) {
+    display.textContent = currentFontSize + 'px';
+  }
+});
+
+function updateFontSize(change) {
+  currentFontSize += change;
+  if (currentFontSize < minSize) currentFontSize = minSize;
+  if (currentFontSize > maxSize) currentFontSize = maxSize;
+  
+  // Save to localStorage with unified key
+  localStorage.setItem('globalFontSize', currentFontSize);
+  
+  // Update body font size with !important to override CSS
+  document.body.style.setProperty('font-size', currentFontSize + 'px', 'important');
+  
+  const display = document.getElementById('font-size-display');
+  if (display) {
+    display.textContent = currentFontSize + 'px';
+  }
+}
+
+function exportToPDF() {
+  window.print();
+}
+</script>
+</body>
+</html>
