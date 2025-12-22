@@ -1,0 +1,171 @@
+/**
+ * Listing Page Styles - Song Book App
+ * This file contains styles for category listing pages (english/index.html, hindi/index.html, etc.)
+ * It's provided as a reference/optional external file.
+ */
+
+/* Universal reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Listing page body */
+body {
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 1.4;
+  padding: 10px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Page header area */
+.page-header {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #000;
+}
+
+/* Controls row with back button and font controls */
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.back-button a {
+  text-decoration: none;
+}
+
+/* Title area */
+.title-row {
+  text-align: center;
+}
+
+.page-title {
+  margin: 0;
+}
+
+/* Font controls */
+.font-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.font-btn {
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+  padding: 2px 8px;
+}
+
+.font-size-display {
+  min-width: 40px;
+  text-align: center;
+}
+
+/* Main content sections */
+.top-section {
+  margin-bottom: 15px;
+}
+
+.search-section {
+  margin-bottom: 15px;
+}
+
+/* Search controls */
+.search-controls {
+  display: flex;
+  gap: 5px;
+}
+
+#search-box {
+  flex: 1;
+  padding: 4px;
+  border: 1px solid #000;
+  font-family: inherit;
+}
+
+#reset-btn {
+  padding: 4px 10px;
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+}
+
+/* Letter navigation */
+.letter-nav-section {
+  margin-bottom: 15px;
+}
+
+.letter-nav-label {
+  margin-bottom: 5px;
+}
+
+#letter-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+#letter-nav button {
+  padding: 2px 8px;
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Song list container */
+.song-list-container {
+  border: 1px solid #000;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* List styles */
+ul {
+  list-style: none;
+}
+
+li {
+  border-bottom: 1px solid #ccc;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+li a {
+  display: block;
+  padding: 8px;
+  text-decoration: none;
+}
+
+/* Back link at bottom */
+.back-link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.back-link a {
+  text-decoration: none;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  body {
+    padding: 8px;
+  }
+  .search-controls {
+    flex-direction: column;
+  }
+  #reset-btn {
+    width: 100%;
+  }
+}
+
