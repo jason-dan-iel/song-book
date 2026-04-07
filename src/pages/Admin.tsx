@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 import { SongForm } from '../components/SongForm'
@@ -63,6 +63,7 @@ function AdminPanel() {
   const [error, setError] = useState<string | null>(null)
   const [editing, setEditing] = useState<Song | null>(null)
   const [adding, setAdding] = useState(false)
+  const formRef = useRef<HTMLDivElement>(null)
 
   async function loadSongs() {
     setLoading(true)
@@ -122,20 +123,22 @@ function AdminPanel() {
         </button>
       )}
 
-      {adding && (
-        <SongForm
-          onSave={handleSave}
-          onCancel={() => setAdding(false)}
-        />
-      )}
+      <div ref={formRef}>
+        {adding && (
+          <SongForm
+            onSave={handleSave}
+            onCancel={() => setAdding(false)}
+          />
+        )}
 
-      {editing && (
-        <SongForm
-          initial={editing}
-          onSave={handleSave}
-          onCancel={() => setEditing(null)}
-        />
-      )}
+        {editing && (
+          <SongForm
+            initial={editing}
+            onSave={handleSave}
+            onCancel={() => setEditing(null)}
+          />
+        )}
+      </div>
 
       {error && <p className="error-msg">{error}</p>}
       {loading ? (
@@ -158,7 +161,11 @@ function AdminPanel() {
                 <td>{s.title}</td>
                 <td style={{ whiteSpace: 'nowrap' }}>
                   <button
-                    onClick={() => { setAdding(false); setEditing(s) }}
+                    onClick={() => {
+                      setAdding(false)
+                      setEditing(s)
+                      setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
+                    }}
                     style={{ marginRight: 4 }}
                   >
                     Edit
