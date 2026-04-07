@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { StickyChorus } from '../components/StickyChorus'
 import { useSong, useSongsByCategory } from '../hooks/useSongs'
 import type { Category } from '../types'
 
@@ -34,7 +33,6 @@ export function SongDetail() {
   if (!song) return <p>Song not found.</p>
 
   const catLabel = cat === 'youth-camp' ? 'Youth Camp' : cat.charAt(0).toUpperCase() + cat.slice(1)
-  const chorusStanza = song.stanzas.find((s) => s.is_chorus)
 
   return (
     <div style={{ fontSize }}>
@@ -55,14 +53,12 @@ export function SongDetail() {
 
       <div className="song-title">{song.number}. {song.title}</div>
 
-      {song.stanzas.filter((s) => !s.is_chorus).map((stanza, i) => (
-        <div key={i} className="stanza">
+      {song.stanzas.map((stanza, i) => (
+        <div key={i} className={stanza.is_chorus ? 'stanza stanza-chorus' : 'stanza'}>
           <div className="stanza-label">{stanza.label}</div>
           {stanza.text}
         </div>
       ))}
-
-      {chorusStanza && <StickyChorus label={chorusStanza.label} text={chorusStanza.text} />}
     </div>
   )
 }
