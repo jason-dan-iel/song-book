@@ -1,11 +1,10 @@
-const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
-
 interface Props {
+  letters: string[]
   active: string
   onChange: (letter: string) => void
 }
 
-export function LetterFilter({ active, onChange }: Props) {
+export function LetterFilter({ letters, active, onChange }: Props) {
   return (
     <div className="letter-filter">
       <button
@@ -14,7 +13,7 @@ export function LetterFilter({ active, onChange }: Props) {
       >
         All
       </button>
-      {LETTERS.map((l) => (
+      {letters.map((l) => (
         <button
           key={l}
           className={active === l ? 'active' : ''}

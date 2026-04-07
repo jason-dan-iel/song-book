@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Category, Song } from '../types'
+import type { Category, Song, Stanza } from '../types'
 
 interface Props {
   initial?: Partial<Song>
@@ -7,18 +7,20 @@ interface Props {
     category: Category
     number: number
     title: string
-    chorus: string | null
-    stanzas: string[]
+    stanzas: Stanza[]
   }) => Promise<void>
   onCancel: () => void
 }
+
+const emptyStanza = (): Stanza => ({ label: '', text: '', is_chorus: false })
 
 export function SongForm({ initial, onSave, onCancel }: Props) {
   const [category, setCategory] = useState<Category>(initial?.category ?? 'english')
   const [number, setNumber] = useState(initial?.number?.toString() ?? '')
   const [title, setTitle] = useState(initial?.title ?? '')
-  const [chorus, setChorus] = useState(initial?.chorus ?? '')
-  const [stanzas, setStanzas] = useState<string[]>(initial?.stanzas?.length ? initial.stanzas : [''])
+  const [stanzas, setStanzas] = useState<Stanza[]>(
+    initial?.stanzas?.length ? initial.stanzas : [emptyStanza()]
+  )
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -36,8 +38,9 @@ export function SongForm({ initial, onSave, onCancel }: Props) {
         category,
         number: num,
         title: title.trim(),
-        chorus: chorus.trim() || null,
-        stanzas: stanzas.map((s) => s.trim()).filter(Boolean),
+        stanzas: stanzas
+          .map((s) => ({ ...s, label: s.label.trim(), text: s.text.trim() }))
+          .filter((s) => s.text),
       })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Save failed')
@@ -45,12 +48,12 @@ export function SongForm({ initial, onSave, onCancel }: Props) {
     }
   }
 
-  function updateStanza(i: number, val: string) {
-    setStanzas((prev) => prev.map((s, idx) => (idx === i ? val : s)))
+  function updateStanza(i: number, patch: Partial<Stanza>) {
+    setStanzas((prev) => prev.map((s, idx) => (idx === i ? { ...s, ...patch } : s)))
   }
 
   function addStanza() {
-    setStanzas((prev) => [...prev, ''])
+    setStanzas((prev) => [...prev, emptyStanza()])
   }
 
   function removeStanza(i: number) {
@@ -88,21 +91,35 @@ export function SongForm({ initial, onSave, onCancel }: Props) {
       </div>
 
       <div className="form-row">
-        <label>Chorus (optional)</label>
-        <textarea rows={3} value={chorus} onChange={(e) => setChorus(e.target.value)} />
-      </div>
-
-      <div className="form-row">
-        <label>Stanzas</label>
+        <label>Stanzas (in order — check "Chorus" on chorus stanzas)</label>
         {stanzas.map((s, i) => (
-          <div key={i} className="stanza-row">
-            <textarea
-              rows={4}
-              value={s}
-              placeholder={`Stanza ${i + 1}`}
-              onChange={(e) => updateStanza(i, e.target.value)}
-            />
-            <button type="button" className="danger" onClick={() => removeStanza(i)}>×</button>
+          <div key={i} className="stanza-row" style={{ marginBottom: 10 }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ display: 'flex', gap: 8, marginBottom: 4, alignItems: 'center' }}>
+                <input
+                  style={{ width: 80 }}
+                  placeholder="Label"
+                  value={s.label}
+                  onChange={(e) => updateStanza(i, { label: e.target.value })}
+                />
+                <label style={{ fontWeight: 'normal', display: 'flex', gap: 4, alignItems: 'center' }}>
+                  <input
+                    type="checkbox"
+                    style={{ width: 'auto' }}
+                    checked={s.is_chorus}
+                    onChange={(e) => updateStanza(i, { is_chorus: e.target.checked })}
+                  />
+                  Chorus
+                </label>
+                <button type="button" className="danger" onClick={() => removeStanza(i)}>×</button>
+              </div>
+              <textarea
+                rows={4}
+                value={s.text}
+                placeholder={s.is_chorus ? 'Chorus text' : `Stanza ${i + 1} text`}
+                onChange={(e) => updateStanza(i, { text: e.target.value })}
+              />
+            </div>
           </div>
         ))}
         <button type="button" onClick={addStanza}>+ Add stanza</button>

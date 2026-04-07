@@ -82,8 +82,7 @@ function AdminPanel() {
     category: Category
     number: number
     title: string
-    chorus: string | null
-    stanzas: string[]
+    stanzas: import('../types').Stanza[]
   }) {
     const row = {
       ...data,

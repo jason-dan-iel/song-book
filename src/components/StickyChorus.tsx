@@ -1,11 +1,12 @@
 interface Props {
+  label: string
   text: string
 }
 
-export function StickyChorus({ text }: Props) {
+export function StickyChorus({ label, text }: Props) {
   return (
     <div className="chorus-sticky">
-      <div className="chorus-label">Chorus</div>
+      <div className="chorus-label">{label}</div>
       {text}
     </div>
   )

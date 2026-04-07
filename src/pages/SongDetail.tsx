@@ -33,10 +33,13 @@ export function SongDetail() {
   if (error) return <p className="error-msg">{error}</p>
   if (!song) return <p>Song not found.</p>
 
+  const catLabel = cat === 'youth-camp' ? 'Youth Camp' : cat.charAt(0).toUpperCase() + cat.slice(1)
+  const chorusStanza = song.stanzas.find((s) => s.is_chorus)
+
   return (
     <div style={{ fontSize }}>
       <div className="song-nav">
-        <Link to={`/c/${cat}`}>← {cat === 'youth-camp' ? 'Youth Camp' : cat.charAt(0).toUpperCase() + cat.slice(1)}</Link>
+        <Link to={`/c/${cat}`}>← {catLabel}</Link>
         {prevSong
           ? <Link to={`/c/${cat}/${prevSong.number}`}>← {prevSong.number}</Link>
           : <span style={{ color: '#aaa' }}>←</span>}
@@ -52,14 +55,14 @@ export function SongDetail() {
 
       <div className="song-title">{song.number}. {song.title}</div>
 
-      {song.chorus && <StickyChorus text={song.chorus} />}
-
       {song.stanzas.map((stanza, i) => (
-        <div key={i} className="stanza">
-          <div className="stanza-label">{i + 1}</div>
-          {stanza}
+        <div key={i} className={stanza.is_chorus ? 'stanza stanza-chorus' : 'stanza'}>
+          <div className="stanza-label">{stanza.label}</div>
+          {stanza.text}
         </div>
       ))}
+
+      {chorusStanza && <StickyChorus label={chorusStanza.label} text={chorusStanza.text} />}
     </div>
   )
 }

@@ -160,6 +160,12 @@ label {
   margin-bottom: 4px;
 }
 
+.stanza-chorus {
+  background: #fffbe6;
+  border-left: 3px solid #aaa;
+  padding-left: 8px;
+}
+
 .chorus-sticky {
   background: #ffffe0;
   border-top: 2px solid #888;
