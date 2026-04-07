@@ -246,36 +246,20 @@ label {
 }
 
 .stanza-chorus {
+  position: sticky;
+  top: 0;
   background: #fffbe6;
-  border-left: 3px solid #f0b429;
+  border-top: 2px solid #f0b429;
+  border-bottom: 2px solid #f0b429;
   padding: 10px 12px;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0;
+  z-index: 10;
 }
 
 .stanza-chorus .stanza-label {
   color: #b07d00;
 }
 
-/* Sticky chorus */
-.chorus-sticky {
-  background: #fffbe6;
-  border-top: 2px solid #f0b429;
-  padding: 10px 12px;
-  white-space: pre-wrap;
-  line-height: 1.7;
-  position: sticky;
-  bottom: 0;
-  font-size: 0.95em;
-}
-
-.chorus-label {
-  font-weight: 700;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #b07d00;
-  margin-bottom: 4px;
-}
 
 .font-controls {
   display: flex;
@@ -289,18 +273,6 @@ label {
   min-width: 32px;
   text-align: center;
   color: #666;
-}
-
-@media (min-width: 769px) {
-  .chorus-sticky {
-    position: sticky;
-    top: 50px;
-    bottom: auto;
-    border-top: none;
-    border: 1px solid #f0d070;
-    border-radius: 4px;
-    margin-bottom: 18px;
-  }
 }
 
 /* Admin */

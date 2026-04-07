@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { Category, Song, Stanza } from '../types'
+import { CATEGORIES } from '../categories'
 
 interface Props {
   initial?: Partial<Song>
@@ -68,9 +69,9 @@ export function SongForm({ initial, onSave, onCancel }: Props) {
       <div className="form-row">
         <label>Category</label>
         <select value={category} onChange={(e) => setCategory(e.target.value as Category)}>
-          <option value="english">English</option>
-          <option value="hindi">Hindi</option>
-          <option value="youth-camp">Youth Camp</option>
+          {CATEGORIES.map((c) => (
+            <option key={c.key} value={c.key}>{c.label}</option>
+          ))}
         </select>
       </div>
 

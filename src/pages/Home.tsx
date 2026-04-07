@@ -1,10 +1,5 @@
 import { Link } from 'react-router-dom'
-
-const CATEGORIES = [
-  { key: 'english', label: 'English' },
-  { key: 'hindi', label: 'Hindi' },
-  { key: 'youth-camp', label: 'Youth Camp' },
-]
+import { CATEGORIES } from '../categories'
 
 export function Home() {
   return (
