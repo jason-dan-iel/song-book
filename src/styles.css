@@ -1,0 +1,293 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  background: #fff;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+a {
+  color: #00f;
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #551a8b;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+button {
+  border: 1px solid #888;
+  background: #eee;
+  padding: 4px 8px;
+  border-radius: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+button:hover {
+  background: #ddd;
+}
+
+button.danger {
+  border-color: #a00;
+  color: #a00;
+}
+
+button.danger:hover {
+  background: #fdd;
+}
+
+button.primary {
+  background: #c0d8f0;
+  border-color: #369;
+}
+
+button.primary:hover {
+  background: #a8c8e8;
+}
+
+input, select, textarea {
+  border: 1px solid #888;
+  padding: 4px 6px;
+  font-family: inherit;
+  font-size: 13px;
+  border-radius: 0;
+  width: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
+label {
+  display: block;
+  margin-bottom: 2px;
+  font-weight: bold;
+}
+
+/* Navbar */
+.navbar {
+  border-bottom: 2px solid #000;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar .site-title {
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+  color: #000;
+}
+
+.navbar .site-title:visited {
+  color: #000;
+}
+
+/* Category list page */
+.category-heading {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-transform: capitalize;
+}
+
+.letter-filter {
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.letter-filter button {
+  padding: 2px 6px;
+  min-width: 24px;
+}
+
+.letter-filter button.active {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.song-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.song-list li {
+  padding: 3px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* Song detail page */
+.song-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.song-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 8px 0 14px 0;
+}
+
+.stanza {
+  margin-bottom: 16px;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+
+.stanza-label {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.chorus-sticky {
+  background: #ffffe0;
+  border-top: 2px solid #888;
+  padding: 8px;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  position: sticky;
+  bottom: 0;
+}
+
+.chorus-label {
+  font-weight: bold;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.font-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.font-size-display {
+  font-size: 12px;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Home page */
+.home-categories {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.home-categories li {
+  padding: 8px 0;
+  border-bottom: 1px solid #ccc;
+  font-size: 15px;
+}
+
+/* Admin page */
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+td, th {
+  border: 1px solid #ccc;
+  padding: 4px 6px;
+  text-align: left;
+}
+
+th {
+  background: #f0f0f0;
+}
+
+.form-section {
+  border: 1px solid #ccc;
+  padding: 12px;
+  margin-bottom: 16px;
+  background: #fafafa;
+}
+
+.form-section h3 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+}
+
+.form-row {
+  margin-bottom: 10px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.stanza-row {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.stanza-row textarea {
+  flex: 1;
+}
+
+.login-form {
+  max-width: 320px;
+  margin: 40px auto;
+}
+
+.login-form h2 {
+  margin-bottom: 16px;
+}
+
+.error-msg {
+  color: #a00;
+  margin-bottom: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .chorus-sticky {
+    bottom: 0;
+  }
+}
+
+@media (min-width: 769px) {
+  .chorus-sticky {
+    position: sticky;
+    top: 50px;
+    bottom: auto;
+    border-top: none;
+    border: 1px solid #ccc;
+    margin-bottom: 16px;
+  }
+}

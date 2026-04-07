@@ -1,3 +1,7 @@
 01.py
 lyrics/combine-songs.js
 test.ipynb
+node_modules
+dist
+.env
+.env.local
