@@ -55,8 +55,8 @@ export function SongDetail() {
 
       <div className="song-title">{song.number}. {song.title}</div>
 
-      {song.stanzas.map((stanza, i) => (
-        <div key={i} className={stanza.is_chorus ? 'stanza stanza-chorus' : 'stanza'}>
+      {song.stanzas.filter((s) => !s.is_chorus).map((stanza, i) => (
+        <div key={i} className="stanza">
           <div className="stanza-label">{stanza.label}</div>
           {stanza.text}
         </div>

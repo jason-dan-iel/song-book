@@ -245,16 +245,6 @@ label {
   margin-bottom: 4px;
 }
 
-.stanza-chorus {
-  background: #fffbe6;
-  border-left: 3px solid #f0b429;
-  padding: 10px 12px;
-  border-radius: 0 4px 4px 0;
-}
-
-.stanza-chorus .stanza-label {
-  color: #b07d00;
-}
 
 /* Sticky chorus */
 .chorus-sticky {
