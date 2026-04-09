@@ -337,6 +337,8 @@ label {
   align-items: center;
   min-width: 24px;
   border-left: 1px solid var(--border);
+  position: relative;   /* contains the absolute bubble */
+  touch-action: none;   /* prevents browser scroll hijacking drag */
 }
 
 .alpha-sidebar button {
@@ -351,6 +353,7 @@ label {
   line-height: 1.6;
   width: 100%;
   text-align: center;
+  transition: transform 0.08s ease-out, font-size 0.08s ease-out;
 }
 
 .alpha-sidebar button:hover {
@@ -361,6 +364,30 @@ label {
   background: var(--header);
   color: #fff;
   font-size: 11px;
+}
+
+.alpha-sidebar button.neighbour {
+  transform: scale(1.15);
+  color: var(--header);
+}
+
+.alpha-bubble {
+  position: absolute;
+  right: 28px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50% 50% 50% 4px;
+  background: var(--header);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(61,120,112,0.35);
+  pointer-events: none;
+  z-index: 10;
+  user-select: none;
 }
 
 /* Song detail */
