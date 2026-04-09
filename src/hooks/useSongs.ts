@@ -64,3 +64,25 @@ export function invalidateCache(category?: Category) {
   if (category) delete cache[category]
   else Object.keys(cache).forEach((k) => delete cache[k])
 }
+
+export function useSongCount(category: Category): number | null {
+  const [count, setCount] = useState<number | null>(
+    cache[category] ? cache[category].length : null
+  )
+
+  useEffect(() => {
+    if (cache[category]) {
+      setCount(cache[category].length)
+      return
+    }
+    supabase
+      .from('songs')
+      .select('*', { count: 'exact', head: true })
+      .eq('category', category)
+      .then(({ count: c, error }) => {
+        if (!error && c !== null) setCount(c)
+      })
+  }, [category])
+
+  return count
+}
