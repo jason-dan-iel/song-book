@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { LetterFilter } from '../components/LetterFilter'
+import { AlphaSidebar } from '../components/AlphaSidebar'
 import { useSongsByCategory } from '../hooks/useSongs'
 import type { Category, Song } from '../types'
 
@@ -40,34 +40,45 @@ export function CategoryList() {
 
   return (
     <div>
-      <p className="category-heading">
-        <Link to="/">←</Link> {label}
-      </p>
+      <div className="page-header">
+        <Link to="/" className="back-arrow">←</Link>
+        <span className="page-title">{label}</span>
+      </div>
 
-      <input
-        type="search"
-        placeholder="Search by title or number…"
-        value={search}
-        onChange={(e) => { setSearch(e.target.value); setFilter('All') }}
-        style={{ marginBottom: 8, width: '100%', maxWidth: 320 }}
-      />
+      <div className="search-strip">
+        <input
+          type="search"
+          placeholder="Search by title or number…"
+          value={search}
+          onChange={(e) => { setSearch(e.target.value); setFilter('All') }}
+        />
+      </div>
 
-      <LetterFilter letters={letters} active={filter} onChange={(l) => { setFilter(l); setSearch('') }} />
+      {loading && <p style={{ padding: '12px 16px' }}>Loading…</p>}
+      {error && <p className="error-msg" style={{ margin: '12px 16px' }}>{error}</p>}
 
-      {loading && <p>Loading…</p>}
-      {error && <p className="error-msg">{error}</p>}
+      <div className="list-body">
+        <ul className="song-list">
+          {visible.map((s) => (
+            <li key={s.id}>
+              <Link to={`/c/${cat}/${s.number}`}>
+                {s.number}. {s.title}
+              </Link>
+            </li>
+          ))}
+          {!loading && visible.length === 0 && (
+            <li style={{ padding: '12px 16px', color: '#aaa', fontSize: 14 }}>No songs found.</li>
+          )}
+        </ul>
 
-      <ul className="song-list">
-        {visible.map((s) => (
-          <li key={s.id}>
-            <Link to={`/c/${cat}/${s.number}`}>
-              {s.number}. {s.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
-
-      {!loading && visible.length === 0 && <p>No songs found.</p>}
+        {!loading && letters.length > 0 && (
+          <AlphaSidebar
+            letters={letters}
+            active={filter}
+            onChange={(l) => { setFilter(l); setSearch('') }}
+          />
+        )}
+      </div>
     </div>
   )
 }
