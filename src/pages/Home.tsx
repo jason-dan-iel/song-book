@@ -3,8 +3,8 @@ import { CATEGORIES } from '../categories'
 import { useSongCount } from '../hooks/useSongs'
 import type { Category } from '../types'
 
-function CategoryRow({ categoryKey, label }: { categoryKey: string; label: string }) {
-  const count = useSongCount(categoryKey as Category)
+function CategoryRow({ categoryKey, label }: { categoryKey: Category; label: string }) {
+  const count = useSongCount(categoryKey)
   return (
     <div className="cat-row">
       <Link to={`/c/${categoryKey}`}>
