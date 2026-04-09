@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useCallback } from 'react'
+import React, { useState, useMemo, useRef, useCallback, useLayoutEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { AlphaSidebar } from '../components/AlphaSidebar'
 import { useSongsByCategory } from '../hooks/useSongs'
@@ -25,6 +25,21 @@ export function CategoryList() {
   const [search, setSearch] = useState('')
   const [activeLetter, setActiveLetter] = useState('')
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({})
+  const bandRef = useRef<HTMLDivElement>(null)
+  const outerRef = useRef<HTMLDivElement>(null)
+
+  // Measure the sticky band and expose its height as --band-h so group-headers
+  // and the sidebar always stick flush to it, whatever the actual rendered height is
+  useLayoutEffect(() => {
+    const band = bandRef.current
+    const outer = outerRef.current
+    if (!band || !outer) return
+    const update = () => outer.style.setProperty('--band-h', band.offsetHeight + 'px')
+    update()
+    const ro = new ResizeObserver(update)
+    ro.observe(band)
+    return () => ro.disconnect()
+  }, [])
 
   // Group songs by first letter of title; '#' first, then A–Z
   const grouped = useMemo(() => {
@@ -48,25 +63,28 @@ export function CategoryList() {
   const handleSidebarChange = useCallback((letter: string) => {
     setActiveLetter(letter)
     const el = sectionRefs.current[letter]
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    if (!el) return
+    const bandH = bandRef.current?.offsetHeight ?? 102
+    window.scrollTo(0, Math.max(0, el.offsetTop - bandH))
   }, [])
 
   const label = cat === 'youth-camp' ? 'Youth Camp' : cat.charAt(0).toUpperCase() + cat.slice(1)
 
   return (
-    <div>
-      <div className="page-header">
-        <Link to="/" className="back-arrow">←</Link>
-        <span className="page-title">{label}</span>
-      </div>
-
-      <div className="search-strip">
-        <input
-          type="search"
-          placeholder="Search by title or number…"
-          value={search}
-          onChange={(e) => { setSearch(e.target.value); setActiveLetter('') }}
-        />
+    <div ref={outerRef}>
+      <div className="sticky-band" ref={bandRef}>
+        <div className="page-header">
+          <Link to="/" className="back-arrow">←</Link>
+          <span className="page-title">{label}</span>
+        </div>
+        <div className="search-strip">
+          <input
+            type="search"
+            placeholder="Search by title or number…"
+            value={search}
+            onChange={(e) => { setSearch(e.target.value); setActiveLetter('') }}
+          />
+        </div>
       </div>
 
       {loading && <p style={{ padding: '12px 16px' }}>Loading…</p>}
@@ -76,10 +94,15 @@ export function CategoryList() {
         <ul className="song-list">
           {grouped.map(({ letter, songs: groupSongs }) => (
             <React.Fragment key={letter}>
+              {/* Static anchor — not sticky, so offsetTop is always the true document position */}
+              <li
+                ref={el => { sectionRefs.current[letter] = el }}
+                className="alpha-anchor"
+                aria-hidden="true"
+              />
               <li
                 className="alpha-group-header"
                 data-letter={letter}
-                ref={el => { sectionRefs.current[letter] = el }}
               >
                 {letter}
               </li>

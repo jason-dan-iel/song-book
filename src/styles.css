@@ -1,14 +1,16 @@
 :root {
-  --header:      #3d7870;
-  --accent:      #5a9e97;
-  --light:       #e4f4f2;
-  --lighter:     #f0faf9;
-  --lightest:    #f7fdfc;
-  --border:      #daeeed;
-  --page:        #fafefe;
-  --text-accent: #3d7870;
-  --badge-bg:    #e4f4f2;
-  --badge-text:  #2d6560;
+  --header:      #2d6b62;
+  --accent:      #4a9189;
+  --light:       #dff0ed;
+  --lighter:     #ecf8f6;
+  --lightest:    #f4fbfa;
+  --border:      #cde6e3;
+  --page:        #fbf9f6;
+  --text-accent: #2d6b62;
+  --badge-bg:    #dff0ed;
+  --badge-text:  #1c4a43;
+  --gold:        #9a6c2a;
+  --text-primary: #1a2e2c;
 }
 
 * {
@@ -16,10 +18,10 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 15px;
-  color: #222;
-  background: #e8efee;
+  color: var(--text-primary);
+  background: #dce8e6;
   margin: 0;
   padding: 0;
 }
@@ -32,6 +34,7 @@ body {
   padding: 0 0 40px;
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
+  box-shadow: 0 0 40px rgba(45,107,98,0.08);
 }
 
 a {
@@ -122,22 +125,27 @@ label {
 .app-header {
   background: var(--header);
   color: #fff;
-  padding: 16px 16px 14px;
+  padding: 18px 16px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .app-header .app-title {
-  font-size: 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
   font-weight: 700;
-  letter-spacing: -0.3px;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
 }
 
 .app-header .app-subtitle {
-  font-size: 12px;
-  opacity: 0.72;
-  margin-top: 3px;
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.68;
+  margin-top: 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .app-header-admin,
@@ -242,70 +250,82 @@ label {
 
 /* Home page */
 .home-body {
-  padding: 10px 12px;
+  padding: 14px 14px;
 }
 
 .cat-row {
   border: 1px solid var(--border);
-  border-radius: 8px;
-  margin-bottom: 8px;
+  border-radius: 10px;
+  margin-bottom: 9px;
   background: #fff;
   cursor: pointer;
-  transition: background 0.12s;
+  transition: background 0.14s, box-shadow 0.14s;
+  box-shadow: 0 1px 3px rgba(45,107,98,0.06);
 }
 
 .cat-row:hover {
-  background: var(--lighter);
+  background: var(--lightest);
+  box-shadow: 0 2px 8px rgba(45,107,98,0.1);
 }
 
 .cat-row a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 16px;
+  padding: 15px 16px;
   text-decoration: none;
 }
 
 .cat-name {
   font-size: 15px;
   font-weight: 600;
-  color: var(--text-accent);
+  color: var(--text-primary);
 }
 
 .cat-badge {
-  font-size: 12px;
+  font-size: 11px;
+  font-weight: 700;
   background: var(--badge-bg);
   color: var(--badge-text);
   border-radius: 10px;
-  padding: 2px 10px;
-  font-weight: 600;
+  padding: 3px 10px;
+  letter-spacing: 0.02em;
 }
 
 
-/* Category list */
+/* Category list — sticky band holds page-header + search as one unit */
+.sticky-band {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+/* Neutralise the individual sticky on page-header when it lives inside the band */
+.sticky-band .page-header {
+  position: relative;
+}
+
 .search-strip {
-  padding: 10px 12px;
+  padding: 10px 14px;
   background: var(--lighter);
   border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 48px;
-  z-index: 15;
 }
 
 .search-strip input {
   width: 100%;
   background: #fff;
   border: 1.5px solid var(--border);
-  border-radius: 8px;
-  padding: 9px 12px;
+  border-radius: 20px;
+  padding: 9px 16px;
   font-size: 14px;
-  color: #333;
+  font-family: 'Nunito', sans-serif;
+  color: var(--text-primary);
 }
 
 .search-strip input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(90,158,151,0.15);
+  box-shadow: 0 0 0 2px rgba(74,145,137,0.15);
 }
 
 .list-body {
@@ -322,42 +342,56 @@ label {
 }
 
 .song-list li {
-  padding: 12px 16px;
-  border-bottom: 1px solid #f3f8f7;
+  padding: 11px 16px;
+  border-bottom: 1px solid #eaf3f1;
   line-height: 1.4;
 }
 
 .song-list li:hover {
-  background: var(--lighter);
+  background: var(--lightest);
 }
 
 .song-list li a {
   display: block;
   font-size: 14px;
   font-weight: 500;
-  color: var(--text-accent);
+  color: var(--text-primary);
   text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
+/* Zero-height static anchor before each group header — gives reliable offsetTop for scroll targeting */
+.song-list li.alpha-anchor {
+  height: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  list-style: none;
+  pointer-events: none;
+  display: block;
 }
 
 .song-list li.alpha-group-header {
   position: sticky;
-  top: 108px;
+  top: var(--band-h, 102px);
   background: var(--lighter);
-  padding: 3px 16px;
-  font-size: 11px;
+  padding: 4px 16px 3px;
+  font-family: 'Cormorant Garamond', system-ui, serif;
+  font-size: 18px;
   font-weight: 700;
-  color: var(--header);
+  color: var(--gold);
+  letter-spacing: 0.01em;
   border-bottom: 1px solid var(--border);
   list-style: none;
   z-index: 5;
-  scroll-margin-top: 112px;
+  scroll-margin-top: var(--band-h, 102px);
 }
 
 /* Alpha sidebar track — full-height column that fills alongside the list */
 .alpha-sidebar-track {
-  width: 28px;
+  width: 30px;
   flex-shrink: 0;
-  background: var(--light);
+  background: linear-gradient(to bottom, var(--lighter) 0%, var(--light) 100%);
   border-left: 1px solid var(--border);
 }
 
@@ -368,10 +402,11 @@ label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 28px;
+  width: 30px;
   position: sticky;
-  top: calc(50vh - 160px);
-  max-height: 70vh;
+  top: var(--band-h, 102px);
+  max-height: calc(100vh - var(--band-h, 102px) - 8px);
+  overflow: visible;
   z-index: 10;
   touch-action: none;
 }
@@ -379,49 +414,42 @@ label {
 .alpha-sidebar button {
   background: none;
   border: none;
-  padding: 2px 6px;
-  font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--badge-text);
   cursor: pointer;
   border-radius: 4px;
-  line-height: 1.6;
   width: 100%;
   text-align: center;
-  transition: transform 0.08s ease-out, font-size 0.08s ease-out;
-}
-
-.alpha-sidebar button:hover {
-  background: var(--border);
+  flex-shrink: 0;
+  /* Spring easing: letters snap into scale with a slight overshoot */
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity  0.18s ease-out,
+              background 0.12s ease;
 }
 
 .alpha-sidebar button.active {
   background: var(--header);
   color: #fff;
-  font-size: 11px;
-}
-
-.alpha-sidebar button.neighbour {
-  transform: scale(1.15);
-  color: var(--header);
+  border-radius: 4px;
 }
 
 .alpha-bubble {
   position: absolute;
-  right: 28px;
-  width: 52px;
-  height: 52px;
-  border-radius: 50% 50% 50% 4px;
+  right: 34px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50% 50% 50% 6px;
   background: var(--header);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
+  font-family: 'Cormorant Garamond', system-ui, serif;
+  font-size: 34px;
   font-weight: 700;
-  box-shadow: 0 4px 16px rgba(61,120,112,0.35);
+  box-shadow: 0 8px 24px rgba(45,107,98,0.45), 0 2px 6px rgba(45,107,98,0.2);
   pointer-events: none;
-  z-index: 10;
+  z-index: 20;
   user-select: none;
 }
 
