@@ -28,7 +28,7 @@ export function AlphaSidebar({ letters, active, onChange }: Props) {
     const { height } = el.getBoundingClientRect()
     const slotHeight = height / letters.length
     const idx = letters.indexOf(letter)
-    return idx * slotHeight + slotHeight / 2 - 26
+    return Math.max(0, Math.min(height - 52, idx * slotHeight + slotHeight / 2 - 26))
   }, [letters])
 
   const handlePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
@@ -43,14 +43,14 @@ export function AlphaSidebar({ letters, active, onChange }: Props) {
   }, [letterAtY, bubbleTopForLetter, onChange])
 
   const handlePointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    if (!dragging) return
+    if (!dragLetterRef.current) return
     const letter = letterAtY(e.clientY)
     if (!letter || letter === dragLetterRef.current) return
     dragLetterRef.current = letter
     setDragLetter(letter)
     setBubbleTop(bubbleTopForLetter(letter))
     onChange(letter)
-  }, [dragging, letterAtY, bubbleTopForLetter, onChange])
+  }, [letterAtY, bubbleTopForLetter, onChange])
 
   const handlePointerUp = useCallback(() => {
     dragLetterRef.current = null
