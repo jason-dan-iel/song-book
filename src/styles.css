@@ -140,20 +140,22 @@ label {
   margin-top: 3px;
 }
 
-.app-header-admin {
+.app-header-admin,
+.app-header-admin:visited {
   font-size: 11px;
   font-weight: 600;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.85);
   text-decoration: none;
-  padding: 4px 8px;
-  border: 1px solid rgba(255,255,255,0.25);
+  padding: 4px 10px;
+  border: 1px solid rgba(255,255,255,0.45);
   border-radius: 5px;
   align-self: flex-start;
 }
 
 .app-header-admin:hover {
   color: #fff;
-  border-color: rgba(255,255,255,0.55);
+  border-color: rgba(255,255,255,0.8);
+  text-decoration: none;
 }
 
 /* Page header (CategoryList, SongDetail) */
@@ -339,7 +341,7 @@ label {
 
 .song-list li.alpha-group-header {
   position: sticky;
-  top: 100px;
+  top: 108px;
   background: var(--lighter);
   padding: 3px 16px;
   font-size: 11px;
@@ -348,7 +350,7 @@ label {
   border-bottom: 1px solid var(--border);
   list-style: none;
   z-index: 5;
-  scroll-margin-top: 104px;
+  scroll-margin-top: 112px;
 }
 
 /* Alpha sidebar */
@@ -361,10 +363,9 @@ label {
   width: 28px;
   border-left: 1px solid var(--border);
   border-radius: 8px 0 0 8px;
-  position: fixed;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  position: sticky;
+  top: calc(50vh - 160px);
+  align-self: flex-start;
   max-height: 70vh;
   z-index: 10;
   touch-action: none;
@@ -651,22 +652,48 @@ tr:hover td {
   flex: 1;
 }
 
+.login-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 48px 24px;
+  min-height: calc(100vh - 48px);
+  background: var(--page);
+}
+
 .login-form {
-  max-width: 320px;
-  margin: 56px auto;
-  padding: 28px 24px;
+  width: 100%;
+  max-width: 360px;
+  padding: 32px 28px;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: #fff;
-  box-shadow: 0 4px 20px rgba(61,120,112,0.08);
+  box-shadow: 0 4px 24px rgba(61,120,112,0.1);
 }
 
 .login-form h2 {
-  margin: 0 0 24px;
-  font-size: 18px;
+  margin: 0 0 28px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--header);
   text-align: center;
+}
+
+.login-form .form-row {
+  margin-bottom: 18px;
+}
+
+.login-form .form-row input {
+  padding: 10px 12px;
+  font-size: 15px;
+  border-color: var(--border);
+}
+
+.login-form button[type="submit"] {
+  width: 100%;
+  padding: 11px;
+  font-size: 15px;
+  margin-top: 8px;
 }
 
 .error-msg {

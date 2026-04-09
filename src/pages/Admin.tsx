@@ -19,8 +19,18 @@ export function Admin() {
     return () => subscription.unsubscribe()
   }, [])
 
-  if (loadingSession) return <p>Loading…</p>
-  if (!session) return <LoginForm />
+  if (loadingSession) return <p style={{ padding: 16 }}>Loading…</p>
+  if (!session) return (
+    <div>
+      <div className="page-header">
+        <Link to="/" className="back-arrow">←</Link>
+        <span className="page-title">Admin</span>
+      </div>
+      <div className="login-wrap">
+        <LoginForm />
+      </div>
+    </div>
+  )
   return <AdminPanel />
 }
 
