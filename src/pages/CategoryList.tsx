@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef, useCallback, useLayoutEffect } from '
 import { useParams, Link } from 'react-router-dom'
 import { AlphaSidebar } from '../components/AlphaSidebar'
 import { useSongsByCategory } from '../hooks/useSongs'
+import { CATEGORIES } from '../categories'
 import type { Category, Song } from '../types'
 
 function firstChar(title: string): string {
@@ -68,7 +69,7 @@ export function CategoryList() {
     window.scrollTo(0, Math.max(0, el.offsetTop - bandH))
   }, [])
 
-  const label = cat === 'youth-camp' ? 'Youth Camp' : cat.charAt(0).toUpperCase() + cat.slice(1)
+  const label = CATEGORIES.find(c => c.key === cat)?.label ?? cat
 
   return (
     <div ref={outerRef}>

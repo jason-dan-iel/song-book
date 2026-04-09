@@ -13,4 +13,5 @@ export const CATEGORIES: CategoryMeta[] = [
   { key: 'chorus-hindi',       label: 'Chorus — Hindi' },
   { key: 'yc-chorus-hindi',    label: 'YC Chorus — Hindi' },
   { key: 'yc-chorus-english',  label: 'YC Chorus — English' },
+  { key: 'special',            label: 'Special Songs' },
 ]
