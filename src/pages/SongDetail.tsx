@@ -28,22 +28,17 @@ export function SongDetail() {
   const prevSong = songs.find((s) => s.number === num - 1)
   const nextSong = songs.find((s) => s.number === num + 1)
 
-  if (loading) return <p>Loading…</p>
-  if (error) return <p className="error-msg">{error}</p>
-  if (!song) return <p>Song not found.</p>
-
   const catLabel = cat === 'youth-camp' ? 'Youth Camp' : cat.charAt(0).toUpperCase() + cat.slice(1)
 
+  if (loading) return <p style={{ padding: '16px' }}>Loading…</p>
+  if (error) return <p className="error-msg" style={{ margin: '16px' }}>{error}</p>
+  if (!song) return <p style={{ padding: '16px' }}>Song not found.</p>
+
   return (
-    <div style={{ fontSize }}>
-      <div className="song-nav">
-        <Link to={`/c/${cat}`}>← {catLabel}</Link>
-        {prevSong
-          ? <Link to={`/c/${cat}/${prevSong.number}`}>← {prevSong.number}</Link>
-          : <span style={{ color: '#aaa' }}>←</span>}
-        {nextSong
-          ? <Link to={`/c/${cat}/${nextSong.number}`}>{nextSong.number} →</Link>
-          : <span style={{ color: '#aaa' }}>→</span>}
+    <div>
+      <div className="song-header">
+        <Link to={`/c/${cat}`} className="back-link">← {catLabel}</Link>
+        <span className="song-num">#{song.number}</span>
         <div className="font-controls">
           <button onClick={() => setFontSize((s) => Math.max(10, s - 1))}>A−</button>
           <span className="font-size-display">{fontSize}px</span>
@@ -51,14 +46,27 @@ export function SongDetail() {
         </div>
       </div>
 
-      <div className="song-title">{song.number}. {song.title}</div>
+      <div className="song-title-area">
+        <div className="song-title" style={{ fontSize: fontSize + 4 }}>{song.title}</div>
+      </div>
 
-      {song.stanzas.map((stanza, i) => (
-        <div key={i} className={stanza.is_chorus ? 'stanza stanza-chorus' : 'stanza'}>
-          <div className="stanza-label">{stanza.label}</div>
-          {stanza.text}
-        </div>
-      ))}
+      <div className="song-body" style={{ fontSize }}>
+        {song.stanzas.map((stanza, i) => (
+          <div key={i} className={stanza.is_chorus ? 'stanza stanza-chorus' : 'stanza'}>
+            <div className="stanza-label">{stanza.label}</div>
+            {stanza.text}
+          </div>
+        ))}
+      </div>
+
+      <div className="bottom-nav">
+        {prevSong
+          ? <Link to={`/c/${cat}/${prevSong.number}`} className="nav-btn prev">← {prevSong.number}</Link>
+          : <button className="nav-btn prev" disabled>←</button>}
+        {nextSong
+          ? <Link to={`/c/${cat}/${nextSong.number}`} className="nav-btn next">{nextSong.number} →</Link>
+          : <button className="nav-btn next" disabled>→</button>}
+      </div>
     </div>
   )
 }
