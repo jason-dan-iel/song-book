@@ -1,0 +1,212 @@
+<h2>Indigo vs Teal — Full App</h2>
+<p class="subtitle">Same layout, two color directions. Both use the sidebar index filter.</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:20px">
+
+  <!-- INDIGO -->
+  <div class="card" data-choice="indigo" onclick="toggleSelect(this)" style="cursor:pointer">
+    <div class="card-body">
+      <div style="font-weight:700;font-size:13px;color:#312e81;margin-bottom:14px;text-align:center">Option 2 — Indigo / Violet</div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+
+        <!-- Home -->
+        <div>
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#aaa;text-align:center;margin-bottom:4px">Home</div>
+          <div style="background:#f5f3ff;border-radius:12px;border:2px solid #c4b5fd;overflow:hidden;width:120px;box-shadow:0 2px 6px rgba(99,102,241,0.12)">
+            <div style="background:#312e81;color:#fff;padding:10px 10px 8px">
+              <div style="font-size:12px;font-weight:700">Song Book</div>
+              <div style="font-size:8px;opacity:0.7;margin-top:1px">Brethren Assembly Jodhpur</div>
+            </div>
+            <div style="padding:6px;background:#fff">
+              <div style="border:1px solid #ede9fe;border-radius:6px;padding:8px 8px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:10px;font-weight:600;color:#4f46e5">English</span>
+                <span style="font-size:8px;background:#ede9fe;color:#6d28d9;border-radius:8px;padding:1px 6px;font-weight:600">324</span>
+              </div>
+              <div style="border:1px solid #ede9fe;border-radius:6px;padding:8px 8px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:10px;font-weight:600;color:#4f46e5">Hindi</span>
+                <span style="font-size:8px;background:#ede9fe;color:#6d28d9;border-radius:8px;padding:1px 6px;font-weight:600">210</span>
+              </div>
+              <div style="border:1px solid #ede9fe;border-radius:6px;padding:8px 8px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:10px;font-weight:600;color:#4f46e5">Youth Camp</span>
+                <span style="font-size:8px;background:#ede9fe;color:#6d28d9;border-radius:8px;padding:1px 6px;font-weight:600">86</span>
+              </div>
+              <div style="border:1px solid #ede9fe;border-radius:6px;padding:8px 8px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:10px;font-weight:600;color:#4f46e5">Chorus — EN</span>
+                <span style="font-size:8px;background:#ede9fe;color:#6d28d9;border-radius:8px;padding:1px 6px;font-weight:600">54</span>
+              </div>
+              <div style="border:1px solid #ede9fe;border-radius:6px;padding:8px 8px;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:10px;font-weight:600;color:#4f46e5">Chorus — HI</span>
+                <span style="font-size:8px;background:#ede9fe;color:#6d28d9;border-radius:8px;padding:1px 6px;font-weight:600">48</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Song List -->
+        <div>
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#aaa;text-align:center;margin-bottom:4px">Song List</div>
+          <div style="background:#f5f3ff;border-radius:12px;border:2px solid #c4b5fd;overflow:hidden;width:120px;box-shadow:0 2px 6px rgba(99,102,241,0.12)">
+            <div style="background:#312e81;color:#fff;padding:8px 10px;display:flex;align-items:center;gap:6px">
+              <span style="font-size:11px">←</span>
+              <span style="font-size:11px;font-weight:700">English</span>
+            </div>
+            <div style="padding:5px 6px;background:#f5f3ff;border-bottom:1px solid #ede9fe">
+              <div style="background:#fff;border:1.5px solid #c4b5fd;border-radius:6px;padding:5px 8px;font-size:9px;color:#aaa">🔍 Search…</div>
+            </div>
+            <div style="display:flex;background:#fff">
+              <div style="flex:1;padding:0">
+                <div style="padding:8px 8px;border-bottom:1px solid #f3f4f6;font-size:9px;color:#4f46e5">1. A Mighty Fortress</div>
+                <div style="padding:8px 8px;border-bottom:1px solid #f3f4f6;font-size:9px;color:#4f46e5">2. Abide with Me</div>
+                <div style="padding:8px 8px;border-bottom:1px solid #f3f4f6;font-size:9px;color:#4f46e5">3. All Creatures</div>
+                <div style="padding:8px 8px;border-bottom:1px solid #f3f4f6;font-size:9px;color:#4f46e5">4. Amazing Grace</div>
+                <div style="padding:8px 8px;font-size:9px;color:#4f46e5">5. As the Deer</div>
+              </div>
+              <!-- sidebar index -->
+              <div style="background:#ede9fe;padding:4px 4px;display:flex;flex-direction:column;gap:1px;justify-content:center;min-width:16px">
+                <div style="font-size:7px;font-weight:700;color:#6d28d9;text-align:center">A</div>
+                <div style="font-size:7px;color:#a78bfa;text-align:center">B</div>
+                <div style="font-size:7px;color:#a78bfa;text-align:center">C</div>
+                <div style="font-size:7px;color:#a78bfa;text-align:center">D</div>
+                <div style="font-size:7px;color:#a78bfa;text-align:center">E</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Song Detail -->
+        <div>
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#aaa;text-align:center;margin-bottom:4px">Song Detail</div>
+          <div style="background:#f5f3ff;border-radius:12px;border:2px solid #c4b5fd;overflow:hidden;width:120px;box-shadow:0 2px 6px rgba(99,102,241,0.12)">
+            <div style="background:#312e81;color:#fff;padding:7px 10px;display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:9px">← English</span>
+              <span style="font-size:9px;font-weight:700">#42</span>
+              <span style="font-size:8px;opacity:0.8">A− A+</span>
+            </div>
+            <div style="background:#fff;padding:8px 10px 3px">
+              <div style="font-size:11px;font-weight:700;color:#111">Amazing Grace</div>
+            </div>
+            <div style="background:#fff;padding:3px 10px;min-height:110px">
+              <div style="font-size:7px;font-weight:700;text-transform:uppercase;color:#a78bfa;letter-spacing:0.05em;margin-bottom:2px">Verse 1</div>
+              <div style="font-size:8px;line-height:1.6;color:#374151">Amazing grace how sweet the sound
+That saved a wretch like me…</div>
+              <div style="background:#fdf4ff;border-top:2px solid #d946ef;border-bottom:2px solid #d946ef;padding:5px 6px;margin:6px -10px;font-size:8px;line-height:1.5;color:#374151">
+                <div style="font-size:7px;font-weight:700;text-transform:uppercase;color:#a21caf;margin-bottom:1px">Chorus</div>
+                To God be the glory…
+              </div>
+            </div>
+            <div style="display:flex;border-top:2px solid #ede9fe">
+              <button style="flex:1;padding:9px;font-size:10px;border:none;border-right:1px solid #ede9fe;background:#f5f3ff;cursor:pointer;color:#4f46e5;font-weight:500">← 41</button>
+              <button style="flex:1;padding:9px;font-size:10px;border:none;background:#312e81;color:#fff;cursor:pointer;font-weight:600">43 →</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <p style="font-size:11px;color:#6d28d9;margin-top:12px;text-align:center">Rich, spiritual feel. Distinct from typical apps.</p>
+    </div>
+  </div>
+
+  <!-- TEAL -->
+  <div class="card" data-choice="teal" onclick="toggleSelect(this)" style="cursor:pointer">
+    <div class="card-body">
+      <div style="font-weight:700;font-size:13px;color:#134e4a;margin-bottom:14px;text-align:center">Option 4 — Teal / Emerald</div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+
+        <!-- Home -->
+        <div>
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#aaa;text-align:center;margin-bottom:4px">Home</div>
+          <div style="background:#f0fdf4;border-radius:12px;border:2px solid #6ee7b7;overflow:hidden;width:120px;box-shadow:0 2px 6px rgba(13,148,136,0.12)">
+            <div style="background:#134e4a;color:#fff;padding:10px 10px 8px">
+              <div style="font-size:12px;font-weight:700">Song Book</div>
+              <div style="font-size:8px;opacity:0.7;margin-top:1px">Brethren Assembly Jodhpur</div>
+            </div>
+            <div style="padding:6px;background:#fff">
+              <div style="border:1px solid #ccfbf1;border-radius:6px;padding:8px 8px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:10px;font-weight:600;color:#0d9488">English</span>
+                <span style="font-size:8px;background:#ccfbf1;color:#0f766e;border-radius:8px;padding:1px 6px;font-weight:600">324</span>
+              </div>
+              <div style="border:1px solid #ccfbf1;border-radius:6px;padding:8px 8px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:10px;font-weight:600;color:#0d9488">Hindi</span>
+                <span style="font-size:8px;background:#ccfbf1;color:#0f766e;border-radius:8px;padding:1px 6px;font-weight:600">210</span>
+              </div>
+              <div style="border:1px solid #ccfbf1;border-radius:6px;padding:8px 8px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:10px;font-weight:600;color:#0d9488">Youth Camp</span>
+                <span style="font-size:8px;background:#ccfbf1;color:#0f766e;border-radius:8px;padding:1px 6px;font-weight:600">86</span>
+              </div>
+              <div style="border:1px solid #ccfbf1;border-radius:6px;padding:8px 8px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:10px;font-weight:600;color:#0d9488">Chorus — EN</span>
+                <span style="font-size:8px;background:#ccfbf1;color:#0f766e;border-radius:8px;padding:1px 6px;font-weight:600">54</span>
+              </div>
+              <div style="border:1px solid #ccfbf1;border-radius:6px;padding:8px 8px;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:10px;font-weight:600;color:#0d9488">Chorus — HI</span>
+                <span style="font-size:8px;background:#ccfbf1;color:#0f766e;border-radius:8px;padding:1px 6px;font-weight:600">48</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Song List -->
+        <div>
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#aaa;text-align:center;margin-bottom:4px">Song List</div>
+          <div style="background:#f0fdf4;border-radius:12px;border:2px solid #6ee7b7;overflow:hidden;width:120px;box-shadow:0 2px 6px rgba(13,148,136,0.12)">
+            <div style="background:#134e4a;color:#fff;padding:8px 10px;display:flex;align-items:center;gap:6px">
+              <span style="font-size:11px">←</span>
+              <span style="font-size:11px;font-weight:700">English</span>
+            </div>
+            <div style="padding:5px 6px;background:#f0fdf4;border-bottom:1px solid #ccfbf1">
+              <div style="background:#fff;border:1.5px solid #6ee7b7;border-radius:6px;padding:5px 8px;font-size:9px;color:#aaa">🔍 Search…</div>
+            </div>
+            <div style="display:flex;background:#fff">
+              <div style="flex:1;padding:0">
+                <div style="padding:8px 8px;border-bottom:1px solid #f0fdf4;font-size:9px;color:#0d9488">1. A Mighty Fortress</div>
+                <div style="padding:8px 8px;border-bottom:1px solid #f0fdf4;font-size:9px;color:#0d9488">2. Abide with Me</div>
+                <div style="padding:8px 8px;border-bottom:1px solid #f0fdf4;font-size:9px;color:#0d9488">3. All Creatures</div>
+                <div style="padding:8px 8px;border-bottom:1px solid #f0fdf4;font-size:9px;color:#0d9488">4. Amazing Grace</div>
+                <div style="padding:8px 8px;font-size:9px;color:#0d9488">5. As the Deer</div>
+              </div>
+              <!-- sidebar index -->
+              <div style="background:#ccfbf1;padding:4px 4px;display:flex;flex-direction:column;gap:1px;justify-content:center;min-width:16px">
+                <div style="font-size:7px;font-weight:700;color:#0f766e;text-align:center">A</div>
+                <div style="font-size:7px;color:#6ee7b7;text-align:center">B</div>
+                <div style="font-size:7px;color:#6ee7b7;text-align:center">C</div>
+                <div style="font-size:7px;color:#6ee7b7;text-align:center">D</div>
+                <div style="font-size:7px;color:#6ee7b7;text-align:center">E</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Song Detail -->
+        <div>
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#aaa;text-align:center;margin-bottom:4px">Song Detail</div>
+          <div style="background:#f0fdf4;border-radius:12px;border:2px solid #6ee7b7;overflow:hidden;width:120px;box-shadow:0 2px 6px rgba(13,148,136,0.12)">
+            <div style="background:#134e4a;color:#fff;padding:7px 10px;display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:9px">← English</span>
+              <span style="font-size:9px;font-weight:700">#42</span>
+              <span style="font-size:8px;opacity:0.8">A− A+</span>
+            </div>
+            <div style="background:#fff;padding:8px 10px 3px">
+              <div style="font-size:11px;font-weight:700;color:#111">Amazing Grace</div>
+            </div>
+            <div style="background:#fff;padding:3px 10px;min-height:110px">
+              <div style="font-size:7px;font-weight:700;text-transform:uppercase;color:#6ee7b7;letter-spacing:0.05em;margin-bottom:2px">Verse 1</div>
+              <div style="font-size:8px;line-height:1.6;color:#374151">Amazing grace how sweet the sound
+That saved a wretch like me…</div>
+              <div style="background:#f0fdf4;border-top:2px solid #0d9488;border-bottom:2px solid #0d9488;padding:5px 6px;margin:6px -10px;font-size:8px;line-height:1.5;color:#374151">
+                <div style="font-size:7px;font-weight:700;text-transform:uppercase;color:#0f766e;margin-bottom:1px">Chorus</div>
+                To God be the glory…
+              </div>
+            </div>
+            <div style="display:flex;border-top:2px solid #ccfbf1">
+              <button style="flex:1;padding:9px;font-size:10px;border:none;border-right:1px solid #ccfbf1;background:#f0fdf4;cursor:pointer;color:#0d9488;font-weight:500">← 41</button>
+              <button style="flex:1;padding:9px;font-size:10px;border:none;background:#134e4a;color:#fff;cursor:pointer;font-weight:600">43 →</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <p style="font-size:11px;color:#0f766e;margin-top:12px;text-align:center">Calm, fresh. Easy on eyes for long reading sessions.</p>
+    </div>
+  </div>
+
+</div>

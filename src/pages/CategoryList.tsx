@@ -1,6 +1,6 @@
-import { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { LetterFilter } from '../components/LetterFilter'
+import { AlphaSidebar } from '../components/AlphaSidebar'
 import { useSongsByCategory } from '../hooks/useSongs'
 import type { Category, Song } from '../types'
 
@@ -22,52 +22,91 @@ export function CategoryList() {
   const { category } = useParams<{ category: string }>()
   const cat = (category ?? 'english') as Category
   const { songs, loading, error } = useSongsByCategory(cat)
-  const [filter, setFilter] = useState('All')
   const [search, setSearch] = useState('')
+  const [activeLetter, setActiveLetter] = useState('')
+  const sectionRefs = useRef<Record<string, HTMLElement | null>>({})
 
-  const letters = useMemo(() => {
-    const set = new Set<string>()
-    for (const s of songs) set.add(firstChar(s.title))
-    return [...set].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
-  }, [songs])
+  // Group songs by first letter of title; '#' first, then A–Z
+  const grouped = useMemo(() => {
+    const map = new Map<string, Song[]>()
+    for (const s of songs) {
+      if (!matchesSearch(s, search)) continue
+      const letter = firstChar(s.title)
+      if (!map.has(letter)) map.set(letter, [])
+      map.get(letter)!.push(s)
+    }
+    const sortedKeys = [...map.keys()].sort((a, b) => {
+      if (a === '#') return -1
+      if (b === '#') return 1
+      return a.localeCompare(b, undefined, { sensitivity: 'base' })
+    })
+    return sortedKeys.map(letter => ({ letter, songs: map.get(letter)! }))
+  }, [songs, search])
 
-  const visible = songs.filter((s) => {
-    const letterMatch = filter === 'All' || firstChar(s.title) === filter
-    return letterMatch && matchesSearch(s, search)
-  })
+  const letters = useMemo(() => grouped.map(g => g.letter), [grouped])
+
+  const handleSidebarChange = useCallback((letter: string) => {
+    setActiveLetter(letter)
+    const el = sectionRefs.current[letter]
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [])
 
   const label = cat === 'youth-camp' ? 'Youth Camp' : cat.charAt(0).toUpperCase() + cat.slice(1)
 
   return (
     <div>
-      <p className="category-heading">
-        <Link to="/">←</Link> {label}
-      </p>
+      <div className="page-header">
+        <Link to="/" className="back-arrow">←</Link>
+        <span className="page-title">{label}</span>
+      </div>
 
-      <input
-        type="search"
-        placeholder="Search by title or number…"
-        value={search}
-        onChange={(e) => { setSearch(e.target.value); setFilter('All') }}
-        style={{ marginBottom: 8, width: '100%', maxWidth: 320 }}
-      />
+      <div className="search-strip">
+        <input
+          type="search"
+          placeholder="Search by title or number…"
+          value={search}
+          onChange={(e) => { setSearch(e.target.value); setActiveLetter('') }}
+        />
+      </div>
 
-      <LetterFilter letters={letters} active={filter} onChange={(l) => { setFilter(l); setSearch('') }} />
+      {loading && <p style={{ padding: '12px 16px' }}>Loading…</p>}
+      {error && <p className="error-msg" style={{ margin: '12px 16px' }}>{error}</p>}
 
-      {loading && <p>Loading…</p>}
-      {error && <p className="error-msg">{error}</p>}
+      <div className="list-body">
+        <ul className="song-list">
+          {grouped.map(({ letter, songs: groupSongs }) => (
+            <React.Fragment key={letter}>
+              <li
+                className="alpha-group-header"
+                data-letter={letter}
+                ref={el => { sectionRefs.current[letter] = el }}
+              >
+                {letter}
+              </li>
+              {groupSongs.map((s) => (
+                <li key={s.id}>
+                  <Link to={`/c/${cat}/${s.number}`}>
+                    {s.number}. {s.title}
+                  </Link>
+                </li>
+              ))}
+            </React.Fragment>
+          ))}
+          {!loading && grouped.length === 0 && (
+            <li style={{ padding: '12px 16px', color: '#aaa', fontSize: 14 }}>No songs found.</li>
+          )}
+        </ul>
 
-      <ul className="song-list">
-        {visible.map((s) => (
-          <li key={s.id}>
-            <Link to={`/c/${cat}/${s.number}`}>
-              {s.number}. {s.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
-
-      {!loading && visible.length === 0 && <p>No songs found.</p>}
+        {!loading && letters.length > 0 && (
+          <div className="alpha-sidebar-track">
+            <AlphaSidebar
+              letters={letters}
+              active={activeLetter}
+              onChange={handleSidebarChange}
+            />
+          </div>
+        )}
+      </div>
     </div>
   )
 }

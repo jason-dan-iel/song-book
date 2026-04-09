@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 import { SongForm } from '../components/SongForm'
@@ -18,8 +19,18 @@ export function Admin() {
     return () => subscription.unsubscribe()
   }, [])
 
-  if (loadingSession) return <p>Loading…</p>
-  if (!session) return <LoginForm />
+  if (loadingSession) return <p style={{ padding: 16 }}>Loading…</p>
+  if (!session) return (
+    <div>
+      <div className="page-header">
+        <Link to="/" className="back-arrow">←</Link>
+        <span className="page-title">Admin</span>
+      </div>
+      <div className="login-wrap">
+        <LoginForm />
+      </div>
+    </div>
+  )
   return <AdminPanel />
 }
 
@@ -113,14 +124,18 @@ function AdminPanel() {
   return (
     <div>
       <div className="admin-header">
-        <h2 style={{ margin: 0, fontSize: 15 }}>Admin</h2>
+        <div className="admin-header-left">
+          <Link to="/" className="back-arrow">←</Link>
+          <h2>Admin</h2>
+        </div>
         <button onClick={handleLogout}>Logout</button>
       </div>
 
+      <div className="admin-body">
       {!adding && !editing && (
-        <button className="primary" onClick={() => setAdding(true)} style={{ marginBottom: 12 }}>
-          + Add song
-        </button>
+        <div className="admin-add-bar">
+          <button className="primary" onClick={() => setAdding(true)}>+ Add song</button>
+        </div>
       )}
 
       <div ref={formRef}>
@@ -144,7 +159,7 @@ function AdminPanel() {
       {loading ? (
         <p>Loading…</p>
       ) : (
-        <table>
+        <div className="table-scroll"><table>
           <thead>
             <tr>
               <th>Cat</th>
@@ -166,7 +181,7 @@ function AdminPanel() {
                       setEditing(s)
                       setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
                     }}
-                    style={{ marginRight: 4 }}
+                    style={{ marginRight: 6 }}
                   >
                     Edit
                   </button>
@@ -175,8 +190,9 @@ function AdminPanel() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table></div>
       )}
+      </div>
     </div>
   )
 }

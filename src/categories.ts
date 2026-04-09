@@ -1,5 +1,7 @@
+import type { Category } from './types'
+
 export interface CategoryMeta {
-  key: string
+  key: Category
   label: string
 }
 

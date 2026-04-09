@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f2f2f2; padding: 24px; color: #222; }
+
+  h1 { font-size: 16px; font-weight: 700; margin-bottom: 4px; color: #111; }
+  .sub { font-size: 12px; color: #888; margin-bottom: 24px; }
+
+  .screens { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+
+  .screen-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .screen-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #888; }
+
+  /* Phone frame */
+  .phone {
+    width: 220px;
+    border-radius: 28px;
+    border: 3px solid #555;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    position: relative;
+  }
+
+  /* ---- COLORS ---- */
+  :root {
+    --header: #3d7870;
+    --accent: #5a9e97;
+    --light: #e4f4f2;
+    --lighter: #f0faf9;
+    --border: #daeeed;
+    --page: #fafefe;
+    --text-accent: #3d7870;
+    --badge-bg: #e4f4f2;
+    --badge-text: #2d6560;
+  }
+
+  /* ---- HEADER ---- */
+  .app-header {
+    background: var(--header);
+    color: #fff;
+    padding: 14px 16px 12px;
+  }
+  .app-header .title { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+  .app-header .subtitle { font-size: 11px; opacity: 0.7; margin-top: 2px; }
+
+  .page-header {
+    background: var(--header);
+    color: #fff;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .page-header .back { font-size: 18px; line-height: 1; opacity: 0.9; }
+  .page-header .page-title { font-size: 15px; font-weight: 700; flex: 1; }
+
+  .song-header {
+    background: var(--header);
+    color: #fff;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .song-header .back-link { font-size: 12px; opacity: 0.9; }
+  .song-header .num { font-size: 13px; font-weight: 700; }
+  .song-header .font-ctrl { font-size: 11px; opacity: 0.85; display: flex; gap: 5px; align-items: center; }
+
+  /* ---- HOME ---- */
+  .cat-list { padding: 10px; background: #fff; }
+  .cat-row {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 13px 14px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .cat-row:last-child { margin-bottom: 0; }
+  .cat-row:hover { background: var(--lighter); }
+  .cat-name { font-size: 14px; font-weight: 600; color: var(--text-accent); }
+  .cat-badge {
+    font-size: 11px;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    border-radius: 10px;
+    padding: 2px 9px;
+    font-weight: 600;
+  }
+  .home-footer { padding: 12px 16px; text-align: right; border-top: 1px solid var(--border); background: #fff; }
+  .home-footer a { font-size: 11px; color: #aaa; text-decoration: none; }
+
+  /* ---- SEARCH BAR ---- */
+  .search-bar { padding: 10px 12px; background: var(--lighter); border-bottom: 1px solid var(--border); }
+  .search-input {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #aaa;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ---- SONG LIST + SIDEBAR ---- */
+  .list-body { display: flex; background: #fff; }
+  .song-list-items { flex: 1; overflow: hidden; }
+  .song-row {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f3f8f7;
+    font-size: 13px;
+    color: var(--text-accent);
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .song-row:hover { background: var(--lighter); }
+
+  .alpha-sidebar {
+    background: var(--light);
+    padding: 8px 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    min-width: 22px;
+    justify-content: center;
+  }
+  .alpha-letter {
+    font-size: 9px;
+    color: var(--badge-text);
+    font-weight: 600;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+  .alpha-letter.active { color: var(--header); font-weight: 800; font-size: 10px; }
+
+  /* ---- SONG DETAIL ---- */
+  .song-content { padding: 12px 16px; background: #fff; min-height: 240px; }
+  .song-title-text { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 16px; line-height: 1.3; }
+
+  .stanza-block { margin-bottom: 16px; }
+  .stanza-lbl {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: #bbb; margin-bottom: 5px;
+  }
+  .stanza-text { font-size: 13px; line-height: 1.75; color: #333; white-space: pre-wrap; }
+
+  .chorus-block {
+    background: var(--light);
+    border-top: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    padding: 10px 14px;
+    margin: 0 -16px 16px;
+  }
+  .chorus-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 4px; }
+  .chorus-text { font-size: 13px; line-height: 1.75; color: #333; white-space: pre-wrap; }
+
+  /* ---- BOTTOM NAV ---- */
+  .bottom-nav {
+    display: flex;
+    border-top: 2px solid var(--border);
+    background: #fff;
+  }
+  .nav-btn {
+    flex: 1;
+    padding: 14px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: inherit;
+  }
+  .nav-btn.prev { background: var(--lighter); color: var(--text-accent); border-right: 1px solid var(--border); }
+  .nav-btn.next { background: var(--header); color: #fff; }
+  .nav-btn:disabled { opacity: 0.35; cursor: default; }
+</style>
+</head>
+<body>
+
+<h1>Song Book — Final Design</h1>
+<p class="sub">Soft Teal palette · Sidebar index · Contextual headers · All 3 screens</p>
+
+<div class="screens">
+
+  <!-- SCREEN 1: HOME -->
+  <div class="screen-wrap">
+    <div class="screen-label">① Home</div>
+    <div class="phone">
+      <div class="app-header">
+        <div class="title">Song Book</div>
+        <div class="subtitle">Brethren Assembly Jodhpur</div>
+      </div>
+      <div class="cat-list">
+        <div class="cat-row">
+          <span class="cat-name">English</span>
+          <span class="cat-badge">324</span>
+        </div>
+        <div class="cat-row">
+          <span class="cat-name">Hindi</span>
+          <span class="cat-badge">210</span>
+        </div>
+        <div class="cat-row">
+          <span class="cat-name">Youth Camp</span>
+          <span class="cat-badge">86</span>
+        </div>
+        <div class="cat-row">
+          <span class="cat-name">Chorus — English</span>
+          <span class="cat-badge">54</span>
+        </div>
+        <div class="cat-row">
+          <span class="cat-name">Chorus — Hindi</span>
+          <span class="cat-badge">48</span>
+        </div>
+        <div class="cat-row">
+          <span class="cat-name">YC Chorus — Hindi</span>
+          <span class="cat-badge">32</span>
+        </div>
+        <div class="cat-row">
+          <span class="cat-name">YC Chorus — English</span>
+          <span class="cat-badge">28</span>
+        </div>
+      </div>
+      <div class="home-footer"><a href="#">Admin</a></div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: SONG LIST -->
+  <div class="screen-wrap">
+    <div class="screen-label">② Song List</div>
+    <div class="phone">
+      <div class="page-header">
+        <span class="back">←</span>
+        <span class="page-title">English</span>
+      </div>
+      <div class="search-bar">
+        <div class="search-input">
+          <span style="color:#bbb;font-size:14px">🔍</span>
+          <span>Search title or number…</span>
+        </div>
+      </div>
+      <div class="list-body">
+        <div class="song-list-items">
+          <div class="song-row">1. A Mighty Fortress</div>
+          <div class="song-row">2. Abide with Me</div>
+          <div class="song-row">3. All Creatures of Our God</div>
+          <div class="song-row">4. Amazing Grace</div>
+          <div class="song-row">5. As the Deer</div>
+          <div class="song-row">6. At the Cross</div>
+          <div class="song-row" style="color:#bbb;font-size:12px;font-style:italic">…</div>
+          <div class="song-row">12. Because He Lives</div>
+          <div class="song-row">13. Blessed Assurance</div>
+          <div class="song-row">14. Breathe on Me</div>
+          <div class="song-row" style="color:#bbb;font-size:12px;font-style:italic">…</div>
+        </div>
+        <div class="alpha-sidebar">
+          <div class="alpha-letter active">A</div>
+          <div class="alpha-letter">B</div>
+          <div class="alpha-letter">C</div>
+          <div class="alpha-letter">D</div>
+          <div class="alpha-letter">E</div>
+          <div class="alpha-letter">F</div>
+          <div class="alpha-letter">G</div>
+          <div class="alpha-letter">H</div>
+          <div class="alpha-letter">I</div>
+          <div class="alpha-letter">J</div>
+          <div class="alpha-letter">K</div>
+          <div class="alpha-letter">L</div>
+          <div class="alpha-letter">M</div>
+          <div class="alpha-letter">N</div>
+          <div class="alpha-letter">O</div>
+          <div class="alpha-letter">P</div>
+          <div class="alpha-letter">R</div>
+          <div class="alpha-letter">S</div>
+          <div class="alpha-letter">T</div>
+          <div class="alpha-letter">W</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: SONG DETAIL -->
+  <div class="screen-wrap">
+    <div class="screen-label">③ Song Detail</div>
+    <div class="phone">
+      <div class="song-header">
+        <span class="back-link">← English</span>
+        <span class="num">#42</span>
+        <div class="font-ctrl">
+          <span>A−</span>
+          <span style="opacity:0.5;font-size:10px">15px</span>
+          <span>A+</span>
+        </div>
+      </div>
+      <div class="song-content">
+        <div class="song-title-text">Amazing Grace</div>
+
+        <div class="stanza-block">
+          <div class="stanza-lbl">Verse 1</div>
+          <div class="stanza-text">Amazing grace, how sweet the sound
+That saved a wretch like me
+I once was lost but now am found
+Was blind but now I see</div>
+        </div>
+
+        <div class="chorus-block">
+          <div class="chorus-lbl">Chorus</div>
+          <div class="chorus-text">To God be the glory
+Great things He hath done
+So loved He the world that He gave us His Son</div>
+        </div>
+
+        <div class="stanza-block">
+          <div class="stanza-lbl">Verse 2</div>
+          <div class="stanza-text">'Twas grace that taught my heart to fear
+And grace my fears relieved
+How precious did that grace appear
+The hour I first believed</div>
+        </div>
+      </div>
+      <div class="bottom-nav">
+        <button class="nav-btn prev">← 41</button>
+        <button class="nav-btn next">43 →</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

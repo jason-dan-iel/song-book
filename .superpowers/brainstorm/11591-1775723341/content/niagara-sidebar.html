@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, sans-serif; background: #f0f0f0; display: flex; gap: 40px; padding: 32px; align-items: flex-start; justify-content: center; }
+
+h2 { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: #333; text-align: center; }
+p.sub { font-size: 11px; color: #888; text-align: center; margin-bottom: 16px; }
+
+/* Phone frame */
+.phone {
+  width: 200px;
+  border-radius: 24px;
+  border: 3px solid #555;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+}
+
+.phone-header {
+  background: #3d7870;
+  color: #fff;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* BEFORE: current sidebar */
+.list-body-before {
+  display: flex;
+  background: #fff;
+  height: 320px;
+  overflow: hidden;
+}
+.song-items { flex: 1; }
+.song-row { padding: 9px 12px; border-bottom: 1px solid #f3f8f7; font-size: 12px; color: #3d7870; font-weight: 500; }
+.old-sidebar {
+  background: #e4f4f2;
+  padding: 6px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 22px;
+  border-left: 1px solid #daeeed;
+}
+.old-sidebar span {
+  font-size: 9px;
+  font-weight: 600;
+  color: #2d6560;
+  line-height: 1.7;
+  cursor: pointer;
+  padding: 0 5px;
+}
+.old-sidebar span.active {
+  background: #3d7870;
+  color: #fff;
+  border-radius: 3px;
+}
+
+/* AFTER: Niagara-style */
+.list-body-after {
+  display: flex;
+  background: #fff;
+  height: 320px;
+  overflow: hidden;
+  position: relative;
+}
+
+.new-sidebar {
+  background: #e4f4f2;
+  padding: 6px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 22px;
+  border-left: 1px solid #daeeed;
+  position: relative;
+  z-index: 2;
+}
+
+.new-sidebar span {
+  font-size: 9px;
+  font-weight: 600;
+  color: #2d6560;
+  line-height: 1.7;
+  padding: 0 5px;
+  border-radius: 3px;
+  transition: transform 0.08s, font-size 0.08s;
+}
+
+.new-sidebar span.near { transform: scale(1.2); color: #3d7870; }
+.new-sidebar span.active {
+  background: #3d7870;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 11px;
+  transform: scale(1.3);
+}
+
+/* The big letter bubble */
+.letter-bubble {
+  position: absolute;
+  right: 28px;
+  top: 85px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50% 50% 50% 4px; /* teardrop pointing right */
+  background: #3d7870;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(61,120,112,0.35);
+  z-index: 10;
+  /* transform-origin: right center; */
+}
+
+</style>
+</head>
+<body>
+
+<div>
+  <h2>Current</h2>
+  <p class="sub">Tap individual buttons</p>
+  <div class="phone">
+    <div class="phone-header">English</div>
+    <div class="list-body-before">
+      <div class="song-items">
+        <div class="song-row">1. A Mighty Fortress</div>
+        <div class="song-row">2. Abide with Me</div>
+        <div class="song-row">3. All Creatures</div>
+        <div class="song-row">4. Amazing Grace</div>
+        <div class="song-row">5. As the Deer</div>
+        <div class="song-row">6. At the Cross</div>
+        <div class="song-row">12. Because He Lives</div>
+        <div class="song-row">13. Blessed Assurance</div>
+        <div class="song-row">14. Breathe on Me</div>
+        <div class="song-row">21. Come Thou Fount</div>
+        <div class="song-row">22. Crown Him</div>
+      </div>
+      <div class="old-sidebar">
+        <span>A</span>
+        <span>B</span>
+        <span class="active">C</span>
+        <span>D</span>
+        <span>E</span>
+        <span>F</span>
+        <span>G</span>
+        <span>H</span>
+        <span>I</span>
+        <span>J</span>
+        <span>K</span>
+        <span>L</span>
+        <span>M</span>
+        <span>N</span>
+        <span>O</span>
+        <span>P</span>
+        <span>R</span>
+        <span>S</span>
+        <span>T</span>
+        <span>W</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <h2>Niagara-style</h2>
+  <p class="sub">Drag to scrub — bubble shows letter</p>
+  <div class="phone">
+    <div class="phone-header">English</div>
+    <div class="list-body-after">
+      <div class="song-items">
+        <div class="song-row">21. Come Thou Fount</div>
+        <div class="song-row">22. Crown Him</div>
+        <div class="song-row">23. Crown of Thorns</div>
+        <div class="song-row">31. Day by Day</div>
+        <div class="song-row">32. Draw Me Nearer</div>
+        <div class="song-row">40. Eternal Father</div>
+        <div class="song-row">41. Every Time I Feel</div>
+        <div class="song-row">42. Face to Face</div>
+        <div class="song-row">43. Fairest Lord Jesus</div>
+        <div class="song-row">44. Faith of our Fathers</div>
+        <div class="song-row">45. Footsteps of Jesus</div>
+      </div>
+      <!-- letter bubble shown during drag -->
+      <div class="letter-bubble">D</div>
+      <!-- sidebar with scaled active letter -->
+      <div class="new-sidebar">
+        <span>A</span>
+        <span>B</span>
+        <span>C</span>
+        <span class="near">D</span>
+        <span class="active">E</span>
+        <span class="near">F</span>
+        <span>G</span>
+        <span>H</span>
+        <span>I</span>
+        <span>J</span>
+        <span>K</span>
+        <span>L</span>
+        <span>M</span>
+        <span>N</span>
+        <span>O</span>
+        <span>P</span>
+        <span>R</span>
+        <span>S</span>
+        <span>T</span>
+        <span>W</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
