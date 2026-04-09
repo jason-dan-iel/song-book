@@ -113,14 +113,15 @@ function AdminPanel() {
   return (
     <div>
       <div className="admin-header">
-        <h2 style={{ margin: 0, fontSize: 15 }}>Admin</h2>
+        <h2>Admin</h2>
         <button onClick={handleLogout}>Logout</button>
       </div>
 
+      <div className="admin-body">
       {!adding && !editing && (
-        <button className="primary" onClick={() => setAdding(true)} style={{ marginBottom: 12 }}>
-          + Add song
-        </button>
+        <div className="admin-add-bar">
+          <button className="primary" onClick={() => setAdding(true)}>+ Add song</button>
+        </div>
       )}
 
       <div ref={formRef}>
@@ -166,7 +167,7 @@ function AdminPanel() {
                       setEditing(s)
                       setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
                     }}
-                    style={{ marginRight: 4 }}
+                    style={{ marginRight: 6 }}
                   >
                     Edit
                   </button>
@@ -177,6 +178,7 @@ function AdminPanel() {
           </tbody>
         </table>
       )}
+      </div>
     </div>
   )
 }

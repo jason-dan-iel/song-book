@@ -48,7 +48,7 @@ export function CategoryList() {
   const handleSidebarChange = useCallback((letter: string) => {
     setActiveLetter(letter)
     const el = sectionRefs.current[letter]
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }, [])
 
   const label = cat === 'youth-camp' ? 'Youth Camp' : cat.charAt(0).toUpperCase() + cat.slice(1)
