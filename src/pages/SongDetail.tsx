@@ -8,7 +8,7 @@ const DEFAULT_SIZE = 15
 
 function loadSize(): number {
   const v = localStorage.getItem(LS_KEY)
-  return v ? parseInt(v, 10) : DEFAULT_SIZE
+  return v ? (parseInt(v, 10) || DEFAULT_SIZE) : DEFAULT_SIZE
 }
 
 export function SongDetail() {
@@ -25,8 +25,9 @@ export function SongDetail() {
     localStorage.setItem(LS_KEY, String(fontSize))
   }, [fontSize])
 
-  const prevSong = songs.find((s) => s.number === num - 1)
-  const nextSong = songs.find((s) => s.number === num + 1)
+  const idx = songs.findIndex((s) => s.number === num)
+  const prevSong = idx > 0 ? songs[idx - 1] : undefined
+  const nextSong = idx !== -1 && idx < songs.length - 1 ? songs[idx + 1] : undefined
 
   const catLabel = cat === 'youth-camp' ? 'Youth Camp' : cat.charAt(0).toUpperCase() + cat.slice(1)
 

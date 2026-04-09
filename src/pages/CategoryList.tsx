@@ -31,10 +31,10 @@ export function CategoryList() {
     return [...set].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
   }, [songs])
 
-  const visible = songs.filter((s) => {
+  const visible = useMemo(() => songs.filter((s) => {
     const letterMatch = filter === 'All' || firstChar(s.title) === filter
     return letterMatch && matchesSearch(s, search)
-  })
+  }), [songs, filter, search])
 
   const label = cat === 'youth-camp' ? 'Youth Camp' : cat.charAt(0).toUpperCase() + cat.slice(1)
 
