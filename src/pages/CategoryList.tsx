@@ -65,7 +65,7 @@ export function CategoryList() {
           type="search"
           placeholder="Search by title or number…"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => { setSearch(e.target.value); setActiveLetter('') }}
         />
       </div>
 

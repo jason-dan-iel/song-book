@@ -76,7 +76,7 @@ export function AlphaSidebar({ letters, active, onChange }: Props) {
           <button
             key={l}
             className={isActive ? 'active' : isNeighbour ? 'neighbour' : ''}
-            aria-label={`Filter by ${l}`}
+            aria-label={`Scroll to ${l}`}
           >
             {l}
           </button>
