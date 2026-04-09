@@ -10,10 +10,9 @@ export function AlphaSidebar({ letters, active, onChange }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [dragging, setDragging] = useState(false)
   const [dragLetter, setDragLetter] = useState<string | null>(null)
+  const dragLetterRef = useRef<string | null>(null)
   const [bubbleTop, setBubbleTop] = useState(0)
 
-  // Given a clientY coordinate, returns which letter slot it falls in.
-  // Clamps to first/last letter if the pointer goes outside the container.
   const letterAtY = useCallback((clientY: number): string | null => {
     const el = containerRef.current
     if (!el || letters.length === 0) return null
@@ -23,20 +22,20 @@ export function AlphaSidebar({ letters, active, onChange }: Props) {
     return letters[idx]
   }, [letters])
 
-  // Returns the `top` value (px) to vertically centre the bubble on a given letter slot.
   const bubbleTopForLetter = useCallback((letter: string): number => {
     const el = containerRef.current
     if (!el || letters.length === 0) return 0
     const { height } = el.getBoundingClientRect()
     const slotHeight = height / letters.length
     const idx = letters.indexOf(letter)
-    return idx * slotHeight + slotHeight / 2 - 26 // 26 = half of 52px bubble height
+    return idx * slotHeight + slotHeight / 2 - 26
   }, [letters])
 
   const handlePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     e.currentTarget.setPointerCapture(e.pointerId)
     const letter = letterAtY(e.clientY)
     if (!letter) return
+    dragLetterRef.current = letter
     setDragging(true)
     setDragLetter(letter)
     setBubbleTop(bubbleTopForLetter(letter))
@@ -46,13 +45,15 @@ export function AlphaSidebar({ letters, active, onChange }: Props) {
   const handlePointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     if (!dragging) return
     const letter = letterAtY(e.clientY)
-    if (!letter || letter === dragLetter) return
+    if (!letter || letter === dragLetterRef.current) return
+    dragLetterRef.current = letter
     setDragLetter(letter)
     setBubbleTop(bubbleTopForLetter(letter))
     onChange(letter)
-  }, [dragging, dragLetter, letterAtY, bubbleTopForLetter, onChange])
+  }, [dragging, letterAtY, bubbleTopForLetter, onChange])
 
   const handlePointerUp = useCallback(() => {
+    dragLetterRef.current = null
     setDragging(false)
     setDragLetter(null)
   }, [])
@@ -70,7 +71,7 @@ export function AlphaSidebar({ letters, active, onChange }: Props) {
     >
       {letters.map((l, i) => {
         const isActive = l === active
-        const isNeighbour = dragging && !isActive && Math.abs(i - activeIdx) === 1
+        const isNeighbour = dragging && !isActive && activeIdx !== -1 && Math.abs(i - activeIdx) === 1
         return (
           <button
             key={l}
