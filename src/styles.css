@@ -122,7 +122,10 @@ label {
 .app-header {
   background: var(--header);
   color: #fff;
-  padding: 18px 16px 14px;
+  padding: 16px 16px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .app-header .app-title {
@@ -135,6 +138,22 @@ label {
   font-size: 12px;
   opacity: 0.72;
   margin-top: 3px;
+}
+
+.app-header-admin {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  padding: 4px 8px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 5px;
+  align-self: flex-start;
+}
+
+.app-header-admin:hover {
+  color: #fff;
+  border-color: rgba(255,255,255,0.55);
 }
 
 /* Page header (CategoryList, SongDetail) */
@@ -260,26 +279,15 @@ label {
   font-weight: 600;
 }
 
-.home-footer {
-  padding: 16px;
-  text-align: right;
-  border-top: 1px solid var(--border);
-}
-
-.home-footer a {
-  font-size: 12px;
-  color: #bbb;
-}
-
-.home-footer a:hover {
-  color: #888;
-}
 
 /* Category list */
 .search-strip {
   padding: 10px 12px;
   background: var(--lighter);
   border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 48px;
+  z-index: 15;
 }
 
 .search-strip input {
@@ -306,7 +314,7 @@ label {
 .song-list {
   flex: 1;
   list-style: none;
-  padding: 0;
+  padding: 0 32px 0 0;
   margin: 0;
   overflow: visible;
 }
@@ -331,7 +339,7 @@ label {
 
 .song-list li.alpha-group-header {
   position: sticky;
-  top: 48px;
+  top: 100px;
   background: var(--lighter);
   padding: 3px 16px;
   font-size: 11px;
@@ -340,7 +348,7 @@ label {
   border-bottom: 1px solid var(--border);
   list-style: none;
   z-index: 5;
-  scroll-margin-top: 52px;
+  scroll-margin-top: 104px;
 }
 
 /* Alpha sidebar */
@@ -350,12 +358,15 @@ label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 24px;
+  width: 28px;
   border-left: 1px solid var(--border);
-  position: sticky;
-  top: 48px;
-  align-self: flex-start;
-  max-height: calc(100vh - 48px);
+  border-radius: 8px 0 0 8px;
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  max-height: 70vh;
+  z-index: 10;
   touch-action: none;
 }
 
@@ -522,10 +533,24 @@ label {
   z-index: 20;
 }
 
+.admin-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .admin-header h2 {
   margin: 0;
   font-size: 16px;
   font-weight: 700;
+  color: #fff;
+}
+
+.admin-header .back-arrow {
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.9;
+  text-decoration: none;
   color: #fff;
 }
 
@@ -547,20 +572,31 @@ label {
 }
 
 .admin-add-bar {
-  margin-bottom: 14px;
+  margin-bottom: 16px;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
 }
 
 table {
   border-collapse: collapse;
   width: 100%;
-  margin-bottom: 16px;
   font-size: 14px;
 }
 
 td, th {
-  border: 1px solid #e8efec;
-  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 14px;
   text-align: left;
+  white-space: nowrap;
+}
+
+td:last-child, th:last-child {
+  white-space: nowrap;
 }
 
 th {
@@ -570,9 +606,10 @@ th {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--header);
-  position: sticky;
-  top: 48px;
-  z-index: 5;
+}
+
+tr:last-child td {
+  border-bottom: none;
 }
 
 tr:hover td {

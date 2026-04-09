@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 import { SongForm } from '../components/SongForm'
@@ -113,7 +114,10 @@ function AdminPanel() {
   return (
     <div>
       <div className="admin-header">
-        <h2>Admin</h2>
+        <div className="admin-header-left">
+          <Link to="/" className="back-arrow">←</Link>
+          <h2>Admin</h2>
+        </div>
         <button onClick={handleLogout}>Logout</button>
       </div>
 
@@ -145,7 +149,7 @@ function AdminPanel() {
       {loading ? (
         <p>Loading…</p>
       ) : (
-        <table>
+        <div className="table-scroll"><table>
           <thead>
             <tr>
               <th>Cat</th>
@@ -176,7 +180,7 @@ function AdminPanel() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table></div>
       )}
       </div>
     </div>

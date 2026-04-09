@@ -19,16 +19,16 @@ export function Home() {
   return (
     <div>
       <div className="app-header">
-        <div className="app-title">Song Book</div>
-        <div className="app-subtitle">Brethren Assembly Jodhpur</div>
+        <div>
+          <div className="app-title">Song Book</div>
+          <div className="app-subtitle">Brethren Assembly Jodhpur</div>
+        </div>
+        <Link to="/admin" className="app-header-admin">Admin</Link>
       </div>
       <div className="home-body">
         {CATEGORIES.map((c) => (
           <CategoryRow key={c.key} categoryKey={c.key} label={c.label} />
         ))}
-      </div>
-      <div className="home-footer">
-        <Link to="/admin">Admin</Link>
       </div>
     </div>
   )
