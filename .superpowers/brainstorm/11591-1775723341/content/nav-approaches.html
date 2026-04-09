@@ -1,0 +1,113 @@
+<h2>Navigation Approach — Which feels right?</h2>
+<p class="subtitle">Focus on SongDetail (most used screen). Tap to select your preference.</p>
+
+<div class="cards" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px">
+
+  <!-- Option A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)" style="cursor:pointer">
+    <div class="card-body">
+      <div class="letter" style="font-size:13px;font-weight:700;color:#888;margin-bottom:8px">A — Fixed Bottom Bar</div>
+      <!-- Phone mockup A -->
+      <div style="background:#f5f5f5;border-radius:12px;border:2px solid #ddd;overflow:hidden;font-size:11px;max-width:160px;margin:0 auto">
+        <!-- top bar -->
+        <div style="background:#1a56bb;color:#fff;padding:8px 10px;font-size:10px;font-weight:600">
+          English Songs
+        </div>
+        <!-- content -->
+        <div style="padding:10px;min-height:180px;background:#fff">
+          <div style="font-weight:700;font-size:12px;margin-bottom:8px">42. Amazing Grace</div>
+          <div style="font-size:10px;line-height:1.6;color:#444">
+            Amazing grace, how sweet the sound<br>
+            That saved a wretch like me<br>
+            I once was lost but now am found<br>
+            Was blind but now I see<br><br>
+            <div style="background:#fffbe6;border-top:2px solid #f0b429;border-bottom:2px solid #f0b429;padding:6px;margin:-4px -4px 4px">
+              Chorus: To God be the glory...<br>
+              Great things He hath done
+            </div>
+          </div>
+        </div>
+        <!-- bottom nav -->
+        <div style="background:#fff;border-top:2px solid #eee;display:flex;align-items:center;padding:6px 4px;gap:2px">
+          <button style="flex:1;padding:5px 2px;font-size:10px;border:1px solid #ddd;border-radius:6px;background:#f5f5f5;cursor:pointer">← Back</button>
+          <button style="flex:1;padding:5px 2px;font-size:10px;border:1px solid #ddd;border-radius:6px;background:#f5f5f5;cursor:pointer">← 41</button>
+          <button style="flex:1;padding:5px 2px;font-size:10px;border:1px solid #ddd;border-radius:6px;background:#1a56bb;color:#fff;cursor:pointer">43 →</button>
+          <button style="flex:0 0 auto;padding:5px 4px;font-size:10px;border:1px solid #ddd;border-radius:6px;background:#f5f5f5;cursor:pointer">A±</button>
+        </div>
+      </div>
+      <p style="font-size:11px;color:#555;margin-top:10px">All controls pinned to bottom thumb zone. Always visible. Clean reading area.</p>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)" style="cursor:pointer">
+    <div class="card-body">
+      <div class="letter" style="font-size:13px;font-weight:700;color:#888;margin-bottom:8px">B — Sticky Header + Side Arrows</div>
+      <div style="background:#f5f5f5;border-radius:12px;border:2px solid #ddd;overflow:hidden;font-size:11px;max-width:160px;margin:0 auto">
+        <!-- sticky header -->
+        <div style="background:#fff;border-bottom:1px solid #eee;padding:6px 10px">
+          <div style="font-size:9px;color:#888">← English &rsaquo; Song 42</div>
+          <div style="font-size:11px;font-weight:700">Amazing Grace</div>
+        </div>
+        <!-- content with side arrows -->
+        <div style="padding:10px;min-height:180px;background:#fff;position:relative">
+          <!-- left arrow zone -->
+          <div style="position:absolute;left:0;top:0;bottom:0;width:24px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.03);font-size:14px;color:#bbb">‹</div>
+          <!-- right arrow zone -->
+          <div style="position:absolute;right:0;top:0;bottom:0;width:24px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.03);font-size:14px;color:#bbb">›</div>
+          <div style="margin:0 24px;font-size:10px;line-height:1.6;color:#444">
+            Amazing grace, how sweet the sound<br>
+            That saved a wretch like me<br>
+            I once was lost but now am found<br>
+            Was blind but now I see<br><br>
+            <div style="background:#fffbe6;border-top:2px solid #f0b429;border-bottom:2px solid #f0b429;padding:6px">
+              Chorus: To God be the glory...
+            </div>
+          </div>
+        </div>
+        <!-- font controls top right -->
+        <div style="background:#f5f5f5;padding:4px 8px;text-align:right;font-size:9px;color:#888;border-top:1px solid #eee">
+          A− 15px A+
+        </div>
+      </div>
+      <p style="font-size:11px;color:#555;margin-top:10px">Maximizes reading space. Side arrows can feel hidden — less "dumbproof".</p>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)" style="cursor:pointer">
+    <div class="card-body">
+      <div class="letter" style="font-size:13px;font-weight:700;color:#888;margin-bottom:8px">C — Bottom Sheet + Big Buttons</div>
+      <div style="background:#f5f5f5;border-radius:12px;border:2px solid #ddd;overflow:hidden;font-size:11px;max-width:160px;margin:0 auto">
+        <!-- top bar -->
+        <div style="background:#1a56bb;color:#fff;padding:6px 10px;display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:10px">← English</span>
+          <span style="font-size:10px;font-weight:700">42</span>
+          <span style="font-size:10px;opacity:0.6">A±</span>
+        </div>
+        <!-- content -->
+        <div style="padding:10px;min-height:150px;background:#fff">
+          <div style="font-weight:700;font-size:12px;margin-bottom:6px">Amazing Grace</div>
+          <div style="font-size:10px;line-height:1.6;color:#444">
+            Amazing grace, how sweet the sound<br>
+            That saved a wretch like me...<br><br>
+            <div style="background:#fffbe6;border-top:2px solid #f0b429;border-bottom:2px solid #f0b429;padding:5px">
+              Chorus: To God be the glory...
+            </div>
+          </div>
+        </div>
+        <!-- large prev/next -->
+        <div style="display:flex;gap:0;border-top:2px solid #eee">
+          <button style="flex:1;padding:10px;font-size:13px;border:none;border-right:1px solid #eee;background:#f8f8f8;cursor:pointer">← Prev</button>
+          <button style="flex:1;padding:10px;font-size:13px;border:none;background:#1a56bb;color:#fff;cursor:pointer">Next →</button>
+        </div>
+      </div>
+      <p style="font-size:11px;color:#555;margin-top:10px">Colored header with back+font. Bold split prev/next at bottom. Obvious.</p>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:20px;padding:12px;background:#f9f9f9;border-radius:8px;font-size:12px;color:#555">
+  <strong>All 3 options also include:</strong> larger tap targets on Home/CategoryList, better search, sticky breadcrumb so you always know where you are.
+</div>
