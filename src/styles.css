@@ -101,8 +101,8 @@ input, select, textarea {
 
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: #1a56bb;
-  box-shadow: 0 0 0 2px rgba(26,86,187,0.12);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(90,158,151,0.12);
 }
 
 textarea {
@@ -511,7 +511,7 @@ tr:hover td {
 .form-section h3 {
   margin: 0 0 14px;
   font-size: 14px;
-  color: #1a56bb;
+  color: var(--header);
 }
 
 .form-row {
