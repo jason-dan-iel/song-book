@@ -316,7 +316,7 @@ label {
 .song-list {
   flex: 1;
   list-style: none;
-  padding: 0 32px 0 0;
+  padding: 0;
   margin: 0;
   overflow: visible;
 }
@@ -353,19 +353,24 @@ label {
   scroll-margin-top: 112px;
 }
 
-/* Alpha sidebar */
-.alpha-sidebar {
+/* Alpha sidebar track — full-height column that fills alongside the list */
+.alpha-sidebar-track {
+  width: 28px;
+  flex-shrink: 0;
   background: var(--light);
+  border-left: 1px solid var(--border);
+}
+
+/* Alpha sidebar — letters float sticky within the track */
+.alpha-sidebar {
+  background: transparent;
   padding: 8px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 28px;
-  border-left: 1px solid var(--border);
-  border-radius: 8px 0 0 8px;
   position: sticky;
   top: calc(50vh - 160px);
-  align-self: flex-start;
   max-height: 70vh;
   z-index: 10;
   touch-action: none;

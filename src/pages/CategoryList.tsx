@@ -98,11 +98,13 @@ export function CategoryList() {
         </ul>
 
         {!loading && letters.length > 0 && (
-          <AlphaSidebar
-            letters={letters}
-            active={activeLetter}
-            onChange={handleSidebarChange}
-          />
+          <div className="alpha-sidebar-track">
+            <AlphaSidebar
+              letters={letters}
+              active={activeLetter}
+              onChange={handleSidebarChange}
+            />
+          </div>
         )}
       </div>
     </div>
