@@ -71,10 +71,6 @@ export function useSongCount(category: Category): number | null {
   )
 
   useEffect(() => {
-    if (cache[category]) {
-      setCount(cache[category].length)
-      return
-    }
     supabase
       .from('songs')
       .select('*', { count: 'exact', head: true })
