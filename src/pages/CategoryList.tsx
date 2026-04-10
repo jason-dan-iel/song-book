@@ -24,6 +24,7 @@ export function CategoryList() {
   const cat = (category ?? 'english') as Category
   const { songs, loading, error } = useSongsByCategory(cat)
   const [search, setSearch] = useState('')
+  const [viewMode, setViewMode] = useState<'alpha' | 'num'>('num')
   const [activeLetter, setActiveLetter] = useState('')
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({})
   const bandRef = useRef<HTMLDivElement>(null)
@@ -42,11 +43,17 @@ export function CategoryList() {
     return () => ro.disconnect()
   }, [])
 
-  // Group songs by first letter of title; '#' first, then A–Z
+  // Group songs by first letter of title (alpha) or just list by number (num)
   const grouped = useMemo(() => {
+    const filtered = songs.filter(s => matchesSearch(s, search))
+
+    if (viewMode === 'num') {
+      const sorted = [...filtered].sort((a, b) => a.number - b.number)
+      return sorted.length > 0 ? [{ letter: '#', songs: sorted }] : []
+    }
+
     const map = new Map<string, Song[]>()
-    for (const s of songs) {
-      if (!matchesSearch(s, search)) continue
+    for (const s of filtered) {
       const letter = firstChar(s.title)
       if (!map.has(letter)) map.set(letter, [])
       map.get(letter)!.push(s)
@@ -57,9 +64,9 @@ export function CategoryList() {
       return a.localeCompare(b, undefined, { sensitivity: 'base' })
     })
     return sortedKeys.map(letter => ({ letter, songs: map.get(letter)! }))
-  }, [songs, search])
+  }, [songs, search, viewMode])
 
-  const letters = useMemo(() => grouped.map(g => g.letter), [grouped])
+  const letters = useMemo(() => viewMode === 'alpha' ? grouped.map(g => g.letter) : [], [grouped, viewMode])
 
   const handleSidebarChange = useCallback((letter: string) => {
     setActiveLetter(letter)
@@ -75,8 +82,20 @@ export function CategoryList() {
     <div ref={outerRef}>
       <div className="sticky-band" ref={bandRef}>
         <div className="page-header">
-          <Link to="/" className="back-arrow">←</Link>
-          <span className="page-title">{label}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flex: 1 }}>
+            <Link to="/" className="back-arrow">←</Link>
+            <span className="page-title">{label}</span>
+          </div>
+          <button
+            className="view-toggle"
+            onClick={() => {
+              setViewMode(v => v === 'alpha' ? 'num' : 'alpha')
+              setActiveLetter('')
+              window.scrollTo(0, 0)
+            }}
+          >
+            {viewMode === 'alpha' ? 'Sort by #' : 'Sort A-Z'}
+          </button>
         </div>
         <div className="search-strip">
           <input
@@ -101,12 +120,14 @@ export function CategoryList() {
                 className="alpha-anchor"
                 aria-hidden="true"
               />
-              <li
-                className="alpha-group-header"
-                data-letter={letter}
-              >
-                {letter}
-              </li>
+              {viewMode === 'alpha' && (
+                <li
+                  className="alpha-group-header"
+                  data-letter={letter}
+                >
+                  {letter}
+                </li>
+              )}
               {groupSongs.map((s) => (
                 <li key={s.id}>
                   <Link to={`/c/${cat}/${s.number}`}>
@@ -121,7 +142,7 @@ export function CategoryList() {
           )}
         </ul>
 
-        {!loading && letters.length > 0 && (
+        {!loading && viewMode === 'alpha' && letters.length > 0 && (
           <div className="alpha-sidebar-track">
             <AlphaSidebar
               letters={letters}
