@@ -165,6 +165,7 @@ function AdminPanel() {
               <th>Cat</th>
               <th>#</th>
               <th>Title</th>
+              <th>Updated</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -174,6 +175,14 @@ function AdminPanel() {
                 <td>{s.category}</td>
                 <td>{s.number}</td>
                 <td>{s.title}</td>
+                <td style={{ fontSize: '11px', color: '#666' }}>
+                  {s.updated_at ? new Date(s.updated_at).toLocaleString('en-GB', {
+                    day: '2-digit',
+                    month: 'short',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  }) : '—'}
+                </td>
                 <td style={{ whiteSpace: 'nowrap' }}>
                   <button
                     onClick={() => {
