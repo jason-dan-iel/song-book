@@ -8,10 +8,8 @@ export interface CategoryMeta {
 export const CATEGORIES: CategoryMeta[] = [
   { key: 'english',            label: 'English' },
   { key: 'hindi',              label: 'Hindi' },
+  { key: 'chorus',             label: 'Chorus' },
   { key: 'youth-camp',         label: 'Youth Camp' },
-  { key: 'chorus-english',     label: 'Chorus — English' },
-  { key: 'chorus-hindi',       label: 'Chorus — Hindi' },
-  { key: 'yc-chorus-hindi',    label: 'YC Chorus — Hindi' },
-  { key: 'yc-chorus-english',  label: 'YC Chorus — English' },
+  { key: 'yc-chorus',          label: 'Youth Camp Chorus' },
   { key: 'special',            label: 'Special Songs' },
 ]
