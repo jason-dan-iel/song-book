@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Home — A · Reverent Editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2EBDD;
+    --paper-warm:#EADFC8;
+    --ink:#1C1814;
+    --ink-soft:#3A322A;
+    --ink-mute:#6B5E4E;
+    --rule:rgba(28,24,20,0.14);
+    --gold:#8B6F47;
+    --gold-dim:#B89566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink)}
+  body{
+    font-family:'Fraunces', Georgia, serif;
+    font-feature-settings:"ss01","liga","onum";
+    font-optical-sizing:auto;
+    line-height:1.45;
+    min-height:100vh;
+    background-image:
+      radial-gradient(1200px 600px at 80% -10%, rgba(139,111,71,0.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 40%, rgba(139,111,71,0.06), transparent 60%);
+  }
+  .devanagari{ font-family:'Tiro Devanagari Hindi', 'Fraunces', serif; }
+
+  .page{max-width:520px;margin:0 auto;padding:28px 28px 60px;position:relative}
+  .page::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent 0,
+        transparent 3px,
+        rgba(28,24,20,0.012) 3px,
+        rgba(28,24,20,0.012) 4px);
+  }
+
+  /* Masthead */
+  .mast{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-bottom:14px;border-bottom:1px solid var(--rule);
+    font-size:11px;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--ink-mute);
+  }
+  .mast .issue{font-style:italic;letter-spacing:0.12em;text-transform:none;font-size:12px}
+
+  /* Hero */
+  .hero{padding:44px 0 34px;border-bottom:1px solid var(--rule);position:relative}
+  .kicker{
+    display:flex;align-items:center;gap:10px;
+    font-size:11px;letter-spacing:0.30em;text-transform:uppercase;
+    color:var(--gold);font-weight:500;
+  }
+  .kicker .dash{width:22px;height:1px;background:var(--gold);display:block}
+  .title{
+    font-size:clamp(64px,16vw,96px);
+    font-weight:370;
+    font-variation-settings:"opsz" 144, "SOFT" 30;
+    letter-spacing:-0.035em;
+    line-height:0.93;
+    margin-top:14px;
+    color:var(--ink);
+  }
+  .title em{
+    font-style:italic;
+    font-variation-settings:"opsz" 144, "SOFT" 100;
+    color:var(--gold);
+    font-weight:400;
+  }
+  .sub{
+    margin-top:18px;
+    font-size:16px;font-style:italic;color:var(--ink-soft);
+    font-variation-settings:"opsz" 14;
+    max-width:24em;
+  }
+  .stats{
+    margin-top:22px;
+    display:flex;gap:22px;align-items:baseline;
+    font-size:13px;color:var(--ink-mute);
+    letter-spacing:0.04em;
+  }
+  .stats b{font-size:22px;font-weight:500;color:var(--ink);letter-spacing:-0.01em;margin-right:4px;font-variation-settings:"opsz" 48}
+
+  /* Verse */
+  .verse{
+    margin:26px 0 0;padding:18px 0 0;
+    display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;
+  }
+  .verse .drop{
+    font-size:64px;line-height:0.75;font-style:italic;color:var(--gold);
+    font-variation-settings:"opsz" 144, "SOFT" 100;
+    margin-top:-4px;
+  }
+  .verse .txt{
+    font-size:19px;line-height:1.45;color:var(--ink-soft);
+    font-style:italic;
+    font-variation-settings:"opsz" 24;
+  }
+  .verse .ref{
+    display:block;margin-top:10px;
+    font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:var(--ink-mute);
+    font-style:normal;
+  }
+  .verse .hi{display:block;font-style:normal;color:var(--ink);margin-top:12px;font-size:17px;line-height:1.6}
+
+  /* Section header */
+  .sec-head{
+    margin-top:44px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding-bottom:10px;border-bottom:2px solid var(--ink);
+  }
+  .sec-head h2{
+    font-size:13px;letter-spacing:0.32em;text-transform:uppercase;
+    font-weight:500;color:var(--ink);
+  }
+  .sec-head .count{
+    font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-mute);
+  }
+
+  /* Category list */
+  .cats{list-style:none;margin:0;padding:0}
+  .cat{
+    display:grid;grid-template-columns:34px 1fr auto auto;gap:14px;align-items:baseline;
+    padding:18px 0;border-bottom:1px solid var(--rule);
+    text-decoration:none;color:var(--ink);
+    transition:padding 220ms cubic-bezier(.2,.7,.2,1);
+    cursor:pointer;
+  }
+  .cat:hover{padding-left:8px;padding-right:8px;background:rgba(139,111,71,0.05)}
+  .cat .num{
+    font-family:'Fraunces',serif;font-style:italic;
+    font-variation-settings:"opsz" 48, "SOFT" 100;
+    font-size:20px;color:var(--gold);letter-spacing:0;
+  }
+  .cat .name{
+    font-size:26px;letter-spacing:-0.015em;font-weight:390;
+    font-variation-settings:"opsz" 60;
+    line-height:1.05;
+  }
+  .cat .name em{font-style:italic;color:var(--ink-soft);font-weight:380}
+  .cat .tag{
+    font-size:10px;letter-spacing:0.26em;text-transform:uppercase;
+    color:var(--ink-mute);align-self:center;
+  }
+  .cat .qty{
+    font-family:'Fraunces',serif;
+    font-variation-settings:"opsz" 48;
+    font-size:22px;color:var(--ink);letter-spacing:-0.01em;
+    font-feature-settings:"onum","tnum";
+    min-width:2ch;text-align:right;
+  }
+
+  /* Footer */
+  .foot{
+    margin-top:52px;padding-top:22px;border-top:1px solid var(--rule);
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-mute);
+  }
+  .foot a{
+    color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);
+    padding-bottom:2px;letter-spacing:0.22em;
+  }
+  .foot .orn{
+    font-family:'Fraunces',serif;font-style:italic;color:var(--gold);
+    font-variation-settings:"opsz" 144, "SOFT" 100;
+    font-size:20px;letter-spacing:0;text-transform:none;
+  }
+
+  /* Fade in */
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .hero,.verse,.sec-head,.cat,.foot{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+  .hero{animation-delay:.05s}
+  .verse{animation-delay:.18s}
+  .sec-head{animation-delay:.28s}
+  .cat:nth-child(1){animation-delay:.36s}
+  .cat:nth-child(2){animation-delay:.44s}
+  .cat:nth-child(3){animation-delay:.52s}
+  .cat:nth-child(4){animation-delay:.60s}
+  .cat:nth-child(5){animation-delay:.68s}
+  .cat:nth-child(6){animation-delay:.76s}
+  .foot{animation-delay:.9s}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="mast">
+    <span>Vol. I · No. 127</span>
+    <span class="issue">Spring, MMXXVI</span>
+  </header>
+
+  <section class="hero">
+    <div class="kicker"><span class="dash"></span><span>The Song Book</span></div>
+    <h1 class="title">Hymns<br><em>&amp; praises</em></h1>
+    <p class="sub">A collected volume of songs sung by the Brethren Assembly, Jodhpur — in English, Hindi, and in chorus.</p>
+    <div class="stats">
+      <span><b>173</b> songs</span>
+      <span><b>6</b> categories</span>
+      <span><b>2</b> languages</span>
+    </div>
+  </section>
+
+  <aside class="verse">
+    <span class="drop">&ldquo;</span>
+    <div class="txt">
+      Sing unto Him a new song; play skilfully with a loud noise.
+      <span class="hi devanagari">उसके लिये नया गीत गाओ, कुशलता से आनन्द के साथ बजाओ।</span>
+      <span class="ref">Psalm 33 · 3</span>
+    </div>
+  </aside>
+
+  <div class="sec-head">
+    <h2>Contents</h2>
+    <span class="count">Six parts</span>
+  </div>
+
+  <nav class="cats">
+    <a class="cat" href="#">
+      <span class="num">I</span>
+      <span class="name">English</span>
+      <span class="tag">Hymns</span>
+      <span class="qty">42</span>
+    </a>
+    <a class="cat" href="#">
+      <span class="num">II</span>
+      <span class="name devanagari">हिन्दी <em style="font-family:'Fraunces',serif">· Hindi</em></span>
+      <span class="tag">Bhajans</span>
+      <span class="qty">58</span>
+    </a>
+    <a class="cat" href="#">
+      <span class="num">III</span>
+      <span class="name">Chorus</span>
+      <span class="tag">Refrains</span>
+      <span class="qty">15</span>
+    </a>
+    <a class="cat" href="#">
+      <span class="num">IV</span>
+      <span class="name">Youth Camp</span>
+      <span class="tag">Assembly</span>
+      <span class="qty">21</span>
+    </a>
+    <a class="cat" href="#">
+      <span class="num">V</span>
+      <span class="name">YC Chorus</span>
+      <span class="tag">Refrains</span>
+      <span class="qty">10</span>
+    </a>
+    <a class="cat" href="#">
+      <span class="num">VI</span>
+      <span class="name"><em>Special</em> Songs</span>
+      <span class="tag">Occasional</span>
+      <span class="qty">27</span>
+    </a>
+  </nav>
+
+  <footer class="foot">
+    <a href="#">Admin</a>
+    <span class="orn">&#10086;</span>
+    <span>Jodhpur, IN</span>
+  </footer>
+</div>
+</body>
+</html>

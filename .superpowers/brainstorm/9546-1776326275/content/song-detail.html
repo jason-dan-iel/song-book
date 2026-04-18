@@ -1,0 +1,124 @@
+<h2>Song Detail — Reading Experience</h2>
+<p class="subtitle">How should the lyrics page feel? (mobile view)</p>
+
+<div class="cards">
+  <!-- Option A: Clean minimal -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0;overflow:hidden;">
+      <!-- Header -->
+      <div style="background:linear-gradient(135deg,#1a4a43,#2d6b62);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;font-family:Inter,sans-serif;">← English</div>
+        <div style="display:flex;gap:8px;">
+          <div style="color:rgba(255,255,255,0.6);font-size:13px;font-family:Inter,sans-serif;">A−</div>
+          <div style="color:#fff;font-size:13px;font-family:Inter,sans-serif;font-weight:600;">A+</div>
+        </div>
+      </div>
+      <!-- Song title area -->
+      <div style="background:#f5f5f0;padding:0;">
+        <div style="background:#fff;padding:20px 18px 16px;border-bottom:1px solid #eee;">
+          <div style="font-size:11px;color:#2d6b62;font-weight:700;letter-spacing:1.5px;font-family:Inter,sans-serif;">SONG #42</div>
+          <div style="font-size:22px;font-weight:800;color:#1a2e2c;margin-top:4px;font-family:Inter,sans-serif;letter-spacing:-0.3px;">Amazing Grace</div>
+        </div>
+        <!-- Verses -->
+        <div style="padding:16px 18px;">
+          <div style="font-size:10px;color:#888;font-weight:600;letter-spacing:1.5px;margin-bottom:8px;font-family:Inter,sans-serif;">VERSE 1</div>
+          <div style="font-size:15px;color:#333;line-height:1.9;font-family:Inter,sans-serif;">Amazing grace how sweet the sound<br>That saved a wretch like me<br>I once was lost but now am found<br>Was blind but now I see</div>
+        </div>
+        <!-- Chorus -->
+        <div style="margin:0 12px;background:linear-gradient(135deg,rgba(45,107,98,0.06),rgba(74,145,137,0.1));border-radius:12px;padding:16px 18px;border-left:3px solid #2d6b62;">
+          <div style="font-size:10px;color:#2d6b62;font-weight:700;letter-spacing:1.5px;margin-bottom:8px;font-family:Inter,sans-serif;">CHORUS</div>
+          <div style="font-size:15px;color:#1a2e2c;line-height:1.9;font-family:Inter,sans-serif;font-weight:500;">My chains are gone, I've been set free<br>My God my Savior has ransomed me</div>
+        </div>
+        <div style="padding:16px 18px 8px;">
+          <div style="font-size:10px;color:#888;font-weight:600;letter-spacing:1.5px;margin-bottom:8px;font-family:Inter,sans-serif;">VERSE 2</div>
+          <div style="font-size:15px;color:#333;line-height:1.9;font-family:Inter,sans-serif;">Twas grace that taught my heart to fear<br>And grace my fears relieved...</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Clean Minimal</h3>
+      <p>White title card, subtle verse labels, chorus in a soft green-tinted rounded box with left accent border. Maximum readability, minimal chrome.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Card-per-verse -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0;overflow:hidden;">
+      <!-- Header -->
+      <div style="background:linear-gradient(135deg,#1a4a43,#2d6b62);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="color:rgba(255,255,255,0.7);font-size:13px;font-family:Inter,sans-serif;">← English</div>
+        <div style="display:flex;gap:8px;">
+          <div style="color:rgba(255,255,255,0.6);font-size:13px;font-family:Inter,sans-serif;">A−</div>
+          <div style="color:#fff;font-size:13px;font-family:Inter,sans-serif;font-weight:600;">A+</div>
+        </div>
+      </div>
+      <div style="background:#f5f5f0;padding:12px 12px 0;">
+        <!-- Title card -->
+        <div style="background:linear-gradient(135deg,#2d6b62,#4a9189);border-radius:14px;padding:18px;margin-bottom:10px;">
+          <div style="font-size:11px;color:rgba(255,255,255,0.7);font-weight:600;letter-spacing:1.5px;font-family:Inter,sans-serif;">#42</div>
+          <div style="font-size:22px;font-weight:800;color:#fff;margin-top:4px;font-family:Inter,sans-serif;letter-spacing:-0.3px;">Amazing Grace</div>
+        </div>
+        <!-- Verse 1 card -->
+        <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 2px 10px rgba(0,0,0,0.04);margin-bottom:10px;">
+          <div style="font-size:10px;color:#888;font-weight:600;letter-spacing:1.5px;margin-bottom:8px;font-family:Inter,sans-serif;">VERSE 1</div>
+          <div style="font-size:15px;color:#333;line-height:1.9;font-family:Inter,sans-serif;">Amazing grace how sweet the sound<br>That saved a wretch like me<br>I once was lost but now am found<br>Was blind but now I see</div>
+        </div>
+        <!-- Chorus card -->
+        <div style="background:linear-gradient(135deg,rgba(45,107,98,0.08),rgba(45,107,98,0.14));border-radius:14px;padding:16px 18px;border:1.5px solid rgba(45,107,98,0.2);margin-bottom:10px;">
+          <div style="font-size:10px;color:#2d6b62;font-weight:700;letter-spacing:1.5px;margin-bottom:8px;font-family:Inter,sans-serif;">CHORUS</div>
+          <div style="font-size:15px;color:#1a2e2c;line-height:1.9;font-family:Inter,sans-serif;font-weight:500;">My chains are gone, I've been set free<br>My God my Savior has ransomed me</div>
+        </div>
+        <!-- Verse 2 card -->
+        <div style="background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 2px 10px rgba(0,0,0,0.04);margin-bottom:10px;">
+          <div style="font-size:10px;color:#888;font-weight:600;letter-spacing:1.5px;margin-bottom:8px;font-family:Inter,sans-serif;">VERSE 2</div>
+          <div style="font-size:15px;color:#333;line-height:1.9;font-family:Inter,sans-serif;">Twas grace that taught my heart to fear<br>And grace my fears relieved...</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Card-per-Verse</h3>
+      <p>Each verse/chorus gets its own rounded card. Title in a bold gradient banner. Every section is distinct and scannable. Chorus card has tinted background + border.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Immersive reader -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0;overflow:hidden;">
+      <!-- Slim floating header -->
+      <div style="background:#f5f5f0;padding:8px 12px 0;">
+        <div style="background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-radius:12px;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+          <div style="color:#2d6b62;font-size:13px;font-family:Inter,sans-serif;font-weight:600;">← Back</div>
+          <div style="font-size:13px;font-weight:700;color:#1a2e2c;font-family:Inter,sans-serif;">#42</div>
+          <div style="display:flex;gap:6px;">
+            <div style="width:28px;height:28px;border-radius:8px;background:#f0f0ec;display:flex;align-items:center;justify-content:center;font-size:11px;color:#666;font-weight:600;font-family:Inter,sans-serif;">A−</div>
+            <div style="width:28px;height:28px;border-radius:8px;background:#2d6b62;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:600;font-family:Inter,sans-serif;">A+</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:#f5f5f0;padding:16px 18px 0;">
+        <!-- Title -->
+        <div style="font-size:26px;font-weight:800;color:#1a2e2c;font-family:Inter,sans-serif;letter-spacing:-0.5px;margin-bottom:4px;">Amazing Grace</div>
+        <div style="font-size:12px;color:#888;font-family:Inter,sans-serif;margin-bottom:20px;">English · 4 verses · 1 chorus</div>
+        <!-- Verse 1 -->
+        <div style="margin-bottom:20px;">
+          <div style="font-size:10px;color:#aaa;font-weight:600;letter-spacing:1.5px;margin-bottom:10px;font-family:Inter,sans-serif;">1</div>
+          <div style="font-size:16px;color:#2a2a2a;line-height:2;font-family:Inter,sans-serif;">Amazing grace how sweet the sound<br>That saved a wretch like me<br>I once was lost but now am found<br>Was blind but now I see</div>
+        </div>
+        <!-- Chorus -->
+        <div style="margin-bottom:20px;padding:18px;background:#fff;border-radius:16px;box-shadow:0 0 0 1.5px rgba(45,107,98,0.15);position:relative;">
+          <div style="position:absolute;top:-8px;left:16px;background:#2d6b62;color:#fff;font-size:9px;font-weight:700;letter-spacing:1.5px;padding:2px 10px;border-radius:6px;font-family:Inter,sans-serif;">CHORUS</div>
+          <div style="font-size:16px;color:#1a2e2c;line-height:2;font-family:Inter,sans-serif;font-weight:500;margin-top:4px;">My chains are gone, I've been set free<br>My God my Savior has ransomed me</div>
+        </div>
+        <!-- Verse 2 -->
+        <div style="margin-bottom:16px;">
+          <div style="font-size:10px;color:#aaa;font-weight:600;letter-spacing:1.5px;margin-bottom:10px;font-family:Inter,sans-serif;">2</div>
+          <div style="font-size:16px;color:#2a2a2a;line-height:2;font-family:Inter,sans-serif;">Twas grace that taught my heart to fear<br>And grace my fears relieved...</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Immersive Reader</h3>
+      <p>Floating pill header, large title on the page itself, minimal verse numbers, chorus in a floating card with a badge label. Maximum focus on the lyrics — feels like a modern reading app.</p>
+    </div>
+  </div>
+</div>

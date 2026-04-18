@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Home — B · Modern Hymnal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B2520;
+    --bg-2:#09201B;
+    --leather:#11302A;
+    --cream:#EDE0C2;
+    --cream-dim:#C7B896;
+    --gold:#D7B36A;
+    --gold-hi:#F2D48A;
+    --gold-dim:#8F7538;
+    --ink:#05110E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--cream)}
+  body{
+    font-family:'Cormorant Garamond', Georgia, serif;
+    line-height:1.5;min-height:100vh;
+    background-image:
+      radial-gradient(1200px 700px at 70% -10%, rgba(215,179,106,0.16), transparent 62%),
+      radial-gradient(900px 500px at -5% 30%, rgba(215,179,106,0.08), transparent 58%),
+      linear-gradient(#0B2520,#081C18);
+    background-attachment:fixed;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.84  0 0 0 0 0.70  0 0 0 0 0.41  0 0 0 .06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity:.7;mix-blend-mode:overlay;
+  }
+  .devanagari{font-family:'Noto Serif Devanagari','Cormorant Garamond',serif}
+
+  .page{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:28px 26px 60px}
+
+  /* Top bar */
+  .top{
+    display:flex;align-items:center;justify-content:space-between;
+    font-family:'Cormorant Garamond',serif;
+    font-size:11px;letter-spacing:0.36em;text-transform:uppercase;
+    color:var(--gold);font-weight:500;
+  }
+  .top .dot{width:4px;height:4px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px var(--gold)}
+  .top .seal{
+    display:inline-flex;align-items:center;gap:10px;
+    border:1px solid rgba(215,179,106,0.4);
+    padding:5px 12px;border-radius:20px;
+    color:var(--cream-dim);letter-spacing:0.22em;font-size:10px;
+  }
+
+  /* Hero */
+  .hero{padding:48px 0 20px;text-align:center;position:relative}
+  .orn{
+    display:flex;align-items:center;justify-content:center;gap:14px;
+    color:var(--gold);font-size:18px;
+    font-family:'DM Serif Display',serif;font-style:italic;
+  }
+  .orn .line{flex:0 0 60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+  .eye{color:var(--gold-hi)}
+  .mono{
+    margin-top:14px;
+    font-size:11px;letter-spacing:0.48em;text-transform:uppercase;
+    color:var(--gold-hi);font-weight:500;
+  }
+  .title{
+    margin-top:18px;
+    font-family:'DM Serif Display',serif;
+    font-size:clamp(72px,18vw,112px);
+    line-height:0.90;letter-spacing:-0.02em;
+    font-weight:400;
+    color:var(--cream);
+    text-shadow:0 2px 0 rgba(0,0,0,0.35), 0 0 38px rgba(215,179,106,0.18);
+  }
+  .title em{
+    display:block;font-style:italic;color:var(--gold);
+    background:linear-gradient(180deg,var(--gold-hi) 0%, var(--gold) 50%, var(--gold-dim) 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    font-weight:400;
+    filter:drop-shadow(0 1px 0 rgba(0,0,0,.3));
+  }
+  .sub{
+    margin:18px auto 0;max-width:30ch;
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:17px;color:var(--cream-dim);line-height:1.45;
+  }
+
+  /* Scripture plaque */
+  .plaque{
+    margin:34px 0 6px;
+    border:1px solid rgba(215,179,106,0.35);
+    border-radius:2px;
+    padding:22px 22px 18px;
+    position:relative;
+    background:
+      linear-gradient(180deg, rgba(215,179,106,0.05), rgba(215,179,106,0) 60%),
+      radial-gradient(120% 140% at 50% 0%, rgba(215,179,106,0.06), transparent 60%);
+  }
+  .plaque::before,.plaque::after{
+    content:"";position:absolute;width:10px;height:10px;border:1px solid var(--gold);
+  }
+  .plaque::before{top:-1px;left:-1px;border-right:none;border-bottom:none}
+  .plaque::after{bottom:-1px;right:-1px;border-left:none;border-top:none}
+  .plaque .label{
+    font-size:10px;letter-spacing:0.36em;text-transform:uppercase;color:var(--gold);
+    margin-bottom:10px;
+  }
+  .plaque .eng{font-size:18px;line-height:1.45;color:var(--cream);font-style:italic}
+  .plaque .hi{
+    margin-top:10px;font-size:17px;line-height:1.6;color:var(--cream);
+  }
+  .plaque .ref{
+    display:block;margin-top:14px;
+    font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--cream-dim);
+    font-style:normal;
+  }
+
+  /* Stats */
+  .stats{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    margin:32px 0 6px;
+    border-top:1px solid rgba(215,179,106,0.25);
+    border-bottom:1px solid rgba(215,179,106,0.25);
+  }
+  .stats div{padding:14px 0;text-align:center;border-left:1px solid rgba(215,179,106,0.15)}
+  .stats div:first-child{border-left:none}
+  .stats b{
+    display:block;
+    font-family:'DM Serif Display',serif;font-size:30px;color:var(--gold-hi);
+    line-height:1;margin-bottom:4px;letter-spacing:-0.02em;
+  }
+  .stats span{font-size:10px;letter-spacing:0.30em;text-transform:uppercase;color:var(--cream-dim)}
+
+  /* Index */
+  .index-h{
+    margin:42px 0 10px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .index-h .line{flex:1;height:1px;background:rgba(215,179,106,0.28)}
+  .index-h h2{
+    font-family:'DM Serif Display',serif;font-style:italic;
+    font-size:32px;color:var(--gold-hi);font-weight:400;
+  }
+
+  /* Category list — chapters */
+  .cats{list-style:none;margin:0;padding:0}
+  .cat{
+    display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;
+    padding:18px 6px;margin:0 -6px;
+    border-bottom:1px dotted rgba(215,179,106,0.30);
+    text-decoration:none;color:var(--cream);
+    transition:all 260ms cubic-bezier(.2,.7,.2,1);
+    position:relative;
+  }
+  .cat::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--gold);
+    transform:scaleY(0);transform-origin:top;transition:transform 260ms ease;
+  }
+  .cat:hover{background:linear-gradient(90deg,rgba(215,179,106,0.08),transparent 70%);padding-left:14px}
+  .cat:hover::before{transform:scaleY(1)}
+  .cat .ch{
+    font-family:'DM Serif Display',serif;font-style:italic;
+    font-size:28px;color:var(--gold);line-height:1;letter-spacing:0;
+  }
+  .cat .nm{
+    font-family:'DM Serif Display',serif;
+    font-size:28px;line-height:1.08;letter-spacing:-0.01em;color:var(--cream);
+    font-weight:400;
+  }
+  .cat .nm .mini{
+    display:block;margin-top:4px;
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:13px;letter-spacing:0.06em;color:var(--cream-dim);text-transform:none;
+  }
+  .cat .qty{
+    font-family:'DM Serif Display',serif;font-size:26px;color:var(--gold-hi);
+    font-feature-settings:"tnum";text-align:right;min-width:2ch;
+  }
+
+  /* Footer */
+  .foot{
+    margin-top:42px;text-align:center;
+    display:flex;flex-direction:column;align-items:center;gap:18px;
+  }
+  .foot .seal2{
+    display:inline-flex;align-items:center;gap:14px;
+    font-family:'DM Serif Display',serif;font-style:italic;font-size:22px;color:var(--gold);
+  }
+  .foot .seal2 .line{width:36px;height:1px;background:var(--gold)}
+  .foot a{
+    color:var(--gold-hi);text-decoration:none;
+    border:1px solid rgba(215,179,106,0.5);padding:10px 22px;border-radius:2px;
+    font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:0.36em;text-transform:uppercase;
+    transition:all 220ms ease;
+  }
+  .foot a:hover{background:var(--gold);color:var(--ink)}
+  .foot .loc{font-size:10px;letter-spacing:0.36em;text-transform:uppercase;color:var(--cream-dim)}
+
+  /* Entrance */
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .top,.hero,.plaque,.stats,.index-h,.cat,.foot{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+  .hero{animation-delay:.05s}
+  .plaque{animation-delay:.22s}
+  .stats{animation-delay:.34s}
+  .index-h{animation-delay:.46s}
+  .cat:nth-child(1){animation-delay:.54s}
+  .cat:nth-child(2){animation-delay:.62s}
+  .cat:nth-child(3){animation-delay:.70s}
+  .cat:nth-child(4){animation-delay:.78s}
+  .cat:nth-child(5){animation-delay:.86s}
+  .cat:nth-child(6){animation-delay:.94s}
+  .foot{animation-delay:1.05s}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="top">
+    <span>Est. MMXXVI</span>
+    <span class="seal"><span class="dot"></span>Jodhpur</span>
+  </header>
+
+  <section class="hero">
+    <div class="orn">
+      <span class="line"></span>
+      <span>&#10086;</span>
+      <span class="line"></span>
+    </div>
+    <div class="mono">The Brethren Assembly</div>
+    <h1 class="title">Song<em>Book</em></h1>
+    <p class="sub">Hymns, choruses, and special songs collected for the congregation &mdash; in English and हिन्दी.</p>
+  </section>
+
+  <div class="plaque">
+    <div class="label">Scripture</div>
+    <div class="eng">&ldquo;O sing unto the Lord a new song; sing unto the Lord, all the earth.&rdquo;</div>
+    <div class="hi devanagari">&ldquo;प्रभु के लिये नया गीत गाओ, हे सारी पृथ्वी प्रभु के लिये गाओ।&rdquo;</div>
+    <span class="ref">Psalm 96 · 1</span>
+  </div>
+
+  <div class="stats">
+    <div><b>173</b><span>Songs</span></div>
+    <div><b>VI</b><span>Parts</span></div>
+    <div><b>02</b><span>Tongues</span></div>
+  </div>
+
+  <div class="index-h">
+    <span class="line"></span>
+    <h2>Index</h2>
+    <span class="line"></span>
+  </div>
+
+  <nav class="cats">
+    <a class="cat" href="#">
+      <span class="ch">I</span>
+      <span class="nm">English<span class="mini">Traditional hymns</span></span>
+      <span class="qty">42</span>
+    </a>
+    <a class="cat" href="#">
+      <span class="ch">II</span>
+      <span class="nm devanagari">हिन्दी<span class="mini" style="font-family:'Cormorant Garamond',serif">Bhajans &amp; gīts</span></span>
+      <span class="qty">58</span>
+    </a>
+    <a class="cat" href="#">
+      <span class="ch">III</span>
+      <span class="nm">Chorus<span class="mini">Short refrains</span></span>
+      <span class="qty">15</span>
+    </a>
+    <a class="cat" href="#">
+      <span class="ch">IV</span>
+      <span class="nm">Youth Camp<span class="mini">Assembly songs</span></span>
+      <span class="qty">21</span>
+    </a>
+    <a class="cat" href="#">
+      <span class="ch">V</span>
+      <span class="nm">YC Chorus<span class="mini">Camp refrains</span></span>
+      <span class="qty">10</span>
+    </a>
+    <a class="cat" href="#">
+      <span class="ch">VI</span>
+      <span class="nm">Special<span class="mini">Occasional &amp; new</span></span>
+      <span class="qty">27</span>
+    </a>
+  </nav>
+
+  <footer class="foot">
+    <div class="seal2"><span class="line"></span>&#10086;<span class="line"></span></div>
+    <a href="#">Admin</a>
+    <span class="loc">Brethren Assembly · Jodhpur · IN</span>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>D · Monochrome Serif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F9F6EF;
+    --ink:#121210;
+    --soft:#3E3A33;
+    --mute:#8A837A;
+    --accent:#8B6F47;
+    --rule:rgba(18,18,16,0.10);
+    --rule-soft:rgba(18,18,16,0.06);
+    --chorus-bg:rgba(139,111,71,0.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink)}
+  body{
+    font-family:'Fraunces',Georgia,serif;
+    font-feature-settings:"ss01","onum";
+    font-optical-sizing:auto;
+    line-height:1.5;
+    min-height:100vh;
+  }
+  .devanagari{font-family:'Tiro Devanagari Hindi','Fraunces',serif}
+  .tnum{font-feature-settings:"tnum","onum"}
+
+  .col{max-width:560px;margin:0 auto;padding:28px 24px 60px}
+
+  /* Top bar */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-bottom:14px;border-bottom:1px solid var(--rule);
+    color:var(--mute);
+  }
+  .topbar .mark{
+    font-size:12px;letter-spacing:0.22em;text-transform:uppercase;font-weight:500;color:var(--ink);
+  }
+  .topbar .meta{
+    font-size:12px;letter-spacing:0.03em;font-feature-settings:"tnum","onum";
+  }
+  .topbar .meta b{font-weight:500;color:var(--ink);margin-right:2px}
+
+  /* Hero */
+  .hero{padding:56px 0 36px}
+  .hero h1{
+    font-size:clamp(60px,15vw,88px);
+    line-height:0.95;letter-spacing:-0.035em;
+    font-weight:380;
+    font-variation-settings:"opsz" 144;
+    color:var(--ink);
+  }
+  .hero h1 em{
+    font-style:italic;color:var(--accent);
+    font-variation-settings:"opsz" 144, "SOFT" 80;
+    font-weight:370;
+  }
+  .hero p{
+    margin-top:16px;font-size:16px;color:var(--soft);font-style:italic;
+    font-variation-settings:"opsz" 14;max-width:30ch;line-height:1.45;
+  }
+
+  /* Section label */
+  .label{
+    margin-top:40px;
+    font-size:11px;letter-spacing:0.24em;text-transform:uppercase;
+    color:var(--mute);font-weight:500;
+    padding-bottom:10px;border-bottom:1px solid var(--rule);
+    display:flex;align-items:baseline;justify-content:space-between;
+  }
+  .label .right{
+    color:var(--mute);letter-spacing:0.1em;font-variation-settings:"opsz" 14;
+  }
+
+  /* Category rows */
+  .cats{list-style:none}
+  .cat{
+    display:grid;grid-template-columns:28px 1fr auto;gap:14px;align-items:baseline;
+    padding:16px 0;border-bottom:1px solid var(--rule-soft);
+    text-decoration:none;color:var(--ink);
+    transition:padding 200ms cubic-bezier(.2,.7,.2,1);
+  }
+  .cat:hover{padding-left:6px;padding-right:6px;background:var(--rule-soft)}
+  .cat .n{
+    color:var(--mute);font-size:13px;font-variation-settings:"opsz" 14;
+    font-feature-settings:"tnum","onum";letter-spacing:0.02em;
+  }
+  .cat .nm{
+    font-size:22px;letter-spacing:-0.015em;font-weight:400;
+    font-variation-settings:"opsz" 48;line-height:1.15;color:var(--ink);
+  }
+  .cat .c{
+    font-size:16px;color:var(--mute);
+    font-feature-settings:"tnum","onum";font-variation-settings:"opsz" 14;
+    min-width:3ch;text-align:right;letter-spacing:0.01em;
+  }
+
+  /* Foot admin */
+  .foot{
+    margin-top:40px;display:flex;justify-content:space-between;align-items:center;
+    padding-top:20px;border-top:1px solid var(--rule);
+    font-size:12px;color:var(--mute);letter-spacing:0.04em;
+  }
+  .foot a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px}
+
+  /* ====== Preview divider ====== */
+  .preview-break{
+    margin:80px auto 0;max-width:560px;padding:0 24px;
+    text-align:center;color:var(--mute);
+    font-size:10px;letter-spacing:0.3em;text-transform:uppercase;
+  }
+  .preview-break .rule{
+    display:block;height:1px;background:var(--rule);margin:8px 0;
+  }
+
+  /* ====== Song Detail preview ====== */
+  .detail{max-width:560px;margin:0 auto;padding:28px 24px 60px}
+
+  .page-head{
+    display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:baseline;
+    padding:6px 0 16px;border-bottom:1px solid var(--rule);
+  }
+  .page-head .back{
+    color:var(--mute);font-size:14px;text-decoration:none;
+    font-variation-settings:"opsz" 14;
+  }
+  .page-head .back:hover{color:var(--ink)}
+  .page-head .num{
+    text-align:center;font-size:13px;color:var(--ink);
+    letter-spacing:0.05em;font-variation-settings:"opsz" 14;
+    font-feature-settings:"tnum","onum";
+  }
+  .fs-ctrl{display:flex;gap:6px;justify-self:end}
+  .fs-ctrl button{
+    appearance:none;border:1px solid var(--rule);background:transparent;
+    width:30px;height:30px;border-radius:50%;
+    font-family:'Fraunces',serif;font-variation-settings:"opsz" 14;font-size:14px;
+    color:var(--ink);cursor:pointer;transition:all 180ms ease;
+  }
+  .fs-ctrl button:hover{background:var(--ink);color:var(--bg)}
+
+  .song-banner{padding:40px 0 28px;border-bottom:1px solid var(--rule-soft)}
+  .song-banner .sn{
+    font-size:13px;color:var(--mute);
+    letter-spacing:0.22em;text-transform:uppercase;font-weight:500;
+  }
+  .song-banner h2{
+    margin-top:14px;
+    font-size:clamp(36px,8vw,52px);line-height:1.02;letter-spacing:-0.02em;
+    font-weight:380;font-variation-settings:"opsz" 96;
+  }
+
+  .stanza{padding:24px 0;border-bottom:1px solid var(--rule-soft)}
+  .stanza .tag{
+    font-size:11px;letter-spacing:0.24em;text-transform:uppercase;
+    color:var(--mute);font-weight:500;margin-bottom:12px;
+  }
+  .stanza .body{
+    font-size:18px;line-height:1.6;color:var(--ink);white-space:pre-line;
+    font-variation-settings:"opsz" 18;
+  }
+  .chorus{
+    margin:24px -24px;padding:26px 24px;
+    background:var(--chorus-bg);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  }
+  .chorus .tag{color:var(--accent)}
+  .chorus .body{font-style:italic;font-variation-settings:"opsz" 24}
+
+  .nav{
+    margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:20px;
+    padding-top:20px;border-top:1px solid var(--rule);
+    font-size:14px;color:var(--mute);
+  }
+  .nav a{color:var(--ink);text-decoration:none;display:block}
+  .nav a .k{display:block;font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--mute);margin-bottom:4px}
+  .nav a:last-child{text-align:right}
+
+  /* Entrance */
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .topbar,.hero,.label,.cat,.foot,.page-head,.song-banner,.stanza,.nav,.preview-break{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+  .hero{animation-delay:.05s}
+  .label{animation-delay:.18s}
+  .cat:nth-child(1){animation-delay:.24s}
+  .cat:nth-child(2){animation-delay:.30s}
+  .cat:nth-child(3){animation-delay:.36s}
+  .cat:nth-child(4){animation-delay:.42s}
+  .cat:nth-child(5){animation-delay:.48s}
+  .cat:nth-child(6){animation-delay:.54s}
+  .foot{animation-delay:.65s}
+</style>
+</head>
+<body>
+
+<div class="col">
+
+  <header class="topbar">
+    <span class="mark">Song Book</span>
+    <span class="meta tnum"><b>179</b>songs</span>
+  </header>
+
+  <section class="hero">
+    <h1>Hymns <em>&amp;&nbsp;praises</em></h1>
+    <p>Collected songs of the Brethren Assembly, Jodhpur — in English and Hindi.</p>
+  </section>
+
+  <div class="label"><span>Categories</span><span class="right">Six</span></div>
+
+  <nav class="cats">
+    <a class="cat" href="#"><span class="n tnum">01</span><span class="nm">English</span><span class="c tnum">42</span></a>
+    <a class="cat" href="#"><span class="n tnum">02</span><span class="nm"><span class="devanagari">हिन्दी</span> <span style="color:var(--mute);font-size:14px">· Hindi</span></span><span class="c tnum">58</span></a>
+    <a class="cat" href="#"><span class="n tnum">03</span><span class="nm">Chorus</span><span class="c tnum">6</span></a>
+    <a class="cat" href="#"><span class="n tnum">04</span><span class="nm">Youth Camp</span><span class="c tnum">21</span></a>
+    <a class="cat" href="#"><span class="n tnum">05</span><span class="nm">YC Chorus</span><span class="c tnum">10</span></a>
+    <a class="cat" href="#"><span class="n tnum">06</span><span class="nm">Special</span><span class="c tnum">27</span></a>
+  </nav>
+
+  <footer class="foot">
+    <span>Jodhpur, IN</span>
+    <a href="#">Admin</a>
+  </footer>
+</div>
+
+<div class="preview-break">
+  <span class="rule"></span>
+  Song Detail
+  <span class="rule"></span>
+</div>
+
+<div class="detail">
+  <div class="page-head">
+    <a class="back" href="#">← Hindi</a>
+    <span class="num tnum">014</span>
+    <div class="fs-ctrl">
+      <button>A−</button>
+      <button>A+</button>
+    </div>
+  </div>
+
+  <div class="song-banner">
+    <div class="sn tnum">Hindi · 14</div>
+    <h2 class="devanagari">आसमान में होगा</h2>
+  </div>
+
+  <div class="chorus">
+    <div class="tag">Chorus</div>
+    <div class="body devanagari">आसमान में होगा
+मेरा भी एक मकान
+उसमें रहेंगे हम जाके
+छोड़ेंगे जब यह जहाँ।</div>
+  </div>
+
+  <div class="stanza">
+    <div class="tag">Verse 1</div>
+    <div class="body devanagari">इस जहाँ में कभी न, तुझको मिलेगी शांति — 2
+प्रभु के साथ चलो तुम, तब मिलेगी शांति — 2
+देखो तुम अपने जीवन को
+प्रभु के हाथों में दो। — 2</div>
+  </div>
+
+  <div class="stanza">
+    <div class="tag">Verse 2</div>
+    <div class="body devanagari">तू काहे शरमाए, तू काहे घबराए — 2
+चलना है तुझको मसीह के साथ
+आज और अभी, — 2
+देखो तुम अपने जीवन को
+यीशु के हाथों में दो। — 2</div>
+  </div>
+
+  <div class="nav">
+    <a href="#"><span class="k">Prev</span>#13</a>
+    <a href="#"><span class="k">Next</span>#15</a>
+  </div>
+</div>
+
+</body>
+</html>

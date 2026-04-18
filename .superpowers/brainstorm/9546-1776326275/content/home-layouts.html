@@ -1,0 +1,142 @@
+<h2>Home Page Layout</h2>
+<p class="subtitle">Which layout feels right for the landing page? (shown as mobile view)</p>
+
+<div class="cards">
+  <!-- Option A: Grid -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0;overflow:hidden;">
+      <div style="background:linear-gradient(135deg,#2d6b62,#4a9189);padding:20px 16px 16px;">
+        <div style="color:#fff;font-size:20px;font-weight:800;letter-spacing:-0.3px;">Song Book</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:12px;margin-top:2px;">Brethren Assembly Jodhpur</div>
+      </div>
+      <div style="background:#f5f5f0;padding:12px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,0.05);">
+            <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#2d6b62,#4a9189);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800;">E</div>
+            <div style="font-size:14px;font-weight:700;color:#1a2e2c;margin-top:8px;">English</div>
+            <div style="font-size:11px;color:#888;margin-top:2px;">124 songs</div>
+          </div>
+          <div style="background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,0.05);">
+            <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#E17055,#FAB1A0);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800;">H</div>
+            <div style="font-size:14px;font-weight:700;color:#1a2e2c;margin-top:8px;">Hindi</div>
+            <div style="font-size:11px;color:#888;margin-top:2px;">98 songs</div>
+          </div>
+          <div style="background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,0.05);">
+            <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#FDCB6E,#F9CA24);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800;">C</div>
+            <div style="font-size:14px;font-weight:700;color:#1a2e2c;margin-top:8px;">Chorus</div>
+            <div style="font-size:11px;color:#888;margin-top:2px;">56 songs</div>
+          </div>
+          <div style="background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,0.05);">
+            <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#6C5CE7,#A29BFE);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800;">Y</div>
+            <div style="font-size:14px;font-weight:700;color:#1a2e2c;margin-top:8px;">Youth Camp</div>
+            <div style="font-size:11px;color:#888;margin-top:2px;">34 songs</div>
+          </div>
+          <div style="background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,0.05);">
+            <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#0984E3,#74B9FF);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800;">YC</div>
+            <div style="font-size:14px;font-weight:700;color:#1a2e2c;margin-top:8px;">YC Chorus</div>
+            <div style="font-size:11px;color:#888;margin-top:2px;">22 songs</div>
+          </div>
+          <div style="background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,0.05);">
+            <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#E17055,#FDCB6E);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800;">S</div>
+            <div style="font-size:14px;font-weight:700;color:#1a2e2c;margin-top:8px;">Special</div>
+            <div style="font-size:11px;color:#888;margin-top:2px;">18 songs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Grid Cards</h3>
+      <p>2-column grid, each category gets a colored icon badge. Compact, scannable — everything visible without scrolling.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Stacked -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0;overflow:hidden;">
+      <div style="background:linear-gradient(135deg,#2d6b62,#4a9189);padding:20px 16px 16px;">
+        <div style="color:#fff;font-size:20px;font-weight:800;letter-spacing:-0.3px;">Song Book</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:12px;margin-top:2px;">Brethren Assembly Jodhpur</div>
+      </div>
+      <div style="background:#f5f5f0;padding:14px 14px 6px;">
+        <div style="background:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 2px 12px rgba(0,0,0,0.05);margin-bottom:10px;display:flex;align-items:center;gap:14px;">
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#2d6b62,#4a9189);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:800;flex-shrink:0;">E</div>
+          <div style="flex:1;">
+            <div style="font-size:16px;font-weight:700;color:#1a2e2c;">English</div>
+            <div style="font-size:12px;color:#888;margin-top:1px;">Hymns & worship songs</div>
+          </div>
+          <div style="background:#dff0ed;color:#2d6b62;font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;">124</div>
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 2px 12px rgba(0,0,0,0.05);margin-bottom:10px;display:flex;align-items:center;gap:14px;">
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#E17055,#FAB1A0);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:800;flex-shrink:0;">H</div>
+          <div style="flex:1;">
+            <div style="font-size:16px;font-weight:700;color:#1a2e2c;">Hindi</div>
+            <div style="font-size:12px;color:#888;margin-top:1px;">हिंदी भजन</div>
+          </div>
+          <div style="background:#fde8e3;color:#E17055;font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;">98</div>
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 2px 12px rgba(0,0,0,0.05);margin-bottom:10px;display:flex;align-items:center;gap:14px;">
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#FDCB6E,#F9CA24);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:800;flex-shrink:0;">C</div>
+          <div style="flex:1;">
+            <div style="font-size:16px;font-weight:700;color:#1a2e2c;">Chorus</div>
+            <div style="font-size:12px;color:#888;margin-top:1px;">Short praise choruses</div>
+          </div>
+          <div style="background:#fdf5dd;color:#d4a017;font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;">56</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Stacked Cards</h3>
+      <p>Full-width cards with icon, description, and count badge. More visual weight per category — feels like a polished app menu. Requires scrolling for all 6.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Minimal hero -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:0;overflow:hidden;">
+      <div style="background:linear-gradient(160deg,#1a4a43,#2d6b62,#4a9189);padding:32px 20px 28px;text-align:center;">
+        <div style="color:#fff;font-size:26px;font-weight:800;letter-spacing:-0.5px;">Song Book</div>
+        <div style="color:rgba(255,255,255,0.6);font-size:13px;margin-top:6px;letter-spacing:1px;">BRETHREN ASSEMBLY JODHPUR</div>
+        <div style="margin-top:14px;display:flex;justify-content:center;gap:6px;">
+          <div style="background:rgba(255,255,255,0.15);color:#fff;font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;">352 songs</div>
+          <div style="background:rgba(255,255,255,0.15);color:#fff;font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;">6 categories</div>
+        </div>
+      </div>
+      <div style="background:#f5f5f0;padding:16px;">
+        <div style="display:flex;flex-direction:column;gap:2px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+          <div style="padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0eeeb;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:#2d6b62;"></div>
+              <span style="font-size:15px;font-weight:600;color:#1a2e2c;">English</span>
+            </div>
+            <span style="font-size:12px;color:#888;">124 →</span>
+          </div>
+          <div style="padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0eeeb;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:#E17055;"></div>
+              <span style="font-size:15px;font-weight:600;color:#1a2e2c;">Hindi</span>
+            </div>
+            <span style="font-size:12px;color:#888;">98 →</span>
+          </div>
+          <div style="padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0eeeb;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:#FDCB6E;"></div>
+              <span style="font-size:15px;font-weight:600;color:#1a2e2c;">Chorus</span>
+            </div>
+            <span style="font-size:12px;color:#888;">56 →</span>
+          </div>
+          <div style="padding:14px 18px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:#6C5CE7;"></div>
+              <span style="font-size:15px;font-weight:600;color:#1a2e2c;">Youth Camp</span>
+            </div>
+            <span style="font-size:12px;color:#888;">34 →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Hero Header + Minimal List</h3>
+      <p>Large branded gradient hero with stats, then a clean grouped list below. Elegant and minimal — the header makes the statement, the list stays out of the way.</p>
+    </div>
+  </div>
+</div>

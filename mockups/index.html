@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Song Book · Minimal Variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Fraunces',Georgia,serif;
+    font-optical-sizing:auto;
+    background:#0E0E0D;color:#EAE7DF;
+    display:flex;flex-direction:column;min-height:100vh;
+  }
+  header{
+    padding:28px 28px 18px;
+    border-bottom:1px solid rgba(234,231,223,0.1);
+    display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  }
+  header h1{font-size:22px;font-weight:380;letter-spacing:-0.015em;font-variation-settings:"opsz" 48}
+  header h1 em{font-style:italic;color:#C9A875}
+  header .sub{
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;
+    color:#8A847A;text-transform:uppercase;
+  }
+
+  .grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+  @media (max-width:980px){.grid{grid-template-columns:1fr}}
+  .cell{
+    display:flex;flex-direction:column;
+    border-right:1px solid rgba(234,231,223,0.1);
+    position:relative;
+  }
+  .cell:last-child{border-right:none}
+  @media (max-width:980px){.cell{border-right:none;border-bottom:1px solid rgba(234,231,223,0.1)}}
+
+  .cell .meta{
+    padding:20px 22px 12px;display:flex;align-items:baseline;justify-content:space-between;
+    border-bottom:1px solid rgba(234,231,223,0.08);gap:12px;
+  }
+  .cell .meta .title{
+    display:flex;align-items:baseline;gap:12px;
+  }
+  .cell .meta .letter{
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.2em;
+    color:#C9A875;text-transform:uppercase;
+  }
+  .cell .meta h2{font-size:18px;font-weight:400;letter-spacing:-0.01em;font-variation-settings:"opsz" 48}
+  .cell .meta .open{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:#8A847A;
+    text-decoration:none;border:1px solid rgba(234,231,223,0.15);
+    padding:5px 10px;border-radius:999px;white-space:nowrap;
+    transition:all .2s ease;
+  }
+  .cell .meta .open:hover{color:#EAE7DF;border-color:#EAE7DF}
+  .cell .tagline{
+    padding:8px 22px 18px;font-size:13px;color:#A8A198;font-style:italic;line-height:1.5;
+    font-variation-settings:"opsz" 14;
+  }
+  .cell .attrs{
+    padding:0 22px 14px;display:flex;flex-wrap:wrap;gap:6px;
+  }
+  .cell .attrs span{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;
+    color:#8A847A;text-transform:uppercase;
+    border:1px solid rgba(234,231,223,0.08);padding:3px 8px;border-radius:2px;
+  }
+  .cell iframe{
+    flex:1;width:100%;min-height:900px;border:0;background:#0a0a0a;
+  }
+  footer{
+    padding:14px 28px;border-top:1px solid rgba(234,231,223,0.08);
+    font-size:12px;color:#8A847A;font-style:italic;
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+  footer code{font-family:'JetBrains Mono',monospace;font-style:normal;color:#C9A875;font-size:11px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Song Book · <em>minimalist variations</em></h1>
+  <span class="sub">D · E · F  /  scroll each to see Song Detail preview below</span>
+</header>
+<div class="grid">
+
+  <div class="cell">
+    <div class="meta">
+      <div class="title">
+        <span class="letter">D</span>
+        <h2>Mono-family Serif</h2>
+      </div>
+      <a class="open" href="home-D-mono-serif.html" target="_blank">Open ↗</a>
+    </div>
+    <p class="tagline">One serif family does everything. Cream paper, umber accent, italic flourishes reserved for one word.</p>
+    <div class="attrs">
+      <span>Fraunces</span><span>#F9F6EF</span><span>#8B6F47</span><span>Serif</span>
+    </div>
+    <iframe src="home-D-mono-serif.html" loading="lazy"></iframe>
+  </div>
+
+  <div class="cell">
+    <div class="meta">
+      <div class="title">
+        <span class="letter">E</span>
+        <h2>Quiet Grotesque</h2>
+      </div>
+      <a class="open" href="home-E-grotesque.html" target="_blank">Open ↗</a>
+    </div>
+    <p class="tagline">Clean sans. Off-white ground, deep-green accent, tabular figures, disciplined spacing. Swiss-leaning.</p>
+    <div class="attrs">
+      <span>Switzer</span><span>#FAFAF7</span><span>#0F4F3F</span><span>Sans</span>
+    </div>
+    <iframe src="home-E-grotesque.html" loading="lazy"></iframe>
+  </div>
+
+  <div class="cell">
+    <div class="meta">
+      <div class="title">
+        <span class="letter">F</span>
+        <h2>Mono &amp; Editorial</h2>
+      </div>
+      <a class="open" href="home-F-mono-editorial.html" target="_blank">Open ↗</a>
+    </div>
+    <p class="tagline">Mono for chrome, serif for lyrics. Ivory paper, one red accent, labels like code comments. Editorial.</p>
+    <div class="attrs">
+      <span>JetBrains Mono</span><span>Instrument Serif</span><span>#C2362C</span>
+    </div>
+    <iframe src="home-F-mono-editorial.html" loading="lazy"></iframe>
+  </div>
+
+</div>
+<footer>
+  <span>Each mockup stacks Home + Song Detail on one page — scroll to see both.</span>
+  <span>Pick one direction → we refine components from there. <code>D · E · F</code></span>
+</footer>
+</body>
+</html>

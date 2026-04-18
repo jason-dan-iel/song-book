@@ -6,6 +6,8 @@ import { SongForm } from '../components/SongForm'
 import { invalidateCache } from '../hooks/useSongs'
 import type { Song, Category } from '../types'
 
+const ADMIN_MAX_WIDTH = 840
+
 export function Admin() {
   const [session, setSession] = useState<Session | null>(null)
   const [loadingSession, setLoadingSession] = useState(true)
@@ -19,12 +21,13 @@ export function Admin() {
     return () => subscription.unsubscribe()
   }, [])
 
-  if (loadingSession) return <p style={{ padding: 16 }}>Loading…</p>
+  if (loadingSession) return <p className="loading-msg">Loading…</p>
   if (!session) return (
     <div>
-      <div className="page-header">
-        <Link to="/" className="back-arrow">←</Link>
+      <div className="page-head">
+        <Link to="/" className="back-arrow">← Home</Link>
         <span className="page-title">Admin</span>
+        <span className="right-slot" />
       </div>
       <div className="login-wrap">
         <LoginForm />
@@ -51,7 +54,7 @@ function LoginForm() {
 
   return (
     <form className="login-form" onSubmit={handleSubmit}>
-      <h2>Admin Login</h2>
+      <h2>Admin</h2>
       {error && <p className="error-msg">{error}</p>}
       <div className="form-row">
         <label>Email</label>
@@ -123,84 +126,87 @@ function AdminPanel() {
 
   return (
     <div>
-      <div className="admin-header">
-        <div className="admin-header-left">
-          <Link to="/" className="back-arrow">←</Link>
-          <h2>Admin</h2>
-        </div>
-        <button onClick={handleLogout}>Logout</button>
+      <div className="page-head sticky" style={{ maxWidth: ADMIN_MAX_WIDTH }}>
+        <Link to="/" className="back-arrow">← Home</Link>
+        <span className="page-title">Admin</span>
+        <span className="right-slot">
+          <button className="logout" onClick={handleLogout}>Logout</button>
+        </span>
       </div>
 
       <div className="admin-body">
-      {!adding && !editing && (
-        <div className="admin-add-bar">
-          <button className="primary" onClick={() => setAdding(true)}>+ Add song</button>
+        {!adding && !editing && (
+          <div className="admin-add-bar">
+            <button className="primary" onClick={() => setAdding(true)}>+ Add song</button>
+          </div>
+        )}
+
+        <div ref={formRef}>
+          {adding && (
+            <SongForm
+              onSave={handleSave}
+              onCancel={() => setAdding(false)}
+            />
+          )}
+
+          {editing && (
+            <SongForm
+              initial={editing}
+              onSave={handleSave}
+              onCancel={() => setEditing(null)}
+            />
+          )}
         </div>
-      )}
 
-      <div ref={formRef}>
-        {adding && (
-          <SongForm
-            onSave={handleSave}
-            onCancel={() => setAdding(false)}
-          />
+        {error && <p className="error-msg">{error}</p>}
+        {loading ? (
+          <p className="loading-msg">Loading…</p>
+        ) : (
+          <div className="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Cat</th>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Updated</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {songs.map((s) => (
+                  <tr key={s.id}>
+                    <td>{s.category}</td>
+                    <td>{s.number}</td>
+                    <td>{s.title}</td>
+                    <td className="updated">
+                      {s.updated_at ? new Date(s.updated_at).toLocaleString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      }) : '—'}
+                    </td>
+                    <td>
+                      <div className="row-actions">
+                        <button
+                          onClick={() => {
+                            setAdding(false)
+                            setEditing(s)
+                            setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button className="danger" onClick={() => handleDelete(s)}>Delete</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
-
-        {editing && (
-          <SongForm
-            initial={editing}
-            onSave={handleSave}
-            onCancel={() => setEditing(null)}
-          />
-        )}
-      </div>
-
-      {error && <p className="error-msg">{error}</p>}
-      {loading ? (
-        <p>Loading…</p>
-      ) : (
-        <div className="table-scroll"><table>
-          <thead>
-            <tr>
-              <th>Cat</th>
-              <th>#</th>
-              <th>Title</th>
-              <th>Updated</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {songs.map((s) => (
-              <tr key={s.id}>
-                <td>{s.category}</td>
-                <td>{s.number}</td>
-                <td>{s.title}</td>
-                <td style={{ fontSize: '11px', color: '#666' }}>
-                  {s.updated_at ? new Date(s.updated_at).toLocaleString('en-GB', {
-                    day: '2-digit',
-                    month: 'short',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                  }) : '—'}
-                </td>
-                <td style={{ whiteSpace: 'nowrap' }}>
-                  <button
-                    onClick={() => {
-                      setAdding(false)
-                      setEditing(s)
-                      setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
-                    }}
-                    style={{ marginRight: 6 }}
-                  >
-                    Edit
-                  </button>
-                  <button className="danger" onClick={() => handleDelete(s)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table></div>
-      )}
       </div>
     </div>
   )

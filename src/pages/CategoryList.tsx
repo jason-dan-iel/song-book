@@ -1,6 +1,5 @@
-import React, { useState, useMemo, useRef, useCallback, useLayoutEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { AlphaSidebar } from '../components/AlphaSidebar'
 import { useSongsByCategory } from '../hooks/useSongs'
 import { CATEGORIES } from '../categories'
 import type { Category, Song } from '../types'
@@ -19,31 +18,22 @@ function matchesSearch(song: Song, q: string): boolean {
   )
 }
 
+const CATEGORY_SUB: Record<Category, string> = {
+  english: 'Hymns in English',
+  hindi: 'Hindi bhajans & gīts',
+  chorus: 'Short choruses',
+  'youth-camp': 'Youth Camp songs',
+  'yc-chorus': 'Youth Camp choruses',
+  special: 'Special songs',
+}
+
 export function CategoryList() {
   const { category } = useParams<{ category: string }>()
   const cat = (category ?? 'english') as Category
   const { songs, loading, error } = useSongsByCategory(cat)
   const [search, setSearch] = useState('')
   const [viewMode, setViewMode] = useState<'alpha' | 'num'>('num')
-  const [activeLetter, setActiveLetter] = useState('')
-  const sectionRefs = useRef<Record<string, HTMLElement | null>>({})
-  const bandRef = useRef<HTMLDivElement>(null)
-  const outerRef = useRef<HTMLDivElement>(null)
 
-  // Measure the sticky band and expose its height as --band-h so group-headers
-  // and the sidebar always stick flush to it, whatever the actual rendered height is
-  useLayoutEffect(() => {
-    const band = bandRef.current
-    const outer = outerRef.current
-    if (!band || !outer) return
-    const update = () => outer.style.setProperty('--band-h', band.offsetHeight + 'px')
-    update()
-    const ro = new ResizeObserver(update)
-    ro.observe(band)
-    return () => ro.disconnect()
-  }, [])
-
-  // Group songs by first letter of title (alpha) or just list by number (num)
   const grouped = useMemo(() => {
     const filtered = songs.filter(s => matchesSearch(s, search))
 
@@ -66,90 +56,83 @@ export function CategoryList() {
     return sortedKeys.map(letter => ({ letter, songs: map.get(letter)! }))
   }, [songs, search, viewMode])
 
-  const letters = useMemo(() => viewMode === 'alpha' ? grouped.map(g => g.letter) : [], [grouped, viewMode])
-
-  const handleSidebarChange = useCallback((letter: string) => {
-    setActiveLetter(letter)
-    const el = sectionRefs.current[letter]
-    if (!el) return
-    const bandH = bandRef.current?.offsetHeight ?? 102
-    window.scrollTo(0, Math.max(0, el.offsetTop - bandH))
-  }, [])
-
   const label = CATEGORIES.find(c => c.key === cat)?.label ?? cat
+  const isHindi = cat === 'hindi'
+  const isDevanagariCategory = cat === 'hindi' || cat === 'chorus' || cat === 'special'
+  const catIndex = CATEGORIES.findIndex(c => c.key === cat)
 
   return (
-    <div ref={outerRef}>
-      <div className="sticky-band" ref={bandRef}>
-        <div className="page-header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flex: 1 }}>
-            <Link to="/" className="back-arrow">←</Link>
-            <span className="page-title">{label}</span>
-          </div>
-          <button
-            className="view-toggle"
-            onClick={() => {
-              setViewMode(v => v === 'alpha' ? 'num' : 'alpha')
-              setActiveLetter('')
-              window.scrollTo(0, 0)
-            }}
-          >
-            {viewMode === 'alpha' ? 'Sort by #' : 'Sort A-Z'}
-          </button>
-        </div>
-        <div className="search-strip">
-          <input
-            type="search"
-            placeholder="Search by title or number…"
-            value={search}
-            onChange={(e) => { setSearch(e.target.value); setActiveLetter('') }}
-          />
-        </div>
+    <div>
+      <div className="page-head sticky">
+        <Link to="/" className="back-arrow">← Home</Link>
+        <span className="page-title">{label}</span>
+        <span className="right-slot tnum" style={{ fontSize: 12, color: 'var(--mute)', letterSpacing: '0.04em' }}>
+          {String(catIndex + 1).padStart(2, '0')}&thinsp;/&thinsp;{String(CATEGORIES.length).padStart(2, '0')}
+        </span>
       </div>
 
-      {loading && <p style={{ padding: '12px 16px' }}>Loading…</p>}
-      {error && <p className="error-msg" style={{ margin: '12px 16px' }}>{error}</p>}
+      <div className="col">
+        <section className="list-banner">
+          <div className="kicker">Category · {label}</div>
+          <h1 className={isHindi ? 'devanagari' : ''}>
+            {isHindi ? 'हिन्दी' : label}
+          </h1>
+          <p className="sub">{CATEGORY_SUB[cat]} — {songs.length} {songs.length === 1 ? 'song' : 'songs'}</p>
+        </section>
 
-      <div className="list-body">
+        <div className="search">
+          <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" />
+          </svg>
+          <input
+            type="search"
+            placeholder="Search by number or title…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <div className="sort-toggles">
+            <button
+              className={`sort-btn ${viewMode === 'num' ? 'active' : ''}`}
+              onClick={() => { setViewMode('num'); window.scrollTo(0, 0) }}
+              aria-label="Sort by number"
+            >
+              #
+            </button>
+            <button
+              className={`sort-btn ${viewMode === 'alpha' ? 'active' : ''}`}
+              onClick={() => { setViewMode('alpha'); window.scrollTo(0, 0) }}
+              aria-label="Sort A–Z"
+            >
+              A–Z
+            </button>
+          </div>
+        </div>
+
+        {loading && <p className="loading-msg">Loading…</p>}
+        {error && <p className="error-msg" style={{ marginTop: 12 }}>{error}</p>}
+
         <ul className="song-list">
           {grouped.map(({ letter, songs: groupSongs }) => (
             <React.Fragment key={letter}>
-              {/* Static anchor — not sticky, so offsetTop is always the true document position */}
-              <li
-                ref={el => { sectionRefs.current[letter] = el }}
-                className="alpha-anchor"
-                aria-hidden="true"
-              />
               {viewMode === 'alpha' && (
-                <li
-                  className="alpha-group-header"
-                  data-letter={letter}
-                >
-                  {letter}
-                </li>
+                <li className="alpha-group-header">{letter}</li>
               )}
               {groupSongs.map((s) => (
                 <li key={s.id}>
-                  <Link to={`/c/${cat}/${s.number}`}>
-                    {s.number}. {s.title}
+                  <Link to={`/c/${cat}/${s.number}`} className="song-row">
+                    <span className="n tnum">{String(s.number).padStart(2, '0')}</span>
+                    <span className={`t ${isDevanagariCategory ? 'devanagari' : ''}`}>{s.title}</span>
+                    <span className="arr">→</span>
                   </Link>
                 </li>
               ))}
             </React.Fragment>
           ))}
-          {!loading && grouped.length === 0 && (
-            <li style={{ padding: '12px 16px', color: '#aaa', fontSize: 14 }}>No songs found.</li>
-          )}
         </ul>
 
-        {!loading && viewMode === 'alpha' && letters.length > 0 && (
-          <div className="alpha-sidebar-track">
-            <AlphaSidebar
-              letters={letters}
-              active={activeLetter}
-              onChange={handleSidebarChange}
-            />
-          </div>
+        {!loading && grouped.length === 0 && (
+          <div className="empty-state">No songs found.</div>
         )}
       </div>
     </div>

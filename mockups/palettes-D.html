@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>D · Palette explorations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0D0D0C;color:#EAE7DF}
+  body{
+    font-family:'Fraunces',Georgia,serif;
+    font-optical-sizing:auto;min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page-title{
+    padding:28px 28px 18px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    border-bottom:1px solid rgba(234,231,223,0.1);
+  }
+  .page-title h1{font-size:22px;font-weight:380;letter-spacing:-0.015em;font-variation-settings:"opsz" 48}
+  .page-title h1 em{font-style:italic;color:#C9A875}
+  .page-title .hint{font-size:12px;color:#8A847A;font-style:italic}
+
+  .palettes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0}
+  @media (max-width:1400px){.palettes{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:900px){.palettes{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:620px){.palettes{grid-template-columns:1fr}}
+
+  .palette{
+    position:relative;border-right:1px solid rgba(234,231,223,0.08);
+    border-bottom:1px solid rgba(234,231,223,0.08);
+    min-width:0;
+  }
+  .palette .label{
+    position:absolute;top:14px;left:14px;z-index:2;
+    font-family:'Fraunces',serif;font-size:10px;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--mute);
+    padding:4px 8px;background:var(--bg);border:1px solid var(--rule);
+  }
+  .palette .swatches{
+    position:absolute;top:14px;right:14px;z-index:2;display:flex;gap:4px;
+  }
+  .palette .swatches span{
+    width:12px;height:12px;border-radius:50%;
+    box-shadow:0 0 0 1px rgba(0,0,0,0.12);
+  }
+
+  /* ========== Shared mockup styles, all using CSS vars ========== */
+  .mock{
+    background:var(--bg);color:var(--ink);
+    padding:0;overflow:hidden;
+  }
+  .mock .col{max-width:100%;padding:52px 22px 32px}
+
+  .devanagari{font-family:'Tiro Devanagari Hindi','Fraunces',serif}
+  .tnum{font-feature-settings:"tnum","onum"}
+
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-bottom:12px;border-bottom:1px solid var(--rule);
+    color:var(--mute);
+  }
+  .topbar .mark{
+    font-size:10px;letter-spacing:0.22em;text-transform:uppercase;font-weight:500;color:var(--ink);
+  }
+  .topbar .meta{font-size:10px;letter-spacing:0.03em;font-feature-settings:"tnum","onum"}
+  .topbar .meta b{font-weight:500;color:var(--ink);margin-right:2px}
+
+  .hero{padding:34px 0 22px}
+  .hero h1{
+    font-size:44px;line-height:0.95;letter-spacing:-0.035em;
+    font-weight:380;font-variation-settings:"opsz" 144;color:var(--ink);
+  }
+  .hero h1 em{
+    font-style:italic;color:var(--accent);
+    font-variation-settings:"opsz" 144, "SOFT" 80;font-weight:370;
+  }
+  .hero p{
+    margin-top:12px;font-size:13px;color:var(--soft);font-style:italic;
+    font-variation-settings:"opsz" 14;max-width:30ch;line-height:1.45;
+  }
+
+  .section-label{
+    margin-top:26px;font-size:10px;letter-spacing:0.24em;text-transform:uppercase;
+    color:var(--mute);font-weight:500;
+    padding-bottom:8px;border-bottom:1px solid var(--rule);
+    display:flex;align-items:baseline;justify-content:space-between;
+  }
+  .section-label .right{color:var(--mute);letter-spacing:0.1em}
+
+  .cats{list-style:none}
+  .cat{
+    display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:baseline;
+    padding:12px 0;border-bottom:1px solid var(--rule-soft);
+    text-decoration:none;color:var(--ink);
+  }
+  .cat .n{
+    color:var(--mute);font-size:11px;font-variation-settings:"opsz" 14;
+    font-feature-settings:"tnum","onum";letter-spacing:0.02em;
+  }
+  .cat .nm{
+    font-size:17px;letter-spacing:-0.015em;font-weight:400;
+    font-variation-settings:"opsz" 48;line-height:1.15;color:var(--ink);
+  }
+  .cat .c{
+    font-size:13px;color:var(--mute);
+    font-feature-settings:"tnum","onum";
+    min-width:3ch;text-align:right;
+  }
+
+  .foot{
+    margin-top:26px;display:flex;justify-content:space-between;align-items:center;
+    padding-top:14px;border-top:1px solid var(--rule);
+    font-size:10px;color:var(--mute);letter-spacing:0.04em;
+  }
+  .foot a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px}
+
+  /* ========== Palette definitions ========== */
+
+  /* D1 — Cream & Umber (original) */
+  .palette.p1{
+    --bg:#F9F6EF;--ink:#121210;--soft:#3E3A33;--mute:#8A837A;
+    --accent:#8B6F47;
+    --rule:rgba(18,18,16,0.10);--rule-soft:rgba(18,18,16,0.06);
+  }
+
+  /* D2 — Parchment & Forest */
+  .palette.p2{
+    --bg:#F3F0E3;--ink:#14181A;--soft:#36403A;--mute:#818876;
+    --accent:#2F5D4E;
+    --rule:rgba(20,24,26,0.10);--rule-soft:rgba(20,24,26,0.05);
+  }
+
+  /* D3 — Bone & Indigo */
+  .palette.p3{
+    --bg:#EFECE1;--ink:#11141B;--soft:#343846;--mute:#7E818E;
+    --accent:#2E4466;
+    --rule:rgba(17,20,27,0.10);--rule-soft:rgba(17,20,27,0.05);
+  }
+
+  /* D4 — Blush & Burgundy */
+  .palette.p4{
+    --bg:#FAF3EC;--ink:#1A0E0E;--soft:#3E2E2E;--mute:#8F8278;
+    --accent:#7A2E2E;
+    --rule:rgba(26,14,14,0.10);--rule-soft:rgba(26,14,14,0.05);
+  }
+
+  /* D5 — Midnight & Gold (dark) */
+  .palette.p5{
+    --bg:#141312;--ink:#EAE5D9;--soft:#B8B2A2;--mute:#7C776C;
+    --accent:#D4A45C;
+    --rule:rgba(234,229,217,0.14);--rule-soft:rgba(234,229,217,0.07);
+  }
+
+  footer.chooser{
+    padding:14px 28px;font-size:12px;color:#8A847A;
+    border-top:1px solid rgba(234,231,223,0.08);
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+  footer.chooser a{color:#C9A875;text-decoration:none;border-bottom:1px dashed #C9A875}
+</style>
+</head>
+<body>
+
+<div class="page-title">
+  <h1>Direction <em>D</em> · palette explorations</h1>
+  <span class="hint">same layout, five palettes — pick one to carry forward</span>
+</div>
+
+<div class="palettes">
+
+  <!-- D1 Cream & Umber -->
+  <div class="palette p1">
+    <span class="label">D1 · Cream &amp; Umber</span>
+    <span class="swatches">
+      <span style="background:#F9F6EF"></span>
+      <span style="background:#8B6F47"></span>
+      <span style="background:#121210"></span>
+    </span>
+    <div class="mock">
+      <div class="col">
+        <header class="topbar">
+          <span class="mark">Song Book</span>
+          <span class="meta tnum"><b>179</b>songs</span>
+        </header>
+        <section class="hero">
+          <h1>Hymns <em>&amp;&nbsp;praises</em></h1>
+          <p>Collected songs of the Brethren Assembly, Jodhpur.</p>
+        </section>
+        <div class="section-label"><span>Categories</span><span class="right">Six</span></div>
+        <nav class="cats">
+          <a class="cat" href="#"><span class="n tnum">01</span><span class="nm">English</span><span class="c tnum">42</span></a>
+          <a class="cat" href="#"><span class="n tnum">02</span><span class="nm"><span class="devanagari">हिन्दी</span></span><span class="c tnum">58</span></a>
+          <a class="cat" href="#"><span class="n tnum">03</span><span class="nm">Chorus</span><span class="c tnum">6</span></a>
+          <a class="cat" href="#"><span class="n tnum">04</span><span class="nm">Youth Camp</span><span class="c tnum">21</span></a>
+          <a class="cat" href="#"><span class="n tnum">05</span><span class="nm">YC Chorus</span><span class="c tnum">10</span></a>
+          <a class="cat" href="#"><span class="n tnum">06</span><span class="nm">Special</span><span class="c tnum">27</span></a>
+        </nav>
+        <footer class="foot">
+          <span>Jodhpur, IN</span>
+          <a href="#">Admin</a>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <!-- D2 Parchment & Forest -->
+  <div class="palette p2">
+    <span class="label">D2 · Parchment &amp; Forest</span>
+    <span class="swatches">
+      <span style="background:#F3F0E3"></span>
+      <span style="background:#2F5D4E"></span>
+      <span style="background:#14181A"></span>
+    </span>
+    <div class="mock">
+      <div class="col">
+        <header class="topbar">
+          <span class="mark">Song Book</span>
+          <span class="meta tnum"><b>179</b>songs</span>
+        </header>
+        <section class="hero">
+          <h1>Hymns <em>&amp;&nbsp;praises</em></h1>
+          <p>Collected songs of the Brethren Assembly, Jodhpur.</p>
+        </section>
+        <div class="section-label"><span>Categories</span><span class="right">Six</span></div>
+        <nav class="cats">
+          <a class="cat" href="#"><span class="n tnum">01</span><span class="nm">English</span><span class="c tnum">42</span></a>
+          <a class="cat" href="#"><span class="n tnum">02</span><span class="nm"><span class="devanagari">हिन्दी</span></span><span class="c tnum">58</span></a>
+          <a class="cat" href="#"><span class="n tnum">03</span><span class="nm">Chorus</span><span class="c tnum">6</span></a>
+          <a class="cat" href="#"><span class="n tnum">04</span><span class="nm">Youth Camp</span><span class="c tnum">21</span></a>
+          <a class="cat" href="#"><span class="n tnum">05</span><span class="nm">YC Chorus</span><span class="c tnum">10</span></a>
+          <a class="cat" href="#"><span class="n tnum">06</span><span class="nm">Special</span><span class="c tnum">27</span></a>
+        </nav>
+        <footer class="foot">
+          <span>Jodhpur, IN</span>
+          <a href="#">Admin</a>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <!-- D3 Bone & Indigo -->
+  <div class="palette p3">
+    <span class="label">D3 · Bone &amp; Indigo</span>
+    <span class="swatches">
+      <span style="background:#EFECE1"></span>
+      <span style="background:#2E4466"></span>
+      <span style="background:#11141B"></span>
+    </span>
+    <div class="mock">
+      <div class="col">
+        <header class="topbar">
+          <span class="mark">Song Book</span>
+          <span class="meta tnum"><b>179</b>songs</span>
+        </header>
+        <section class="hero">
+          <h1>Hymns <em>&amp;&nbsp;praises</em></h1>
+          <p>Collected songs of the Brethren Assembly, Jodhpur.</p>
+        </section>
+        <div class="section-label"><span>Categories</span><span class="right">Six</span></div>
+        <nav class="cats">
+          <a class="cat" href="#"><span class="n tnum">01</span><span class="nm">English</span><span class="c tnum">42</span></a>
+          <a class="cat" href="#"><span class="n tnum">02</span><span class="nm"><span class="devanagari">हिन्दी</span></span><span class="c tnum">58</span></a>
+          <a class="cat" href="#"><span class="n tnum">03</span><span class="nm">Chorus</span><span class="c tnum">6</span></a>
+          <a class="cat" href="#"><span class="n tnum">04</span><span class="nm">Youth Camp</span><span class="c tnum">21</span></a>
+          <a class="cat" href="#"><span class="n tnum">05</span><span class="nm">YC Chorus</span><span class="c tnum">10</span></a>
+          <a class="cat" href="#"><span class="n tnum">06</span><span class="nm">Special</span><span class="c tnum">27</span></a>
+        </nav>
+        <footer class="foot">
+          <span>Jodhpur, IN</span>
+          <a href="#">Admin</a>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <!-- D4 Blush & Burgundy -->
+  <div class="palette p4">
+    <span class="label">D4 · Blush &amp; Burgundy</span>
+    <span class="swatches">
+      <span style="background:#FAF3EC"></span>
+      <span style="background:#7A2E2E"></span>
+      <span style="background:#1A0E0E"></span>
+    </span>
+    <div class="mock">
+      <div class="col">
+        <header class="topbar">
+          <span class="mark">Song Book</span>
+          <span class="meta tnum"><b>179</b>songs</span>
+        </header>
+        <section class="hero">
+          <h1>Hymns <em>&amp;&nbsp;praises</em></h1>
+          <p>Collected songs of the Brethren Assembly, Jodhpur.</p>
+        </section>
+        <div class="section-label"><span>Categories</span><span class="right">Six</span></div>
+        <nav class="cats">
+          <a class="cat" href="#"><span class="n tnum">01</span><span class="nm">English</span><span class="c tnum">42</span></a>
+          <a class="cat" href="#"><span class="n tnum">02</span><span class="nm"><span class="devanagari">हिन्दी</span></span><span class="c tnum">58</span></a>
+          <a class="cat" href="#"><span class="n tnum">03</span><span class="nm">Chorus</span><span class="c tnum">6</span></a>
+          <a class="cat" href="#"><span class="n tnum">04</span><span class="nm">Youth Camp</span><span class="c tnum">21</span></a>
+          <a class="cat" href="#"><span class="n tnum">05</span><span class="nm">YC Chorus</span><span class="c tnum">10</span></a>
+          <a class="cat" href="#"><span class="n tnum">06</span><span class="nm">Special</span><span class="c tnum">27</span></a>
+        </nav>
+        <footer class="foot">
+          <span>Jodhpur, IN</span>
+          <a href="#">Admin</a>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <!-- D5 Midnight & Gold -->
+  <div class="palette p5">
+    <span class="label">D5 · Midnight &amp; Gold</span>
+    <span class="swatches">
+      <span style="background:#141312"></span>
+      <span style="background:#D4A45C"></span>
+      <span style="background:#EAE5D9"></span>
+    </span>
+    <div class="mock">
+      <div class="col">
+        <header class="topbar">
+          <span class="mark">Song Book</span>
+          <span class="meta tnum"><b>179</b>songs</span>
+        </header>
+        <section class="hero">
+          <h1>Hymns <em>&amp;&nbsp;praises</em></h1>
+          <p>Collected songs of the Brethren Assembly, Jodhpur.</p>
+        </section>
+        <div class="section-label"><span>Categories</span><span class="right">Six</span></div>
+        <nav class="cats">
+          <a class="cat" href="#"><span class="n tnum">01</span><span class="nm">English</span><span class="c tnum">42</span></a>
+          <a class="cat" href="#"><span class="n tnum">02</span><span class="nm"><span class="devanagari">हिन्दी</span></span><span class="c tnum">58</span></a>
+          <a class="cat" href="#"><span class="n tnum">03</span><span class="nm">Chorus</span><span class="c tnum">6</span></a>
+          <a class="cat" href="#"><span class="n tnum">04</span><span class="nm">Youth Camp</span><span class="c tnum">21</span></a>
+          <a class="cat" href="#"><span class="n tnum">05</span><span class="nm">YC Chorus</span><span class="c tnum">10</span></a>
+          <a class="cat" href="#"><span class="n tnum">06</span><span class="nm">Special</span><span class="c tnum">27</span></a>
+        </nav>
+        <footer class="foot">
+          <span>Jodhpur, IN</span>
+          <a href="#">Admin</a>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="chooser">
+  <span>Same layout, 5 palettes. Home view shown here.</span>
+  <span>Song list + detail w/ improved Hindi lyrics → <a href="pages-D.html">pages-D.html</a></span>
+</footer>
+
+</body>
+</html>
