@@ -1,0 +1,157 @@
+[
+  {
+    "category": "yc-chorus",
+    "number": 1,
+    "title": "Colours that I see",
+    "stanzas": [
+      {
+        "label": "Verse 1",
+        "text": "Colours that I see\nMean so much to me\nRed and yellow, black, blue and green\nEvery single shade has a story inlaid\nColours mean so much to me",
+        "is_chorus": false
+      },
+      {
+        "label": "Verse 2",
+        "text": "White shows the holiness of God\nGold tells of heaven above\nBlack shows the state of my heart\nRed shows the measure of His love.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "yc-chorus",
+    "number": 2,
+    "title": "Love the Lord your God",
+    "stanzas": [
+      {
+        "label": "Verse 1",
+        "text": "Love the Lord your God\nWith all your heart and all your soul\nAnd all your mind and love for all mankind\nAs you would love yourself and\nLove the Lord your God with all your heart\nAnd all your soul and mind\nAnd love for mankind.",
+        "is_chorus": false
+      },
+      {
+        "label": "Verse 2",
+        "text": "We've got Christian lives to live\nWe've got Jesus' love to give\nWe've got nothing to hide\nBecause in him we abide\n        The Lord...............",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "yc-chorus",
+    "number": 3,
+    "title": "What's impossible with man",
+    "stanzas": [
+      {
+        "label": "Verse 1",
+        "text": "What's impossible with man\nIs possible with God - 2\nHe can do everything\nFor nothing is too hard\nWhat's impossible to you\nBe sure He can do\nPraise His name\nHe's the God of impossible. - 2",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "yc-chorus",
+    "number": 4,
+    "title": "He's still working on me",
+    "stanzas": [
+      {
+        "label": "Verse 1",
+        "text": "He's still working on me\nTo make me what I ought to be\nIt took Him just a week\nTo make the Moon and the Stars\nThe Sun and the Earth\nAnd Jupiter and Mars\nHow loving and patient He must be\nHe's still working on me!",
+        "is_chorus": false
+      },
+      {
+        "label": "Verse 2",
+        "text": "There really ought to be a sign upon my heart\n\"Don't judge me yet, there's an unfinished part\"\nBut I'll be perfect just according to His plan\nFashioned by the Master's loving hand.",
+        "is_chorus": false
+      },
+      {
+        "label": "Verse 3",
+        "text": "In mirror of His word, reflections that I see\nMake me wonder why he never gave up on me\nHe loves me as I am and helps me when I pray\nRemember He's the potter I'm the clay.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "yc-chorus",
+    "number": 5,
+    "title": "Let's talk about Jesus",
+    "stanzas": [
+      {
+        "label": "Verse 1",
+        "text": "Let's talk about Jesus\nThe King of Kings is He\nThe Lord of Lords supreme\nThrough all eternity\nThe great I am the way\nThe Truth, the Life, the Door\nLet's talk about Jesus\nMore and more.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "yc-chorus",
+    "number": 6,
+    "title": "Something Something",
+    "stanzas": [
+      {
+        "label": "Verse 1",
+        "text": "आज हम बताते हैं Something Something\nआज हम से सुन लो तुम\nEverything Everything\nन कोई magic न कोई tragic\nन कोई zing thing\nलेकिन Something good thing big thing\nसबसे Superthing\nईश्वर ने दुनिया से Love किया\nअपना Begotten Son दिया\nक्रूस पर मारा गया, पूरा किया Everything\nउसने हमें Holy किया, दूर किया every sin.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "yc-chorus",
+    "number": 7,
+    "title": "यहोवा परमेश्वर",
+    "stanzas": [
+      {
+        "label": "Verse 1",
+        "text": "यहोवा परमेश्वर, यहोवा मेरा प्रभु,\nयहोवा मेरा राजा, यहोवा तारणहारा।",
+        "is_chorus": false
+      },
+      {
+        "label": "Chorus",
+        "text": "El-Shaddai, El-Shaddai\nसर्वशक्तिमान तू है। - 2\n\nEbenezer, Ebenezer,\nआज तक तू मेरे साथ है। - 2",
+        "is_chorus": true
+      }
+    ]
+  },
+  {
+    "category": "yc-chorus",
+    "number": 8,
+    "title": "For I'm building a people of power",
+    "stanzas": [
+      {
+        "label": "Verse 1",
+        "text": "For I'm building a people of power\nAnd I'm building a people of praise\nWho will move through this land by my Spirit\nAnd will glorify My precious name.",
+        "is_chorus": false
+      },
+      {
+        "label": "Verse 2",
+        "text": "Build your church Lord, Make us strong Lord\nJoin our hearts Lord, through your Son\nMake us one Lord, In your body\nIn the kingdom of your Son.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "yc-chorus",
+    "number": 9,
+    "title": "ऐ खुदा तू है बड़ा",
+    "stanzas": [
+      {
+        "label": "Verse 1",
+        "text": "ऐ खुदा तू है बड़ा\nऐ खुदा ते है सदा\nऐ खुदा तू पाक है\nऐ खुदा तू शक्ति है\nजिन्दगी के सोते में मुझे\nजिन्दगी पाने को तू चला।",
+        "is_chorus": false
+      },
+      {
+        "label": "Verse 2",
+        "text": "आ जा मेरे जिन्दा खुदा\nजिन्दगी के राहों में चला\nजिन्दगी के सोते में मुझे\nजिन्दगी पाने को तू चला।",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "yc-chorus",
+    "number": 10,
+    "title": "एक लड़ाई लड़नी है",
+    "stanzas": [
+      {
+        "label": "Verse 1",
+        "text": "एक लड़ाई लड़नी है\nऔर एक दौड़ दौड़ना है\nसामना करना है सब खतरों का\nयीशु मेरा प्रकाश मेरे जीवन की आस\nवह है बल मेरी आत्मा का\nहै भरोसा वही मुक्तिदाता वही\nउसकी आज्ञा को मान ला ईमान\nयीशु मेरा प्रकाश मेरे जीवन की आस\nवह है बल मेरी आत्मा का।",
+        "is_chorus": false
+      }
+    ]
+  }
+]
