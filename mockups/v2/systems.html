@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Song Book · System Variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  /* ===========================================================
+     Shell — chooser grid
+  =========================================================== */
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; background:#1c1b17; color:#ddd; font-family: 'Fraunces', serif; -webkit-font-smoothing: antialiased; }
+  body { min-height: 100vh; padding: 28px 20px 60px; }
+  .chooser-head {
+    max-width: 1340px; margin: 0 auto 26px;
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .chooser-head h1 { font-size: 22px; margin:0; font-weight: 400; letter-spacing: -0.01em; color: #faf7e9; }
+  .chooser-head .legend { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #8a8778; }
+
+  .grid {
+    max-width: 1340px; margin: 0 auto;
+    display: grid; gap: 24px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 1100px) { .grid { grid-template-columns: 1fr; } }
+
+  .slot { display: flex; flex-direction: column; gap: 14px; }
+  .slot-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 0 4px;
+  }
+  .slot-head .tag { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #b8b4a2; font-weight: 500; }
+  .slot-head .name { font-size: 15px; color: #faf7e9; letter-spacing: -0.01em; }
+  .slot-head .hint { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #6e6a5c; }
+
+  .device {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.04);
+    max-height: 880px;
+    overflow-y: auto;
+    background: #F3F0E3;
+  }
+  .device::-webkit-scrollbar { width: 6px; }
+  .device::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
+
+  /* ===========================================================
+     SHARED BASE (palette + reset inside each .sys)
+  =========================================================== */
+  .sys {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-feature-settings: "ss01", "onum";
+    font-optical-sizing: auto;
+    font-size: 16px;
+    line-height: 1.5;
+    display: block;
+  }
+  .sys a { color: inherit; text-decoration: none; }
+  .sys .dev { font-family: 'Tiro Devanagari Hindi', 'Fraunces', serif; }
+  .sys .tnum { font-feature-settings: "tnum", "onum"; }
+
+  /* Default palette (shared) */
+  .sys {
+    --bg: #F3F0E3;
+    --panel: #FAF7E9;
+    --ink: #14181A;
+    --soft: #36403A;
+    --mute: #818876;
+    --faint: #A8AD9D;
+    --accent: #2F5D4E;
+    --accent-soft: rgba(47, 93, 78, 0.10);
+    --accent-rule: rgba(47, 93, 78, 0.30);
+    --rule: rgba(20, 24, 26, 0.10);
+    --rule-soft: rgba(20, 24, 26, 0.05);
+  }
+
+  .page { padding: 22px 22px 40px; }
+  .page + .page { border-top: 8px solid rgba(20,24,26,0.04); }
+
+  .page-label {
+    margin: -10px -22px 18px;
+    padding: 6px 22px;
+    background: rgba(20,24,26,0.04);
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--mute);
+    font-weight: 500;
+  }
+
+  /* ===========================================================
+     SYSTEM 1 — "EDITORIAL"
+     Clean serif, left-aligned, thin rules, restrained accent
+  =========================================================== */
+  .sys-1 .topbar {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding-bottom: 12px; border-bottom: 1px solid var(--rule);
+  }
+  .sys-1 .topbar .mark { font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--ink); font-weight: 500; }
+  .sys-1 .topbar .meta { font-size: 10px; letter-spacing: 0.08em; color: var(--mute); font-feature-settings: "tnum", "onum"; }
+  .sys-1 .topbar .meta b { color: var(--ink); font-weight: 500; margin-right: 2px; }
+
+  .sys-1 .hero { padding: 44px 0 28px; }
+  .sys-1 .hero h1 {
+    margin: 0;
+    font-size: 64px;
+    line-height: 0.96;
+    letter-spacing: -0.035em;
+    font-weight: 380;
+    font-variation-settings: "opsz" 144;
+  }
+  .sys-1 .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144, "SOFT" 80;
+  }
+  .sys-1 .hero p {
+    margin: 16px 0 0;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--soft);
+    max-width: 30ch;
+    line-height: 1.5;
+  }
+
+  .sys-1 .slabel {
+    margin-top: 32px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--mute); font-weight: 500;
+  }
+  .sys-1 .slabel .r { color: var(--mute); letter-spacing: 0.1em; text-transform: none; font-feature-settings: "tnum", "onum"; }
+
+  .sys-1 .cat {
+    display: grid; grid-template-columns: 26px 1fr auto; gap: 14px;
+    padding: 15px 0; border-bottom: 1px solid var(--rule-soft);
+    align-items: baseline;
+  }
+  .sys-1 .cat .n { font-size: 12px; color: var(--mute); font-feature-settings: "tnum"; letter-spacing: 0.02em; }
+  .sys-1 .cat .nm { font-size: 21px; font-variation-settings: "opsz" 48; line-height: 1.15; letter-spacing: -0.015em; }
+  .sys-1 .cat .c { font-size: 14px; color: var(--mute); font-feature-settings: "tnum"; text-align: right; min-width: 3ch; }
+
+  .sys-1 .hfoot {
+    margin-top: 30px; padding-top: 16px; border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; color: var(--mute); letter-spacing: 0.04em;
+  }
+  .sys-1 .hfoot a { color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 1px; }
+
+  /* Category page */
+  .sys-1 .phead {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 12px;
+    align-items: baseline; padding: 2px 0 14px; border-bottom: 1px solid var(--rule);
+  }
+  .sys-1 .phead .back { color: var(--mute); font-size: 13px; }
+  .sys-1 .phead .ttl { text-align: center; font-size: 12px; letter-spacing: 0.08em; }
+  .sys-1 .phead .r { justify-self: end; font-size: 10px; color: var(--mute); letter-spacing: 0.06em; font-feature-settings: "tnum"; }
+
+  .sys-1 .banner { padding: 22px 0 16px; border-bottom: 1px solid var(--rule-soft); }
+  .sys-1 .banner .k { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--mute); font-weight: 500; }
+  .sys-1 .banner h2 { margin: 8px 0 0; font-size: 42px; line-height: 1.0; letter-spacing: -0.025em; font-weight: 380; font-variation-settings: "opsz" 144; }
+  .sys-1 .banner .sub { margin-top: 8px; font-size: 13px; color: var(--soft); font-style: italic; }
+
+  .sys-1 .search {
+    margin-top: 14px; padding: 8px 0 10px; border-bottom: 1px solid var(--rule);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sys-1 .search svg { width: 13px; height: 13px; color: var(--mute); }
+  .sys-1 .search input {
+    flex: 1; border: 0; background: transparent; font-family: inherit; font-size: 14px; color: var(--ink); outline: 0;
+  }
+  .sys-1 .search input::placeholder { color: var(--mute); font-style: italic; }
+  .sys-1 .search .tog { display: flex; gap: 4px; padding-left: 10px; border-left: 1px solid var(--rule); }
+  .sys-1 .search .tog button {
+    appearance: none; background: transparent; border: 0; padding: 3px 7px;
+    font-family: inherit; font-size: 11px; letter-spacing: 0.08em; color: var(--mute); border-radius: 3px; cursor: pointer;
+  }
+  .sys-1 .search .tog button.on { color: var(--ink); background: var(--rule-soft); }
+
+  .sys-1 .row {
+    display: grid; grid-template-columns: 32px 1fr auto; gap: 14px;
+    padding: 12px 0; border-bottom: 1px solid var(--rule-soft); align-items: baseline;
+  }
+  .sys-1 .row .n { font-size: 12px; color: var(--mute); font-feature-settings: "tnum"; }
+  .sys-1 .row .t { font-size: 17px; font-variation-settings: "opsz" 24; line-height: 1.25; letter-spacing: -0.01em; }
+  .sys-1 .row .a { color: var(--faint); font-size: 13px; }
+
+  /* Song detail */
+  .sys-1 .sbanner { padding: 22px 0 20px; border-bottom: 1px solid var(--rule-soft); }
+  .sys-1 .sbanner .sn { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--mute); font-weight: 500; }
+  .sys-1 .sbanner h3 { margin: 10px 0 0; font-size: 36px; line-height: 1.05; letter-spacing: -0.02em; font-weight: 380; font-variation-settings: "opsz" 96; }
+
+  .sys-1 .stanza { padding: 18px 0; border-bottom: 1px solid var(--rule-soft); }
+  .sys-1 .stanza .ltag {
+    font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--mute); font-weight: 500; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sys-1 .stanza .ltag::before { content: ""; width: 18px; height: 1px; background: var(--mute); }
+  .sys-1 .stanza .body { font-size: 16px; line-height: 1.6; white-space: pre-line; }
+  .sys-1 .stanza .body.dev { font-family: 'Tiro Devanagari Hindi', serif; font-size: 19px; line-height: 1.7; }
+
+  .sys-1 .chorus {
+    margin: 18px -22px; padding: 20px 22px 20px 28px;
+    background: var(--accent-soft);
+    border-top: 1px solid var(--accent-rule); border-bottom: 1px solid var(--accent-rule);
+    position: relative;
+  }
+  .sys-1 .chorus::before { content:""; position: absolute; left:0; top:0; bottom:0; width:3px; background: var(--accent); }
+  .sys-1 .chorus .ltag { color: var(--accent); }
+  .sys-1 .chorus .ltag::before { background: var(--accent); }
+  .sys-1 .chorus .body { font-style: italic; }
+
+  /* ===========================================================
+     SYSTEM 2 — "HYMNAL"
+     Centered, ornamented, decorative fleurons, italic kickers
+  =========================================================== */
+  .sys-2 {
+    --accent: #7A3E1D;        /* Burnt sienna */
+    --accent-soft: rgba(122, 62, 29, 0.08);
+    --accent-rule: rgba(122, 62, 29, 0.28);
+  }
+  .sys-2 .topbar {
+    display: flex; align-items: center; justify-content: center;
+    padding-bottom: 14px; position: relative;
+    font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--mute); font-weight: 500;
+    gap: 12px;
+  }
+  .sys-2 .topbar::before,
+  .sys-2 .topbar::after {
+    content: ""; flex: 1; height: 1px; background: var(--rule);
+  }
+  .sys-2 .topbar .mark { color: var(--ink); }
+
+  .sys-2 .hero { padding: 40px 0 30px; text-align: center; }
+  .sys-2 .hero .kicker {
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--accent); font-style: italic; font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .sys-2 .hero h1 {
+    margin: 0;
+    font-size: 52px;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    font-weight: 360;
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+  }
+  .sys-2 .hero h1 em {
+    display: block;
+    font-style: italic;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+    font-size: 0.75em;
+    font-weight: 340;
+    margin-top: 4px;
+  }
+  .sys-2 .hero .fleuron {
+    margin: 20px auto 0;
+    width: 44px; height: 1px;
+    background: var(--accent);
+    position: relative;
+  }
+  .sys-2 .hero .fleuron::before {
+    content: "❦";
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    background: var(--bg); padding: 0 10px;
+    color: var(--accent);
+    font-size: 14px;
+  }
+  .sys-2 .hero p {
+    margin: 20px auto 0;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--soft);
+    max-width: 28ch;
+    line-height: 1.55;
+  }
+
+  .sys-2 .slabel {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; font-style: italic;
+    padding-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sys-2 .slabel::before,
+  .sys-2 .slabel::after { content:""; flex: 1; height: 1px; background: var(--rule); }
+
+  .sys-2 .cat {
+    display: grid; grid-template-columns: 1fr auto; gap: 12px;
+    padding: 16px 6px; border-bottom: 1px dotted var(--rule);
+    align-items: baseline;
+  }
+  .sys-2 .cat .left { display: flex; align-items: baseline; gap: 14px; }
+  .sys-2 .cat .n {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 13px; color: var(--accent); font-feature-settings: "tnum";
+    font-variation-settings: "opsz" 14;
+  }
+  .sys-2 .cat .nm {
+    font-size: 22px; font-variation-settings: "opsz" 72;
+    letter-spacing: -0.01em; font-weight: 400;
+  }
+  .sys-2 .cat .c {
+    font-size: 12px; color: var(--mute); font-feature-settings: "tnum";
+    font-style: italic;
+  }
+
+  .sys-2 .hfoot {
+    margin-top: 28px; padding-top: 20px;
+    text-align: center; font-size: 11px; color: var(--mute); font-style: italic;
+    letter-spacing: 0.06em;
+    position: relative;
+  }
+  .sys-2 .hfoot::before {
+    content: "✦ ✦ ✦"; display: block; color: var(--accent);
+    font-style: normal; letter-spacing: 0.6em; font-size: 9px;
+    margin-bottom: 12px;
+  }
+  .sys-2 .hfoot a { color: var(--ink); font-style: normal; border-bottom: 1px solid var(--accent); padding-bottom: 1px; margin-left: 10px; }
+
+  /* Category page */
+  .sys-2 .phead {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 12px;
+    align-items: center; padding: 2px 0 14px; border-bottom: 1px solid var(--rule);
+  }
+  .sys-2 .phead .back { color: var(--mute); font-size: 13px; font-style: italic; }
+  .sys-2 .phead .ttl {
+    text-align: center; font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--ink); font-weight: 500;
+  }
+  .sys-2 .phead .r { justify-self: end; font-size: 10px; color: var(--mute); font-feature-settings: "tnum"; font-style: italic; }
+
+  .sys-2 .banner { padding: 28px 0 18px; text-align: center; }
+  .sys-2 .banner .k {
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--accent); font-style: italic; font-weight: 500;
+  }
+  .sys-2 .banner h2 {
+    margin: 12px 0 10px; font-size: 38px; line-height: 1.05;
+    letter-spacing: -0.02em; font-weight: 370;
+    font-variation-settings: "opsz" 144, "SOFT" 40;
+  }
+  .sys-2 .banner .fleuron {
+    margin: 8px auto 0; width: 40px; height: 1px; background: var(--accent-rule); position: relative;
+  }
+  .sys-2 .banner .fleuron::before {
+    content: "§"; position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%); background: var(--bg); padding: 0 8px;
+    color: var(--accent); font-size: 11px; font-style: italic;
+  }
+  .sys-2 .banner .sub { margin-top: 12px; font-size: 12px; color: var(--soft); font-style: italic; }
+
+  .sys-2 .search {
+    margin-top: 20px; padding: 8px 14px; border: 1px solid var(--rule);
+    border-radius: 2px; background: var(--panel);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sys-2 .search svg { width: 13px; height: 13px; color: var(--mute); }
+  .sys-2 .search input {
+    flex: 1; border: 0; background: transparent; font-family: inherit;
+    font-size: 14px; color: var(--ink); outline: 0; font-style: italic;
+  }
+  .sys-2 .search input::placeholder { color: var(--mute); }
+  .sys-2 .search .tog { display: flex; gap: 4px; }
+  .sys-2 .search .tog button {
+    appearance: none; background: transparent; border: 1px solid transparent;
+    padding: 3px 8px; font-family: inherit; font-size: 11px;
+    letter-spacing: 0.1em; color: var(--mute); border-radius: 999px; cursor: pointer; font-style: italic;
+  }
+  .sys-2 .search .tog button.on { color: var(--accent); border-color: var(--accent-rule); font-style: normal; }
+
+  .sys-2 .row {
+    display: grid; grid-template-columns: 34px 1fr auto; gap: 12px;
+    padding: 13px 4px; border-bottom: 1px dotted var(--rule); align-items: baseline;
+  }
+  .sys-2 .row .n { font-size: 12px; color: var(--accent); font-feature-settings: "tnum"; font-style: italic; }
+  .sys-2 .row .t { font-size: 17px; font-variation-settings: "opsz" 24; line-height: 1.25; letter-spacing: -0.005em; }
+  .sys-2 .row .a { color: var(--faint); font-size: 13px; }
+
+  /* Song detail */
+  .sys-2 .sbanner { padding: 28px 0 24px; text-align: center; }
+  .sys-2 .sbanner .sn {
+    font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; font-style: italic;
+  }
+  .sys-2 .sbanner h3 {
+    margin: 12px 0 10px; font-size: 32px; line-height: 1.1;
+    letter-spacing: -0.015em; font-weight: 370;
+    font-variation-settings: "opsz" 96, "SOFT" 30;
+  }
+  .sys-2 .sbanner .fleuron {
+    margin: 6px auto 0; width: 32px; height: 1px; background: var(--accent-rule); position: relative;
+  }
+  .sys-2 .sbanner .fleuron::before {
+    content: "❦"; position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%); background: var(--bg); padding: 0 8px;
+    color: var(--accent); font-size: 11px;
+  }
+
+  .sys-2 .stanza { padding: 20px 0; text-align: center; border-bottom: 1px dotted var(--rule); }
+  .sys-2 .stanza .ltag {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 12px; font-style: italic;
+  }
+  .sys-2 .stanza .body { font-size: 16px; line-height: 1.65; white-space: pre-line; }
+  .sys-2 .stanza .body.dev { font-family: 'Tiro Devanagari Hindi', serif; font-size: 19px; line-height: 1.75; }
+
+  .sys-2 .chorus {
+    margin: 20px -6px; padding: 22px 22px;
+    background: var(--accent-soft);
+    border-top: 1px solid var(--accent-rule); border-bottom: 1px solid var(--accent-rule);
+    text-align: center;
+  }
+  .sys-2 .chorus .ltag { color: var(--accent); }
+  .sys-2 .chorus .body { font-style: italic; font-variation-settings: "opsz" 24, "SOFT" 50; }
+
+  /* ===========================================================
+     SYSTEM 3 — "BREVIARY"
+     Index/hymnal plate: double-rule borders, tracked caps, numbered prominence
+  =========================================================== */
+  .sys-3 {
+    --bg: #EDE8D6;
+    --panel: #F5F1DF;
+    --ink: #1A1714;
+    --accent: #2F5D4E;
+    --accent-soft: rgba(47, 93, 78, 0.10);
+    --accent-rule: rgba(47, 93, 78, 0.35);
+    --rule: rgba(26, 23, 20, 0.14);
+    --rule-soft: rgba(26, 23, 20, 0.06);
+    --mute: #6e6a5c;
+    --faint: #a09b89;
+    --soft: #3d3a33;
+  }
+
+  .sys-3 .topbar {
+    padding-top: 4px; padding-bottom: 16px;
+    border-top: 3px double var(--ink);
+    border-bottom: 1px solid var(--rule);
+    margin-top: 4px;
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--mute); font-weight: 500;
+    padding-top: 10px;
+  }
+  .sys-3 .topbar .mark { color: var(--ink); }
+  .sys-3 .topbar .meta { font-feature-settings: "tnum"; letter-spacing: 0.12em; }
+  .sys-3 .topbar .meta b { color: var(--ink); font-weight: 500; }
+
+  .sys-3 .hero { padding: 40px 0 28px; position: relative; }
+  .sys-3 .hero .plate {
+    font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .sys-3 .hero .plate::after { content:""; flex:1; height: 1px; background: var(--rule); }
+  .sys-3 .hero h1 {
+    margin: 0;
+    font-size: 58px;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+    font-variation-settings: "opsz" 144;
+  }
+  .sys-3 .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144, "SOFT" 60;
+    font-weight: 380;
+  }
+  .sys-3 .hero p {
+    margin: 18px 0 0;
+    font-size: 13px;
+    color: var(--soft);
+    max-width: 32ch;
+    line-height: 1.55;
+  }
+
+  .sys-3 .slabel {
+    margin-top: 32px;
+    padding: 8px 0;
+    border-top: 3px double var(--ink);
+    border-bottom: 1px solid var(--rule);
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--ink); font-weight: 600;
+  }
+  .sys-3 .slabel .r {
+    color: var(--mute); font-weight: 500; font-feature-settings: "tnum";
+    letter-spacing: 0.12em;
+  }
+
+  .sys-3 .cat {
+    display: grid; grid-template-columns: 40px 1fr auto; gap: 14px;
+    padding: 14px 0; border-bottom: 1px solid var(--rule-soft);
+    align-items: baseline;
+  }
+  .sys-3 .cat .n {
+    font-size: 22px; font-variation-settings: "opsz" 72; font-weight: 400;
+    color: var(--accent); font-feature-settings: "tnum", "onum";
+    line-height: 1; letter-spacing: -0.01em;
+  }
+  .sys-3 .cat .nm { font-size: 21px; font-variation-settings: "opsz" 48; line-height: 1.15; letter-spacing: -0.015em; }
+  .sys-3 .cat .nm .short {
+    display: block; font-size: 11px; color: var(--mute); letter-spacing: 0.18em;
+    text-transform: uppercase; font-weight: 500; margin-top: 2px;
+  }
+  .sys-3 .cat .c {
+    font-size: 13px; color: var(--mute); font-feature-settings: "tnum";
+    border-left: 1px solid var(--rule); padding-left: 12px; min-width: 3ch; text-align: right;
+  }
+
+  .sys-3 .hfoot {
+    margin-top: 28px; padding-top: 14px;
+    border-top: 3px double var(--ink);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 10px; color: var(--mute); letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .sys-3 .hfoot a {
+    color: var(--ink); font-weight: 500;
+    background: var(--accent); color: var(--bg);
+    padding: 4px 10px; letter-spacing: 0.18em;
+  }
+
+  /* Category page */
+  .sys-3 .phead {
+    padding-top: 10px; padding-bottom: 12px;
+    border-top: 3px double var(--ink);
+    border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: auto 1fr auto; gap: 12px;
+    align-items: baseline;
+  }
+  .sys-3 .phead .back { color: var(--mute); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; }
+  .sys-3 .phead .ttl { text-align: center; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 600; }
+  .sys-3 .phead .r { justify-self: end; font-size: 10px; color: var(--mute); font-feature-settings: "tnum"; letter-spacing: 0.14em; }
+
+  .sys-3 .banner { padding: 26px 0 16px; border-bottom: 1px solid var(--rule); }
+  .sys-3 .banner .k {
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; display: flex; align-items: center; gap: 10px;
+  }
+  .sys-3 .banner .k::after { content:""; flex:1; height:1px; background: var(--accent-rule); }
+  .sys-3 .banner h2 {
+    margin: 12px 0 0; font-size: 44px; line-height: 1.0;
+    letter-spacing: -0.025em; font-weight: 400;
+    font-variation-settings: "opsz" 144;
+  }
+  .sys-3 .banner .sub { margin-top: 12px; font-size: 12px; color: var(--soft); letter-spacing: 0.04em; }
+
+  .sys-3 .search {
+    margin-top: 14px; padding: 10px 12px;
+    border: 1px solid var(--ink);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sys-3 .search svg { width: 13px; height: 13px; color: var(--ink); }
+  .sys-3 .search input {
+    flex: 1; border: 0; background: transparent; font-family: inherit;
+    font-size: 14px; color: var(--ink); outline: 0;
+  }
+  .sys-3 .search input::placeholder { color: var(--mute); }
+  .sys-3 .search .tog { display: flex; gap: 0; border: 1px solid var(--ink); }
+  .sys-3 .search .tog button {
+    appearance: none; background: transparent; border: 0; padding: 3px 9px;
+    font-family: inherit; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink); cursor: pointer; font-weight: 500; border-right: 1px solid var(--ink);
+  }
+  .sys-3 .search .tog button:last-child { border-right: 0; }
+  .sys-3 .search .tog button.on { background: var(--ink); color: var(--bg); }
+
+  .sys-3 .row {
+    display: grid; grid-template-columns: 40px 1fr auto; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid var(--rule-soft); align-items: baseline;
+  }
+  .sys-3 .row .n {
+    font-size: 18px; color: var(--accent); font-feature-settings: "tnum", "onum";
+    font-variation-settings: "opsz" 48; line-height: 1;
+  }
+  .sys-3 .row .t { font-size: 17px; font-variation-settings: "opsz" 24; line-height: 1.25; letter-spacing: -0.005em; }
+  .sys-3 .row .a { color: var(--faint); font-size: 13px; }
+
+  /* Song detail */
+  .sys-3 .sbanner {
+    padding: 20px 0 22px;
+    border-top: 3px double var(--ink);
+    border-bottom: 3px double var(--ink);
+    margin-top: 4px;
+  }
+  .sys-3 .sbanner .sn {
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600;
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .sys-3 .sbanner .sn .num {
+    font-size: 34px; font-variation-settings: "opsz" 96; line-height: 1; font-weight: 400;
+    font-feature-settings: "tnum", "onum"; letter-spacing: -0.01em; color: var(--ink);
+  }
+  .sys-3 .sbanner h3 {
+    margin: 10px 0 0; font-size: 34px; line-height: 1.08;
+    letter-spacing: -0.02em; font-weight: 400;
+    font-variation-settings: "opsz" 96;
+  }
+
+  .sys-3 .stanza { padding: 20px 0; border-bottom: 1px solid var(--rule-soft); }
+  .sys-3 .stanza .ltag {
+    font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink); font-weight: 600; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sys-3 .stanza .ltag .num {
+    color: var(--accent); font-feature-settings: "tnum"; letter-spacing: 0.08em;
+    border: 1px solid var(--accent-rule); padding: 1px 6px; font-size: 9px;
+  }
+  .sys-3 .stanza .body { font-size: 16px; line-height: 1.6; white-space: pre-line; }
+  .sys-3 .stanza .body.dev { font-family: 'Tiro Devanagari Hindi', serif; font-size: 19px; line-height: 1.7; }
+
+  .sys-3 .chorus {
+    margin: 20px -22px; padding: 22px 22px;
+    background: var(--accent-soft);
+    border-top: 3px double var(--accent); border-bottom: 3px double var(--accent);
+  }
+  .sys-3 .chorus .ltag { color: var(--accent); }
+  .sys-3 .chorus .ltag .num { color: var(--accent); }
+  .sys-3 .chorus .body { font-variation-settings: "opsz" 24; }
+
+  /* ===========================================================
+     Small helpers
+  =========================================================== */
+  .note {
+    max-width: 1340px; margin: 40px auto 0;
+    padding: 22px 24px; border: 1px solid rgba(255,255,255,0.1);
+    font-size: 13px; color: #b8b4a2; line-height: 1.6; border-radius: 8px;
+  }
+  .note b { color: #faf7e9; font-weight: 500; }
+  .note code {
+    background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 3px;
+    font-family: ui-monospace, SFMono-Regular, monospace; font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="chooser-head">
+  <h1>Song Book · System variations</h1>
+  <span class="legend">mobile-width · scroll each column</span>
+</div>
+
+<div class="grid">
+
+  <!-- ============================================================= -->
+  <!-- SYSTEM 1: EDITORIAL                                             -->
+  <!-- ============================================================= -->
+  <div class="slot">
+    <div class="slot-head">
+      <span class="tag">System 1</span>
+      <span class="name">Editorial</span>
+      <span class="hint">left · hairline · restrained</span>
+    </div>
+    <div class="device">
+      <div class="sys sys-1">
+
+        <div class="page">
+          <div class="page-label">Home</div>
+          <div class="topbar">
+            <span class="mark">Song Book</span>
+            <span class="meta"><b>346</b> songs</span>
+          </div>
+          <div class="hero">
+            <h1>Hymns <em>&amp;&nbsp;praises</em></h1>
+            <p>Collected songs of the Brethren Assembly, Jodhpur — in English and Hindi.</p>
+          </div>
+          <div class="slabel"><span>Categories</span><span class="r">6 in total</span></div>
+          <div class="cat"><span class="n">01</span><span class="nm">English</span><span class="c">118</span></div>
+          <div class="cat"><span class="n">02</span><span class="nm dev">हिन्दी</span><span class="c">104</span></div>
+          <div class="cat"><span class="n">03</span><span class="nm">Chorus</span><span class="c">40</span></div>
+          <div class="cat"><span class="n">04</span><span class="nm">Youth Camp</span><span class="c">48</span></div>
+          <div class="cat"><span class="n">05</span><span class="nm">YC Chorus</span><span class="c">22</span></div>
+          <div class="cat"><span class="n">06</span><span class="nm">Special</span><span class="c">14</span></div>
+          <div class="hfoot"><span>Jodhpur, IN</span><a>Admin</a></div>
+        </div>
+
+        <div class="page">
+          <div class="page-label">Category · English</div>
+          <div class="phead">
+            <span class="back">← Home</span>
+            <span class="ttl tnum">ENGLISH</span>
+            <span class="r tnum">01 / 06</span>
+          </div>
+          <div class="banner">
+            <div class="k">Category · English</div>
+            <h2>English</h2>
+            <p class="sub">Hymns in English — 118 songs</p>
+          </div>
+          <div class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input placeholder="Search by number or title…">
+            <div class="tog"><button class="on">#</button><button>A–Z</button></div>
+          </div>
+          <div class="row"><span class="n">01</span><span class="t">A mighty fortress is our God</span><span class="a">→</span></div>
+          <div class="row"><span class="n">02</span><span class="t">All hail the power of Jesus' name</span><span class="a">→</span></div>
+          <div class="row"><span class="n">03</span><span class="t">Amazing grace, how sweet the sound</span><span class="a">→</span></div>
+          <div class="row"><span class="n">04</span><span class="t">Be Thou my vision, O Lord of my heart</span><span class="a">→</span></div>
+        </div>
+
+        <div class="page">
+          <div class="page-label">Song detail</div>
+          <div class="phead">
+            <span class="back">← English</span>
+            <span class="ttl tnum">#003</span>
+            <span class="r"><span style="display:inline-flex;gap:4px;"><span style="width:22px;height:22px;border:1px solid rgba(20,24,26,0.1);border-radius:50%;font-size:10px;display:inline-grid;place-items:center;">A−</span><span style="width:22px;height:22px;border:1px solid rgba(20,24,26,0.1);border-radius:50%;font-size:10px;display:inline-grid;place-items:center;">A+</span></span></span>
+          </div>
+          <div class="sbanner">
+            <div class="sn">English · 3</div>
+            <h3>Amazing Grace</h3>
+          </div>
+          <div class="stanza">
+            <div class="ltag">Verse 1</div>
+            <div class="body">Amazing grace! how sweet the sound,
+That saved a wretch like me!
+I once was lost, but now am found,
+Was blind, but now I see.</div>
+          </div>
+          <div class="chorus">
+            <div class="ltag">Chorus</div>
+            <div class="body">'Twas grace that taught my heart to fear,
+And grace my fears relieved;
+How precious did that grace appear
+The hour I first believed!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- SYSTEM 2: HYMNAL                                                -->
+  <!-- ============================================================= -->
+  <div class="slot">
+    <div class="slot-head">
+      <span class="tag">System 2</span>
+      <span class="name">Hymnal</span>
+      <span class="hint">center · ornamented · literary</span>
+    </div>
+    <div class="device">
+      <div class="sys sys-2">
+
+        <div class="page">
+          <div class="page-label">Home</div>
+          <div class="topbar"><span class="mark">Song Book</span></div>
+          <div class="hero">
+            <div class="kicker">Brethren Assembly · Jodhpur</div>
+            <h1>Hymns<em>&amp; praises</em></h1>
+            <div class="fleuron"></div>
+            <p>Three hundred and forty-six songs collected for worship, in English and Hindi.</p>
+          </div>
+          <div class="slabel">Categories</div>
+          <div class="cat"><span class="left"><span class="n">i</span><span class="nm">English</span></span><span class="c">118</span></div>
+          <div class="cat"><span class="left"><span class="n">ii</span><span class="nm dev">हिन्दी</span></span><span class="c">104</span></div>
+          <div class="cat"><span class="left"><span class="n">iii</span><span class="nm">Chorus</span></span><span class="c">40</span></div>
+          <div class="cat"><span class="left"><span class="n">iv</span><span class="nm">Youth Camp</span></span><span class="c">48</span></div>
+          <div class="cat"><span class="left"><span class="n">v</span><span class="nm">YC Chorus</span></span><span class="c">22</span></div>
+          <div class="cat"><span class="left"><span class="n">vi</span><span class="nm">Special</span></span><span class="c">14</span></div>
+          <div class="hfoot">Jodhpur, IN <a>Admin</a></div>
+        </div>
+
+        <div class="page">
+          <div class="page-label">Category · English</div>
+          <div class="phead">
+            <span class="back">← Home</span>
+            <span class="ttl">Category</span>
+            <span class="r">i / vi</span>
+          </div>
+          <div class="banner">
+            <div class="k">Part the First</div>
+            <h2>English</h2>
+            <div class="fleuron"></div>
+            <div class="sub">Hymns in English — 118 songs</div>
+          </div>
+          <div class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input placeholder="Search by number or title…">
+            <div class="tog"><button class="on">№</button><button>A–Z</button></div>
+          </div>
+          <div class="row"><span class="n">i</span><span class="t">A mighty fortress is our God</span><span class="a">→</span></div>
+          <div class="row"><span class="n">ii</span><span class="t">All hail the power of Jesus' name</span><span class="a">→</span></div>
+          <div class="row"><span class="n">iii</span><span class="t">Amazing grace, how sweet the sound</span><span class="a">→</span></div>
+          <div class="row"><span class="n">iv</span><span class="t">Be Thou my vision, O Lord of my heart</span><span class="a">→</span></div>
+        </div>
+
+        <div class="page">
+          <div class="page-label">Song detail</div>
+          <div class="phead">
+            <span class="back">← English</span>
+            <span class="ttl">Hymn</span>
+            <span class="r"><span style="display:inline-flex;gap:4px;"><span style="width:22px;height:22px;border:1px solid rgba(122,62,29,0.28);border-radius:50%;font-size:10px;display:inline-grid;place-items:center;color:#7A3E1D;">A−</span><span style="width:22px;height:22px;border:1px solid rgba(122,62,29,0.28);border-radius:50%;font-size:10px;display:inline-grid;place-items:center;color:#7A3E1D;">A+</span></span></span>
+          </div>
+          <div class="sbanner">
+            <div class="sn">English · Hymn 3</div>
+            <h3>Amazing Grace</h3>
+            <div class="fleuron"></div>
+          </div>
+          <div class="stanza">
+            <div class="ltag">Verse i</div>
+            <div class="body">Amazing grace! how sweet the sound,
+That saved a wretch like me!
+I once was lost, but now am found,
+Was blind, but now I see.</div>
+          </div>
+          <div class="chorus">
+            <div class="ltag">Refrain</div>
+            <div class="body">'Twas grace that taught my heart to fear,
+And grace my fears relieved;
+How precious did that grace appear
+The hour I first believed!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- SYSTEM 3: BREVIARY                                              -->
+  <!-- ============================================================= -->
+  <div class="slot">
+    <div class="slot-head">
+      <span class="tag">System 3</span>
+      <span class="name">Breviary</span>
+      <span class="hint">index · double-rule · numeric</span>
+    </div>
+    <div class="device">
+      <div class="sys sys-3">
+
+        <div class="page">
+          <div class="page-label">Home</div>
+          <div class="topbar">
+            <span class="mark">SONG BOOK</span>
+            <span class="meta"><b>346</b> SONGS</span>
+          </div>
+          <div class="hero">
+            <div class="plate">A Collection · I</div>
+            <h1>Hymns <em>&amp;&nbsp;praises</em></h1>
+            <p>Collected songs of the Brethren Assembly, Jodhpur — in English and Hindi.</p>
+          </div>
+          <div class="slabel"><span>Categories</span><span class="r">VI IN TOTAL</span></div>
+          <div class="cat"><span class="n">1</span><span class="nm">English<span class="short">Hymns in English</span></span><span class="c">118</span></div>
+          <div class="cat"><span class="n">2</span><span class="nm dev">हिन्दी<span class="short">Hindi bhajans</span></span><span class="c">104</span></div>
+          <div class="cat"><span class="n">3</span><span class="nm">Chorus<span class="short">Short choruses</span></span><span class="c">40</span></div>
+          <div class="cat"><span class="n">4</span><span class="nm">Youth Camp<span class="short">Camp songs</span></span><span class="c">48</span></div>
+          <div class="cat"><span class="n">5</span><span class="nm">YC Chorus<span class="short">Camp choruses</span></span><span class="c">22</span></div>
+          <div class="cat"><span class="n">6</span><span class="nm">Special<span class="short">Occasional</span></span><span class="c">14</span></div>
+          <div class="hfoot"><span>JODHPUR · IN</span><a>ADMIN</a></div>
+        </div>
+
+        <div class="page">
+          <div class="page-label">Category · English</div>
+          <div class="phead">
+            <span class="back">← HOME</span>
+            <span class="ttl">ENGLISH</span>
+            <span class="r">01 / 06</span>
+          </div>
+          <div class="banner">
+            <div class="k">Category I</div>
+            <h2>English</h2>
+            <div class="sub">Hymns in English · 118 songs</div>
+          </div>
+          <div class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input placeholder="Search number or title…">
+            <div class="tog"><button class="on">NO.</button><button>A–Z</button></div>
+          </div>
+          <div class="row"><span class="n">1</span><span class="t">A mighty fortress is our God</span><span class="a">→</span></div>
+          <div class="row"><span class="n">2</span><span class="t">All hail the power of Jesus' name</span><span class="a">→</span></div>
+          <div class="row"><span class="n">3</span><span class="t">Amazing grace, how sweet the sound</span><span class="a">→</span></div>
+          <div class="row"><span class="n">4</span><span class="t">Be Thou my vision, O Lord of my heart</span><span class="a">→</span></div>
+        </div>
+
+        <div class="page">
+          <div class="page-label">Song detail</div>
+          <div class="phead">
+            <span class="back">← ENGLISH</span>
+            <span class="ttl">HYMN</span>
+            <span class="r"><span style="display:inline-flex;gap:4px;"><span style="width:22px;height:22px;border:1px solid #1A1714;font-size:10px;display:inline-grid;place-items:center;">A−</span><span style="width:22px;height:22px;border:1px solid #1A1714;font-size:10px;display:inline-grid;place-items:center;">A+</span></span></span>
+          </div>
+          <div class="sbanner">
+            <div class="sn"><span class="num">3</span> · ENGLISH</div>
+            <h3>Amazing Grace</h3>
+          </div>
+          <div class="stanza">
+            <div class="ltag"><span class="num">I</span>Verse</div>
+            <div class="body">Amazing grace! how sweet the sound,
+That saved a wretch like me!
+I once was lost, but now am found,
+Was blind, but now I see.</div>
+          </div>
+          <div class="chorus">
+            <div class="ltag"><span class="num">R</span>Chorus</div>
+            <div class="body">'Twas grace that taught my heart to fear,
+And grace my fears relieved;
+How precious did that grace appear
+The hour I first believed!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="note">
+  <b>How to read this:</b> each column is one complete design system rendered at mobile width. Scroll within a column to see Home → Category → Song detail. All three use <b>Fraunces</b> + <b>Tiro Devanagari Hindi</b> — difference is alignment, ornament, rule treatment, accent weight.
+  <br><br>
+  <b>System 1 · Editorial</b> — current direction refined. Left-aligned, hairline rules, forest accent only on interaction, numeric indices in tnum. <em>Default pick if you want a modern serif book.</em>
+  <br>
+  <b>System 2 · Hymnal</b> — centered composition, Roman numerals, fleuron glyphs (❦ § ✦), burnt-sienna accent, italic kickers. <em>Most literary, most ornamented.</em>
+  <br>
+  <b>System 3 · Breviary</b> — 3px double-rule dividers, numbered entries prominent in big serif, tracked uppercase labels, tighter index feel. <em>Most like an old hymnal plate.</em>
+</div>
+
+</body>
+</html>

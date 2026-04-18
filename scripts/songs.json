@@ -1,155 +1,478 @@
 [
   {
-    "category": "yc-chorus",
-    "number": 1,
-    "title": "Colours that I see",
-    "stanzas": [
-      {
-        "label": "Verse 1",
-        "text": "Colours that I see\nMean so much to me\nRed and yellow, black, blue and green\nEvery single shade has a story inlaid\nColours mean so much to me",
-        "is_chorus": false
-      },
-      {
-        "label": "Verse 2",
-        "text": "White shows the holiness of God\nGold tells of heaven above\nBlack shows the state of my heart\nRed shows the measure of His love.",
-        "is_chorus": false
-      }
-    ]
-  },
-  {
-    "category": "yc-chorus",
-    "number": 2,
-    "title": "Love the Lord your God",
-    "stanzas": [
-      {
-        "label": "Verse 1",
-        "text": "Love the Lord your God\nWith all your heart and all your soul\nAnd all your mind and love for all mankind\nAs you would love yourself and\nLove the Lord your God with all your heart\nAnd all your soul and mind\nAnd love for mankind.",
-        "is_chorus": false
-      },
-      {
-        "label": "Verse 2",
-        "text": "We've got Christian lives to live\nWe've got Jesus' love to give\nWe've got nothing to hide\nBecause in him we abide\n        The Lord...............",
-        "is_chorus": false
-      }
-    ]
-  },
-  {
-    "category": "yc-chorus",
-    "number": 3,
-    "title": "What's impossible with man",
-    "stanzas": [
-      {
-        "label": "Verse 1",
-        "text": "What's impossible with man\nIs possible with God - 2\nHe can do everything\nFor nothing is too hard\nWhat's impossible to you\nBe sure He can do\nPraise His name\nHe's the God of impossible. - 2",
-        "is_chorus": false
-      }
-    ]
-  },
-  {
-    "category": "yc-chorus",
-    "number": 4,
-    "title": "He's still working on me",
-    "stanzas": [
-      {
-        "label": "Verse 1",
-        "text": "He's still working on me\nTo make me what I ought to be\nIt took Him just a week\nTo make the Moon and the Stars\nThe Sun and the Earth\nAnd Jupiter and Mars\nHow loving and patient He must be\nHe's still working on me!",
-        "is_chorus": false
-      },
-      {
-        "label": "Verse 2",
-        "text": "There really ought to be a sign upon my heart\n\"Don't judge me yet, there's an unfinished part\"\nBut I'll be perfect just according to His plan\nFashioned by the Master's loving hand.",
-        "is_chorus": false
-      },
-      {
-        "label": "Verse 3",
-        "text": "In mirror of His word, reflections that I see\nMake me wonder why he never gave up on me\nHe loves me as I am and helps me when I pray\nRemember He's the potter I'm the clay.",
-        "is_chorus": false
-      }
-    ]
-  },
-  {
-    "category": "yc-chorus",
-    "number": 5,
-    "title": "Let's talk about Jesus",
-    "stanzas": [
-      {
-        "label": "Verse 1",
-        "text": "Let's talk about Jesus\nThe King of Kings is He\nThe Lord of Lords supreme\nThrough all eternity\nThe great I am the way\nThe Truth, the Life, the Door\nLet's talk about Jesus\nMore and more.",
-        "is_chorus": false
-      }
-    ]
-  },
-  {
-    "category": "yc-chorus",
-    "number": 6,
-    "title": "Something Something",
-    "stanzas": [
-      {
-        "label": "Verse 1",
-        "text": "आज हम बताते हैं Something Something\nआज हम से सुन लो तुम\nEverything Everything\nन कोई magic न कोई tragic\nन कोई zing thing\nलेकिन Something good thing big thing\nसबसे Superthing\nईश्वर ने दुनिया से Love किया\nअपना Begotten Son दिया\nक्रूस पर मारा गया, पूरा किया Everything\nउसने हमें Holy किया, दूर किया every sin.",
-        "is_chorus": false
-      }
-    ]
-  },
-  {
-    "category": "yc-chorus",
+    "category": "chorus",
     "number": 7,
-    "title": "यहोवा परमेश्वर",
+    "title": "आदर के योग्य वह / Worthy of Honour",
     "stanzas": [
       {
-        "label": "Verse 1",
-        "text": "यहोवा परमेश्वर, यहोवा मेरा प्रभु,\nयहोवा मेरा राजा, यहोवा तारणहारा।",
+        "label": "English",
+        "text": "Worthy of honour and worthy of glory and\nWorthy of praise is He\nHe has redeemed me by the blood of the Lamb\nSet my spirit free .............. Worthy of Honour ...............",
         "is_chorus": false
       },
       {
-        "label": "Chorus",
-        "text": "El-Shaddai, El-Shaddai\nसर्वशक्तिमान तू है। - 2\n\nEbenezer, Ebenezer,\nआज तक तू मेरे साथ है। - 2",
-        "is_chorus": true
+        "label": "Hindi",
+        "text": "आदर के योग्य वह, महिमा के योग्य वह\nस्तुति के योग्य है वह\nअपने ख़ून से छुड़ाया मुझे\nआत्मा में आज़ादी दी .................. आदर के योग्य वह ...............",
+        "is_chorus": false
       }
     ]
   },
   {
-    "category": "yc-chorus",
+    "category": "chorus",
     "number": 8,
-    "title": "For I'm building a people of power",
+    "title": "अपने हाथ उठाकर स्तुति / With my hands lifted up",
     "stanzas": [
       {
-        "label": "Verse 1",
-        "text": "For I'm building a people of power\nAnd I'm building a people of praise\nWho will move through this land by my Spirit\nAnd will glorify My precious name.",
+        "label": "English",
+        "text": "With my hands lifted up, and my mouth filled with praise\nI will bless thee O Lord - 2\nWith a heart of thanks giving, I will bless thee O Lord.",
         "is_chorus": false
       },
       {
-        "label": "Verse 2",
-        "text": "Build your church Lord, Make us strong Lord\nJoin our hearts Lord, through your Son\nMake us one Lord, In your body\nIn the kingdom of your Son.",
+        "label": "Hindi",
+        "text": "अपने हाथ उठाकर स्तुति के शब्दों से\nधन्यवादित हृदय से तुझे धन्य कहूँ ।\nतुझे धन्य कहूँ - 2\nधन्यवादित हृदय से, तुझे धन्य कहूँ ।",
         "is_chorus": false
       }
     ]
   },
   {
-    "category": "yc-chorus",
+    "category": "chorus",
     "number": 9,
-    "title": "ऐ खुदा तू है बड़ा",
+    "title": "प्रभु है, प्रभु है / He is Lord",
     "stanzas": [
       {
-        "label": "Verse 1",
-        "text": "ऐ खुदा तू है बड़ा\nऐ खुदा ते है सदा\nऐ खुदा तू पाक है\nऐ खुदा तू शक्ति है\nजिन्दगी के सोते में मुझे\nजिन्दगी पाने को तू चला।",
+        "label": "English",
+        "text": "He is Lord, He is Lord, He is risen from the dead and He is Lord\nEvery knee shall bow, every tongue shall confess\nThat Jesus Christ is Lord.",
         "is_chorus": false
       },
       {
-        "label": "Verse 2",
-        "text": "आ जा मेरे जिन्दा खुदा\nजिन्दगी के राहों में चला\nजिन्दगी के सोते में मुझे\nजिन्दगी पाने को तू चला।",
+        "label": "Hindi",
+        "text": "प्रभु है, प्रभु है वह मृत्युंजय प्रभु यीशु है\nहर एक घुटना टिकेगा\nहर एक जीभ मान लेगी कि यीशु ही प्रभु है ।",
         "is_chorus": false
       }
     ]
   },
   {
-    "category": "yc-chorus",
+    "category": "chorus",
     "number": 10,
-    "title": "एक लड़ाई लड़नी है",
+    "title": "है मेरा यीशु ज़िंदा सर्वदा / Alive, Alive",
     "stanzas": [
       {
-        "label": "Verse 1",
-        "text": "एक लड़ाई लड़नी है\nऔर एक दौड़ दौड़ना है\nसामना करना है सब खतरों का\nयीशु मेरा प्रकाश मेरे जीवन की आस\nवह है बल मेरी आत्मा का\nहै भरोसा वही मुक्तिदाता वही\nउसकी आज्ञा को मान ला ईमान\nयीशु मेरा प्रकाश मेरे जीवन की आस\nवह है बल मेरी आत्मा का।",
+        "label": "English",
+        "text": "Alive, Alive, Alive for evermore\nMy Jesus is alive, alive for evermore\nAlive, Alive, Alive for evermore\nMy Jesus is alive\nSing Halleluyah - 2, my Jesus is alive for evermore\nSing Halleluyah - 2, my Jesus is alive",
+        "is_chorus": false
+      },
+      {
+        "label": "Hindi",
+        "text": "है मेरा यीशु ज़िंदा सर्वदा\nहै ज़िंदा सर्वदा, वह सबका है ख़ुदा\nहै मेरा यीशु ज़िंदा सर्वदा\nहै ज़िंदा सर्वदा\nहल्लेलूयाह - 2, है मेरा यीशु ज़िंदा सर्वदा\nहल्लेलूयाह - 2, है ज़िंदा है सदा ।",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 11,
+    "title": "आनन्द जयानन्द / Joy so full and triumphant",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "So rich and abundant, joy so full and triumphant\nNothing can happen, no man take away\nIn the shadow of turning, oil still keeping me burning\nThe wonder of wonders, Jesus is mine.",
+        "is_chorus": false
+      },
+      {
+        "label": "Hindi",
+        "text": "तेरा जीवन वह मेरा, आनन्द जयानन्द से बढ़कर\nजो छीनी न जाए, न ही मिट सके\nपर चाल जो चमके, तेल जो मुझे जलाए\nवह कैसा है अद्भुत, यीशु मेरा है ।",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 12,
+    "title": "प्रभु की महिमा, मुझे उभारा / Glory to God, He has lifted me up",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "Glory to God, He has lifted me up\nHe has lifted me up I know\nHe reached out His hand and He lifted me up\nAnd that's why I love Him so\nI love Him more and more - 2\nAnd when I stand upon the other shore\nI'll praise Him more and more.",
+        "is_chorus": false
+      },
+      {
+        "label": "Hindi",
+        "text": "प्रभु की महिमा, मुझे उभारा\nउसने मुझको उभारा है\nउसने हाथ बढ़ाकर मुझे उभार लिया\nइसलिए उससे प्रेम करूँगा\nउससे प्रेम करूँगा - 2\nस्वर्गीय छोर पर जब पहुँचूँगा मैं\nउसकी स्तुति करता रहूँगा ।",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 13,
+    "title": "तूने ऐ ख़ुदा बनाया आसमान / Our Lord God Thou hast made the heavens",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "Our Lord God Thou hast made the heavens\nAnd the earth by Thy great power\nOur Lord God Thou hast made the heavens\nAnd the earth by Thine outstretched arm\nNothing is too difficult for Thee (2)\nO Great and mighty God\nGreat in counsel and mighty in deed\nNothing, nothing, absolutely nothing (3)\nNothing is too difficult for Thee.",
+        "is_chorus": false
+      },
+      {
+        "label": "Hindi",
+        "text": "तूने ऐ ख़ुदा बनाया आसमान\nऔर ज़मीं को अपने सामर्थ वचन से\nतूने ऐ ख़ुदा बनाया है इंसान\nअपने ख़ूबसूरत हाथों से\nकुछ कठिन नहीं तेरे लिए (2)\nतू है सामर्थ में महान, है कितने अनोखे तेरे काम\nकुछ भी नहीं हरगिज़ नहीं, कुछ कठिन नहीं तेरे लिए (3)",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 14,
+    "title": "होसन्ना, होसन्ना / Hosanna",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "Hosanna, hosanna, hosanna in the highest (2)\nLord we lift up your name\nWith our hearts filled with praise\nWe exalt you O Lord our God\nHosanna in the highest.\nJesus, Jesus, Jesus in the highest ...........\nGlory, Glory, Glory to the King of kings ................",
+        "is_chorus": false
+      },
+      {
+        "label": "Hindi",
+        "text": "होसन्ना, होसन्ना, होसन्ना आसमान में (2)\nप्रभु, हम ऊँचा करते तेरा नाम\nदिल से हम स्तुति करते हैं\nहम ऊँचा करते हैं, हे हमारे प्रभु परमेश्वर\nहोसन्ना आसमान में ।\nयीशु, यीशु, यीशु आसमान में ............\nजय हो, जय हो, राजाओं के राजा की ............",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 15,
+    "title": "यीशु सब में है श्रेष्ठ नाम / Name above all names",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "Name above all names\nBeautiful Saviour, Glorious Lord\nEmmanuel, God is with us\nBlessed Redeemer, Living Word.",
+        "is_chorus": false
+      },
+      {
+        "label": "Hindi",
+        "text": "यीशु सब में है श्रेष्ठ नाम\nहितकर उद्धारक, महिमामय प्रभु\nइम्मानुएल, परमेश्वर साथ है\nधन्य त्राता, जीवित वचन ।",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 16,
+    "title": "मैं यहोवा की करुणा के गीत / I will sing of the mercies of the Lord",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "I will sing of the mercies of the Lord\nForever I will sing, I will sing\nI will sing of the mercies of the Lord\nForever I will sing of the mercies of the Lord.\nWith my mouth will I make known\nThy faithfulness, Thy faithfulness.\nWith my mouth will I make known\nThy faithfulness to all generations.",
+        "is_chorus": false
+      },
+      {
+        "label": "Hindi",
+        "text": "मैं यहोवा की करुणा के गीत\nगाऊँगा, सर्वदा, सर्वदा\nमैं यहोवा की करुणा के गीत\nगाऊँगा सर्वदा, जब तक ज़िंदा रहूँगा ।\nउसकी वफ़ा का, मेरी ज़ुबां, करेगी बयान, करेगी बयान\nउसकी वफ़ा का, मेरी ज़ुबां, करेगी बयान सारे कुलों से ।",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 17,
+    "title": "मेरा बोझ उठाया यीशु ने / Jesus took my burdens",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "I'm so happy here's the reason why\nJesus took my burdens all away\nNow I'm singing as the days go by\nJesus took my burdens all away\nOnce my heart was heavy with the load of sin\nJesus took my burdens gave me peace within\nNow I'm singing as the days go by\nJesus took my burdens all away.",
+        "is_chorus": false
+      },
+      {
+        "label": "Hindi",
+        "text": "मैं ख़ुश हूँ और ख़ुश हूँ इसलिए, मेरा बोझ उठाया यीशु ने\nअब मैं गाता गीत ख़ुशी से, सारा बोझ उठाया यीशु ने ।\nएक समय अशान्ति मेरे दिल में थी, यीशु ने हटाकर मुझे शान्ति दी\nअब मैं गाता गीत ख़ुशी से, सारा बोझ उठाया यीशु ने ।",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 18,
+    "title": "जब वे कहने लगे आओ यहोवा के घर / I was glad",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "I was glad very glad when they said unto me\nLet us go to the house of the Lord today\nThere is singing there is dancing there is victory\nIn the house of the Lord today.",
+        "is_chorus": false
+      },
+      {
+        "label": "Hindi",
+        "text": "जब वे कहने लगे आओ यहोवा के घर\nहम सब मिलकर चले मेरा दिल ख़ुश हुआ\nगाएँगे नाचेंगे उछलेंगे नाचेंगे\nयहोवा के घर में आज ।",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 19,
+    "title": "हम स्तुति की भेंट लाते हैं / We bring sacrifice of praise",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "We bring sacrifice of praise, into the house of the Lord - 2\nAnd we offer unto you, the sacrifices of thanks giving\nAnd we offer unto you, the sacrifices of joy.",
+        "is_chorus": false
+      },
+      {
+        "label": "Hindi",
+        "text": "हम स्तुति की भेंट लाते हैं, भवन में तेरे हे प्रभु\nभवन में हम तेरी स्तुति करते हैं, भवन में आकर तेरे हे प्रभु\nहम चढ़ाते हैं तुझको, धन्यवादों की भेंट अपनी\nऔर देते हैं तुझको, सर्वस्व अपना प्रभु ।",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 20,
+    "title": "हे स्वर्गीय पिता, हो धन्यवाद",
+    "stanzas": [
+      {
+        "label": "Hindi",
+        "text": "हे स्वर्गीय पिता, हो धन्यवाद\nहो तेरी स्तुति, आराधना\nकरता समर्पण, आत्मा और जीवन\nतेरी आराधना, दे तन–मन–धन ।\nमेरे मसीहा ............\nहे पवित्र आत्मा ............",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 21,
+    "title": "अर्पण मैं करता हूँ तुझको",
+    "stanzas": [
+      {
+        "label": "Hindi",
+        "text": "1. अर्पण मैं करता हूँ तुझको, तू ही तो मेरा पिता है\nअपनी इच्छा से तू ले चल, ये जीवन मैं सौंपता हूँ ।\n\nकोरस: तेरा प्रेम जो क्रूस पर देखा, चरणों में तेरे जो मुझको लगा\nकरके तू पाक मेरे दिल को, सामर्थ्य दे दे अब ।\n\n2. तुझ बिन में कुछ भी नहीं हूँ, इस जग में परदेशी ठहरा\nमुझको तू ले चल हमेशा, तुझमें सदा मैं रहूँ ।",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 22,
+    "title": "अनुग्रह का तेरे प्रभु",
+    "stanzas": [
+      {
+        "label": "Hindi",
+        "text": "1. अनुग्रह का तेरे प्रभु, कैसे मैं वर्णन करूँ\nसमझ के बाहर तेरा प्रेम, कैसे बखान मैं करूँ ।\n\nकोरस: तेरी दया का जो पहना हूँ ताज, मैं गाऊँ उठा के आवाज़\nमैं जो कुछ भी आज हूँ, तेरे अनुग्रह से हूँ ।\n\n2. तेरा फ़ज़ल है ख़ुदा, मरने से मैं जो बचा\nसदा की वो मौत हटा, दिया तूने जीवन नया ।",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 23,
+    "title": "Lord, I lift your name on high",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "Lord, I lift your name on high\nLord, I love to sing your praises\nI'm so glad you're in my life\nI'm so glad you came to save me\nYou came from heaven to earth, to show the way\nFrom the earth to the cross, my debts to pay\nFrom the cross to the grave, from the grave to the sky\nLord, I lift your name on high.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 24,
+    "title": "Majesty, worship His majesty",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "Majesty, worship His majesty\nUnto Jesus, be all glory, honour and praise\nMajesty, Kingdom authority\nFlows from His throne, unto His own, His anthem raise!\nSo exalt, lift up on high the name of Jesus\nMagnify, come glorify, Christ Jesus the King\nMajesty, worship His majesty\nJesus, who died, now glorified\nKing of all kings.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 25,
+    "title": "We have come into His house",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "We have come into His house\nAnd gathered in His name to worship Him (3)\nWorship Him, Jesus Christ the Lord.\nLet's forget about ourselves\nAnd concentrate on Him and worship Him (3)\nWorship Him, Jesus Christ the Lord.\nHe is all my righteousness\nI stand complete in Him and worship Him (3)\nWorship Him, Jesus Christ the Lord.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 26,
+    "title": "The fulness of the God head bodily",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "The fulness of the God head bodily\nDwelleth in my Lord (3)\nAnd we are complete in Him.\nComplete (3) in Him, we are complete in Him.\nIt's not by works of righteousness\nBut by His grace alone (3)\nAnd we are complete in Him.\nThere's nothing more that I can do\nFor Jesus did it all (3)\nAnd we are complete in Him.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 27,
+    "title": "Open book",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "1. In the evening when I start to pray, I think about this day\nAnother page is turned forever, another yesterday\nAnd as the story of my life unfolds, I know you've read it all\nAnother line to be continued — will I stand or fall?\n\nOpen book, to you I am an open book\nYou know every page by heart\nFrom the ending to the start\nOpen book, my life is like an open book\nAs I read between the lines\nIt's your love that truly binds this open book\n\n2. When the cover of this book is closed\nThe final chapter read\nI hope you'll find it worth the reading\nI hope \"Well Done\" is said!",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 28,
+    "title": "We are here to praise You",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "We are here to praise You, to lift our hearts and sing\nWe are here to give You, the best that we can bring\nAnd it is our love, rising from our hearts\nEverything within us cries, ABBA FATHER!\nHelp us now to give You, pleasure and delight\nHearts and minds and will that say \"I love You Lord!\"",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 29,
+    "title": "Give thanks with a grateful heart",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "Give thanks with a grateful heart\nGive thanks to the Holy One\nGive thanks because He's given Jesus Christ, His Son\nAnd now let the weak say I am strong\nLet the poor say I am rich\nBecause of what the Lord has done for us ... Give thanks.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 30,
+    "title": "Be exalted, the King is exalted on high",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "Be exalted, the King is exalted on high\nWe praise Him\nBe exalted, forever exalted His name\nHe is our Lord, forever His truth shall reign\nHeaven and earth, rejoice in His holy name\nBe exalted, the King is exalted on high.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 31,
+    "title": "Father God, I wonder",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "Father God, I wonder how I managed to exist\nWithout the knowledge of Your parenthood\nAnd Your loving care\nBut now I am your child, I am adopted in your family\nAnd I will never be alone\nCause Father God You're there beside me\nI will sing Your praises (3) ..... for evermore.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 32,
+    "title": "Thy Word is a lamp unto my feet",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "Thy Word is a lamp unto my feet\nAnd a light unto my path.\n\nWhen I feel afraid, think I've lost my way\nStill you are there right beside me\nAnd nothing will I fear, as long as you are near\nPlease be near me to the end.\n\nI will not forget, Your love for me, and yet\nMy heart forever is wandering\nJesus, be my guide, and hold me to your side\nAnd I will love you to the end.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 33,
+    "title": "Great is Thy faithfulness",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "The steadfast love of the Lord never ceases\nHis mercies never come to an end\nThey are new every morning, new every morning\nGreat is Thy faithfulness, O Lord\nGreat is Thy faithfulness.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 34,
+    "title": "Turn your eyes upon Jesus",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "Turn your eyes upon Jesus, look in His wonderful face\nAnd the things of the earth will grow strangely dim\nIn the light of His Glory and Grace.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 35,
+    "title": "Open our eyes Lord",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "Open our eyes Lord; we want to see Jesus\nTo reach out and touch Him, and say that we love Him\nOpen our ears Lord and help us to listen\nOpen our eyes Lord; we want to see Jesus.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 36,
+    "title": "You shall go out with joy",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "You shall go out with joy, and be led forth with peace\nThe mountains and the hills, will break forth before you\nThere'll be shouts of joy, and all the trees of the fields\nWill clap, will clap their hands\nAnd all the trees of the fields will clap their hands ... (3)\nWhile you go out with joy.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 37,
+    "title": "The glory of the risen Lord",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "Who shall declare, the glory of the risen Lord\nIncomparable, with the beauty of the Lord?\nForever He will be, the Lamb upon the throne\nI gladly bow my knee, and worship Him alone.\nFor He was slain, to reconcile man to God.\nForever You will be, the Lamb upon the throne\nI gladly bow my knee, And worship You alone.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 38,
+    "title": "It's a great thing to praise the Lord",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "It's a great thing to praise the Lord ......... (3)\nWalking in the light of the Lord.\nWalk walk walk in the light ......... (3)\nWalking in the light of the Lord.\nIt's a great thing to love the Lord ......... (3)\nWalking in the light of the Lord.\nIt's a great thing to serve the Lord ...... (3)\nWalking in the light of the Lord.",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 39,
+    "title": "Come bless the Lord",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "Come bless the Lord, all ye servants of the Lord\nWho stand by night, in the house of the Lord\nLift up your hands, in the holy place\nAnd bless the Lord, and bless the Lord.\nOh taste and see that the Lord is good ..... (3)\nBlessed is the man, who trusts in Him!",
+        "is_chorus": false
+      }
+    ]
+  },
+  {
+    "category": "chorus",
+    "number": 40,
+    "title": "यीशु अच्छा है / My Lord is good",
+    "stanzas": [
+      {
+        "label": "English",
+        "text": "He lifted me up from the miry clay\nAnd set my feet on the rock to stay\nHe put a song in my heart today\nA song of praise, a song of praise.\n\nMy Lord is good (6)\nHe's so good to me.",
+        "is_chorus": false
+      },
+      {
+        "label": "Multilingual",
+        "text": "यीशु अच्छा है (6) मुझको\nयीशु चंगा है (6) मैनु          (पंजाबी)\nजीसू उत्तोमो (6) मोचाई         (उड़िया)\nजेसू भालो छे (6) आमोके        (बंगाली)\nयेशु आसरो छे (6) माने          (गुजराती)\nएशु चंगला है (6) मला           (मराठी)\nऔल्ले देवरू (6) ननगे           (कन्नड़)\nमंची येसय्या (6) नाकू          (तेलुगू)\nयेसु नल्लवर (6) एणक            (तमिल)\nयेशु नल्लवन (6) एनिक           (मलयालम)\nयेसे राम रोछे (6) मलाई         (नेपाली)\nयीशु एपोडू (6) नाला           (तिब्बती)\nशूनाशिनन्चु (6) नयगे           (कोरियन)\nशुआ शुबरासी (6) शुआ           (जापानी)\nहोलो रोडेरा (6) नीसि           (अफ्रीकी)",
         "is_chorus": false
       }
     ]
