@@ -567,6 +567,7 @@ a:visited { color: inherit; }
 .chorus .tag::before { background: var(--accent); }
 .chorus .body {
   font-style: italic;
+  white-space: pre-line;
   font-variation-settings: "opsz" 24;
 }
 .chorus .body.devanagari {
