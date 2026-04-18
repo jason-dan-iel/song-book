@@ -22,6 +22,9 @@
   /* Motion */
   --t-fast: 150ms cubic-bezier(.2,.7,.2,1);
   --t-med:  220ms cubic-bezier(.2,.7,.2,1);
+
+  /* Layout */
+  --head-h: 55px;
 }
 
 * { box-sizing: border-box; }
@@ -534,14 +537,22 @@ a:visited { color: inherit; }
   letter-spacing: -0.002em;
 }
 
-/* Chorus block — accent left-tick + tinted bleed to column edge */
+/* Chorus block — accent left-tick + tinted bleed to column edge.
+   Sticks below the page header so lyrics stay visible while verses scroll. */
 .chorus {
-  position: relative;
+  position: sticky;
+  top: var(--head-h);
+  z-index: 10;
   margin: 22px -22px;
   padding: 24px 22px 24px 28px;
-  background: var(--accent-soft);
+  /* Layer the translucent accent over an opaque page-bg so scrolling
+     verses don't bleed through while the chorus is pinned. */
+  background:
+    linear-gradient(var(--accent-soft), var(--accent-soft)),
+    var(--bg);
   border-top: 1px solid var(--accent-rule);
   border-bottom: 1px solid var(--accent-rule);
+  box-shadow: 0 10px 22px -18px rgba(20, 24, 26, 0.35);
 }
 .chorus::before {
   content: "";
