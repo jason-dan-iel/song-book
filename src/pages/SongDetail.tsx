@@ -39,10 +39,16 @@ export function SongDetail() {
 
   const catLabel = CATEGORIES.find(c => c.key === cat)?.label ?? cat
 
-  const header = (title: React.ReactNode, showControls = true) => (
+  const header = (title: React.ReactNode, kicker?: string, showControls = true) => (
     <div className="page-head sticky">
-      <Link to={`/c/${cat}`} className="back-arrow">← {catLabel}</Link>
-      <span className="page-title tnum">{title}</span>
+      <Link to={`/c/${cat}`} className="back-arrow">
+        <span className="arrow" aria-hidden="true">←</span>
+        <span className="label">{catLabel}</span>
+      </Link>
+      <span className="page-title tnum">
+        {kicker && <span className="crumb">{kicker}</span>}
+        <span>{title}</span>
+      </span>
       <span className="right-slot">
         {showControls && (
           <span className="fs-ctrl">
@@ -54,15 +60,15 @@ export function SongDetail() {
     </div>
   )
 
-  if (loading) return <div>{header('', false)}<p className="loading-msg">Loading…</p></div>
-  if (error) return <div>{header('', false)}<p className="error-msg" style={{ margin: '16px 22px' }}>{error}</p></div>
-  if (!song) return <div>{header('', false)}<p className="loading-msg">Song not found.</p></div>
+  if (loading) return <div>{header('', undefined, false)}<p className="loading-msg">Loading…</p></div>
+  if (error) return <div>{header('', undefined, false)}<p className="error-msg" style={{ margin: '16px 22px' }}>{error}</p></div>
+  if (!song) return <div>{header('', undefined, false)}<p className="loading-msg">Song not found.</p></div>
 
   const titleIsHindi = hasDevanagari(song.title)
 
   return (
     <div>
-      {header(`#${String(song.number).padStart(3, '0')}`)}
+      {header(`#${String(song.number).padStart(3, '0')}`, 'Song')}
 
       <div className="col">
         <div className="song-banner">
