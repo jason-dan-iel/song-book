@@ -64,9 +64,15 @@ export function CategoryList() {
   return (
     <div>
       <div className="page-head sticky">
-        <Link to="/" className="back-arrow">← Home</Link>
-        <span className="page-title">{label}</span>
-        <span className="right-slot tnum" style={{ fontSize: 12, color: 'var(--mute)', letterSpacing: '0.04em' }}>
+        <Link to="/" className="back-arrow">
+          <span className="arrow" aria-hidden="true">←</span>
+          <span className="label">Home</span>
+        </Link>
+        <span className="page-title">
+          <span className="crumb">Category</span>
+          <span>{label}</span>
+        </span>
+        <span className="right-slot pagination tnum">
           {String(catIndex + 1).padStart(2, '0')}&thinsp;/&thinsp;{String(CATEGORIES.length).padStart(2, '0')}
         </span>
       </div>
