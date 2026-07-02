@@ -1,16 +1,17 @@
 import { Link } from 'react-router-dom'
 import { CATEGORIES } from '../categories'
 import { useSongCount } from '../hooks/useSongs'
+import { hasDevanagari } from '../lib/devanagari'
 import type { Category } from '../types'
 
 function CategoryRow({ index, categoryKey, label }: { index: number; categoryKey: Category; label: string }) {
   const count = useSongCount(categoryKey)
-  const isHindi = categoryKey === 'hindi'
+  const displayLabel = categoryKey === 'hindi' ? 'हिन्दी' : label
   return (
     <Link to={`/c/${categoryKey}`} className="cat-row">
       <span className="n tnum">{String(index + 1).padStart(2, '0')}</span>
       <span className="nm">
-        {isHindi ? <span className="devanagari">हिन्दी</span> : label}
+        <span className={hasDevanagari(displayLabel) ? 'devanagari' : ''}>{displayLabel}</span>
       </span>
       <span className="c tnum">{count ?? '—'}</span>
     </Link>

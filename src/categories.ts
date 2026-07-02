@@ -13,4 +13,5 @@ export const CATEGORIES: CategoryMeta[] = [
   { key: 'youth-camp', label: 'Youth Camp',        color: '#6C5CE7' },
   { key: 'yc-chorus',  label: 'Youth Camp Chorus', color: '#0984E3' },
   { key: 'special',    label: 'Special Songs',     color: '#E17055' },
+  { key: 'aatmik-geetmala', label: 'आत्मिक गीतमाला', color: '#9B59B6' },
 ]

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useSong, useSongsByCategory } from '../hooks/useSongs'
 import { CATEGORIES } from '../categories'
+import { hasDevanagari } from '../lib/devanagari'
 import type { Category } from '../types'
 
 const LS_KEY = 'fontSize'
@@ -13,10 +14,6 @@ function loadSize(): number {
   const v = localStorage.getItem(LS_KEY)
   const n = v ? parseInt(v, 10) : NaN
   return Number.isFinite(n) ? Math.min(MAX_SIZE, Math.max(MIN_SIZE, n)) : DEFAULT_SIZE
-}
-
-function hasDevanagari(s: string): boolean {
-  return /[\u0900-\u097F]/.test(s)
 }
 
 export function SongDetail() {
@@ -65,6 +62,7 @@ export function SongDetail() {
   if (!song) return <div>{header('', undefined, false)}<p className="loading-msg">Song not found.</p></div>
 
   const titleIsHindi = hasDevanagari(song.title)
+  const catLabelIsHindi = hasDevanagari(catLabel)
 
   return (
     <div>
@@ -72,7 +70,7 @@ export function SongDetail() {
 
       <div className="col">
         <div className="song-banner">
-          <div className="sn tnum">{catLabel} · {song.number}</div>
+          <div className={`sn tnum${catLabelIsHindi ? ' devanagari' : ''}`}>{catLabel} · {song.number}</div>
           <h2 className={titleIsHindi ? 'devanagari' : ''}>{song.title}</h2>
         </div>
 
