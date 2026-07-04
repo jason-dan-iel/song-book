@@ -1,3 +1,4 @@
 anthropic
 supabase
 python-dotenv
+pymupdf

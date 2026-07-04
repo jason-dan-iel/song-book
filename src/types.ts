@@ -1,4 +1,4 @@
-export type Category = 'english' | 'hindi' | 'youth-camp' | 'chorus' | 'yc-chorus' | 'special'
+export type Category = 'english' | 'hindi' | 'youth-camp' | 'chorus' | 'yc-chorus' | 'special' | 'aatmik-geetmala'
 
 export interface Stanza {
   label: string

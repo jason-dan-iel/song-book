@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useSongsByCategory } from '../hooks/useSongs'
 import { CATEGORIES } from '../categories'
+import { hasDevanagari } from '../lib/devanagari'
 import type { Category, Song } from '../types'
 
 function firstChar(title: string): string {
@@ -25,6 +26,7 @@ const CATEGORY_SUB: Record<Category, string> = {
   'youth-camp': 'Youth Camp songs',
   'yc-chorus': 'Youth Camp choruses',
   special: 'Special songs',
+  'aatmik-geetmala': 'Spiritual songs',
 }
 
 export function CategoryList() {
@@ -57,8 +59,8 @@ export function CategoryList() {
   }, [songs, search, viewMode])
 
   const label = CATEGORIES.find(c => c.key === cat)?.label ?? cat
-  const isHindi = cat === 'hindi'
-  const isDevanagariCategory = cat === 'hindi' || cat === 'chorus' || cat === 'special'
+  const displayLabel = cat === 'hindi' ? 'हिन्दी' : label
+  const isDevanagariLabel = hasDevanagari(displayLabel)
   const catIndex = CATEGORIES.findIndex(c => c.key === cat)
 
   return (
@@ -79,9 +81,9 @@ export function CategoryList() {
 
       <div className="col">
         <section className="list-banner">
-          <div className="kicker">Category · {label}</div>
-          <h1 className={isHindi ? 'devanagari' : ''}>
-            {isHindi ? 'हिन्दी' : label}
+          <div className={`kicker${hasDevanagari(label) ? ' devanagari' : ''}`}>Category · {label}</div>
+          <h1 className={isDevanagariLabel ? 'devanagari' : ''}>
+            {displayLabel}
           </h1>
           <p className="sub">{CATEGORY_SUB[cat]} — {songs.length} {songs.length === 1 ? 'song' : 'songs'}</p>
         </section>
@@ -128,7 +130,7 @@ export function CategoryList() {
                 <li key={s.id}>
                   <Link to={`/c/${cat}/${s.number}`} className="song-row">
                     <span className="n tnum">{String(s.number).padStart(2, '0')}</span>
-                    <span className={`t ${isDevanagariCategory ? 'devanagari' : ''}`}>{s.title}</span>
+                    <span className={`t ${hasDevanagari(s.title) ? 'devanagari' : ''}`}>{s.title}</span>
                     <span className="arr">→</span>
                   </Link>
                 </li>

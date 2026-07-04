@@ -364,6 +364,9 @@ a:visited { color: inherit; }
   text-transform: uppercase;
   font-weight: 500;
 }
+.list-banner .kicker.devanagari {
+  letter-spacing: normal;
+}
 .list-banner h1 {
   margin: 10px 0 0;
   font-size: clamp(40px, 9vw, 56px);
@@ -529,6 +532,9 @@ a:visited { color: inherit; }
   letter-spacing: 0.22em;
   text-transform: uppercase;
   font-weight: 500;
+}
+.song-banner .sn.devanagari {
+  letter-spacing: normal;
 }
 .song-banner h2 {
   margin: 14px 0 0;
